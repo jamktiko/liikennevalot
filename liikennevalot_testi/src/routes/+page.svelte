@@ -2,6 +2,7 @@
 	import Button from './Button.svelte';
 	import type Player from '$lib/components/Pelaaja.d.ts';
 	import Character from './Character.svelte';
+	import Valotolppa from './Valo.svelte';
 
 	let maaliviiva: number = 750;
 	let korkeus: number = $state(180);
@@ -163,6 +164,9 @@
 					</div>
 				{/each}
 			</div>
+			<div class="fixedvalo">
+				<Valotolppa valocolor={valo} />
+			</div>
 		</div>
 	</div>
 
@@ -176,10 +180,9 @@
 		<Button onclick={() => vaihdaVari(3)} text="{players[3].name} väri" />
 
 		<p>{viesti}</p>
-
-		<div class="liikennevalo {valo}"></div>
 	</div>
 </div>
+
 <svelte:window onkeydown={handleKeydown} />
 
 <style>
@@ -219,21 +222,6 @@
 		transition: transform 0.1s ease-out;
 	}
 
-	.liikennevalo {
-		width: 100px;
-		height: 100px;
-		border-radius: 50%;
-		background-color: gray;
-		transition: background-color 0.2s;
-	}
-	.vihrea {
-		background-color: #00ff00;
-		box-shadow: 0 0 20px #00ff00;
-	}
-	.punainen {
-		background-color: #ff0000;
-		box-shadow: 0 0 20px #ff0000;
-	}
 	.peli-ohjaus {
 		position: relative;
 		/* top: 500px; */
@@ -280,6 +268,9 @@
 		background-repeat: no-repeat;
 		background-attachment: fixed;
 	}
-	.bg-image {
+	.fixedvalo {
+		left: 920px;
+		top: -200px;
+		position: fixed;
 	}
 </style>
