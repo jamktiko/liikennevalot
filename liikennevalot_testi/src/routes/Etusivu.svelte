@@ -1,112 +1,76 @@
 <script lang="ts">
-	import Button from './Button.svelte';
-
-	// Otetaan vastaan uudet propsit pääohjelmasta
-	let {
-		aloita,
-		lisaaPelaaja,
-		poistaPelaaja,
-		pelaajamaara
-	}: {
+	// Otetaan vastaan propsit pääohjelmasta
+	let { aloita, lisaaPelaaja, poistaPelaaja, pelaajamaara } = $props<{
 		aloita: () => void;
 		lisaaPelaaja: () => void;
 		poistaPelaaja: () => void;
 		pelaajamaara: number;
-	} = $props();
+	}>();
 </script>
 
-<div class="aloitusruutu">
-	<h1 class="pelin-otsikko">Liikennevalot 🚥</h1>
-	<p>Testaa reaktionopeutesi kavereita vastaan!</p>
-	<div class="asetukset">
-		<h2>Pelaajamäärä</h2>
+<div style="background-image: url('/src/lib/assets/tausta.png');"></div>
 
-		<div class="pelaaja-laskuri">
-			<button class="stepper-nappi" onclick={poistaPelaaja} disabled={pelaajamaara <= 2}>
-				-
-			</button>
-
-			<span class="laskuri-teksti">Pelaajat: {pelaajamaara}</span>
-
-			<button class="stepper-nappi" onclick={lisaaPelaaja} disabled={pelaajamaara >= 4}> + </button>
+<div class="flex min-h-screen items-center justify-center bg-slate-900">
+	<div
+		class="flex aspect-square w-[500px] flex-col items-center justify-between border-[6px] border-black bg-[#9dc2e0] p-8 font-mono shadow-[10px_10px_0px_0px_rgba(0,0,0,0.2)]"
+	>
+		<div class="text-center">
+			<h2
+				class="mb-4 font-['Press_Start_2P'] text-3xl font-black tracking-tighter text-black uppercase [text-shadow:4px_4px_0px_rgba(0,0,0,0.3)]"
+			>
+				Ohjeet
+			</h2>
+			<p
+				class="max-w-[400px] font-['Press_Start_2P'] text-[12px] leading-tight font-black text-black uppercase [text-shadow:2px_2px_0px_rgba(0,0,0,0.3)]"
+			>
+				Valon ollessa vihreä, paina nappia. Liian aikaisesta reaktiosta rangaistaan. Ensimmäinen
+				maalissa voittaa.
+			</p>
 		</div>
-	</div>
 
-	<Button onclick={aloita} text="Pelaa" />
+		<div class="flex flex-col items-center">
+			<h3
+				class="mb-4 font-['Press_Start_2P'] text-xl font-black text-black uppercase [text-shadow:3px_3px_0px_rgba(0,0,0,0.3)]"
+			>
+				Pelaajat
+			</h3>
+
+			<div
+				class="flex items-center gap-4 border-4 border-black bg-white p-4 shadow-[6px_6px_0px_rgba(0,0,0,0.3)]"
+			>
+				<button
+					onclick={poistaPelaaja}
+					disabled={pelaajamaara <= 2}
+					class="flex h-16 w-16 items-center justify-center border-4 border-black bg-[#eb4c34] text-4xl font-bold text-white shadow-[inset_0px_-6px_0px_rgba(0,0,0,0.4)] active:translate-y-1 disabled:opacity-50 disabled:grayscale disabled:active:translate-y-0"
+				>
+					-
+				</button>
+
+				<div
+					class="flex h-20 w-20 items-center justify-center border-4 border-black bg-[#c0c0c0] text-4xl font-black text-black shadow-[inset_0px_-4px_0px_rgba(0,0,0,0.4)]"
+				>
+					{pelaajamaara}
+				</div>
+
+				<button
+					onclick={lisaaPelaaja}
+					disabled={pelaajamaara >= 4}
+					class="flex h-16 w-16 items-center justify-center border-4 border-black bg-[#63a352] text-4xl font-bold text-white shadow-[inset_0px_-6px_0px_rgba(0,0,0,0.4)] active:translate-y-1 disabled:opacity-50 disabled:grayscale disabled:active:translate-y-0"
+				>
+					+
+				</button>
+			</div>
+		</div>
+
+		<button
+			onclick={aloita}
+			class="p-7 text-center font-['Press_Start_2P'] text-3xl leading-none font-black text-black uppercase transition-transform [text-shadow:5px_5px_0px_rgba(0,0,0,0.3)] hover:scale-105"
+		>
+			Aloita<br />peli
+		</button>
+	</div>
 </div>
 
 <style>
-	.aloitusruutu {
-		background-image: url('$lib/assets/tausta.png');
-		width: 100%;
-		height: 1080px;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		gap: 20px;
-		text-align: center;
-	}
-
-	.pelin-otsikko {
-		font-size: 4rem;
-		margin: 0;
-		color: #333;
-		text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-	}
-	.asetukset {
-		background-color: rgba(255, 255, 255, 0.85);
-		padding: 20px 40px;
-		border-radius: 12px;
-		box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-		margin-bottom: 20px;
-	}
-
-	.asetukset h2 {
-		margin-top: 0;
-		font-size: 1.5rem;
-		color: #333;
-	}
-
-	.pelaaja-laskuri {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		gap: 20px; /* Väli nappien ja tekstin välillä */
-		margin-top: 15px;
-	}
-
-	.laskuri-teksti {
-		font-size: 1.5rem;
-		font-weight: bold;
-		min-width: 120px; /* Pitää napit paikoillaan vaikka numero muuttuu */
-	}
-
-	.stepper-nappi {
-		width: 45px;
-		height: 45px;
-		border-radius: 50%; /* Tekee napista täydellisen pyöreän */
-		border: none;
-		background-color: #333;
-		color: white;
-		font-size: 2rem;
-		line-height: 1;
-		cursor: pointer;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		transition:
-			background-color 0.2s,
-			transform 0.1s;
-	}
-
-	.stepper-nappi:hover:not(:disabled) {
-		background-color: #555;
-		transform: scale(1.1); /* Pieni suurennusefekti kun hiiri on päällä */
-	}
-
-	.stepper-nappi:disabled {
-		background-color: #ccc;
-		cursor: not-allowed;
-		opacity: 0.7;
-	}
+	@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 </style>

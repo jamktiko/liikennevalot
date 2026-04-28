@@ -8,12 +8,13 @@
 	let maaliviiva: number = 750;
 	let korkeus: number = $state(180);
 	let peliKaynnissa: boolean = $state(false);
-	let viesti = $state('Liikennevalot');
+	let viesti: string = $state('Liikennevalot');
 	let pelaajamaara: number = $state(2);
 	let loopinVoitto: boolean = $state(false);
 	let voittajanNimi: string = $state('');
 	let naytaModal: boolean = $state(false);
 	let nakyma: 'etusivu' | 'peli' = $state('etusivu');
+	//let asetusModal: boolean = $state(false);
 
 	const speed: number = 150;
 
