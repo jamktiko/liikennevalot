@@ -2,19 +2,19 @@
 	import Button from './Button.svelte';
 	import type Player from '$lib/components/Pelaaja.d.ts';
 	import Character from './Character.svelte';
+	import Valotolppa from './Valo.svelte';
 	import Modal from './Modal.svelte';
 	import Etusivu from './Etusivu.svelte';
 
 	let maaliviiva: number = 750;
 	let korkeus: number = $state(180);
 	let peliKaynnissa: boolean = $state(false);
-	let viesti: string = $state('Liikennevalot');
+	let viesti = $state('Liikennevalot');
 	let pelaajamaara: number = $state(2);
 	let loopinVoitto: boolean = $state(false);
 	let voittajanNimi: string = $state('');
 	let naytaModal: boolean = $state(false);
 	let nakyma: 'etusivu' | 'peli' = $state('etusivu');
-	//let asetusModal: boolean = $state(false);
 
 	const speed: number = 150;
 
@@ -80,8 +80,8 @@
 			const winner = alivePlayers[0];
 
 			setTimeout(() => {
-				naytaModal = true;
 				voittajanNimi = winner.name;
+				naytaModal = true;
 			}, 100);
 
 			peliKaynnissa = false;
@@ -183,23 +183,24 @@
 						</div>
 					{/each}
 				</div>
+				<div class="fixedvalo">
+					<Valotolppa valocolor={valo} />
+				</div>
 			</div>
 		</div>
 
 		<div class="peli-ohjaus">
 			<Button onclick={aloitaPeli} text="Aloita uusi kierros" disabled={peliKaynnissa} />
-
 			<Button onclick={() => vaihdaVari(0)} text="{players[0].name} väri" />
 			<Button onclick={() => vaihdaVari(1)} text="{players[1].name} väri" />
 			<Button onclick={() => vaihdaVari(2)} text="{players[2].name} väri" />
 			<Button onclick={() => vaihdaVari(3)} text="{players[3].name} väri" />
 
 			<p>{viesti}</p>
-
-			<div class="liikennevalo {valo}"></div>
 		</div>
 	</div>
 {/if}
+
 <svelte:window onkeydown={handleKeydown} />
 
 {#if naytaModal}
@@ -251,24 +252,9 @@
 		transition: transform 0.1s ease-out;
 	}
 
-	.liikennevalo {
-		width: 300px;
-		height: 300px;
-		border-radius: 50%;
-		background-color: gray;
-		transition: background-color 0.2s;
-	}
-	.vihrea {
-		background-color: #00ff00;
-		box-shadow: 0 0 20px #00ff00;
-	}
-	.punainen {
-		background-color: #ff0000;
-		box-shadow: 0 0 20px #ff0000;
-	}
 	.peli-ohjaus {
-		position: fixed;
-		top: 500px;
+		position: relative;
+		/* top: 500px; */
 		height: 50px;
 		left: 50%;
 		transform: translateX(-50%);
@@ -289,7 +275,7 @@
 	}
 	.bg-box-game {
 		position: fixed;
-		top: 100px;
+		top: 350px;
 		left: 50%;
 		transform: translateX(-50%);
 		width: 100%;
@@ -302,12 +288,19 @@
 	}
 	.bg-box {
 		width: 100%;
+		margin: 0;
 		height: 1080px;
 
 		background-image: url('$lib/assets/tausta.png');
-		background-size: cover; /* 👈 THIS is the important one */
+		background-size: cover;
 
 		background-position: top center;
 		background-repeat: no-repeat;
+		background-attachment: fixed;
+	}
+	.fixedvalo {
+		left: 920px;
+		top: -200px;
+		position: fixed;
 	}
 </style>
