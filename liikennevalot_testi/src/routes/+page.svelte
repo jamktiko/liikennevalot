@@ -220,8 +220,8 @@
 	}
 
 	.liikennevalo {
-		width: 300px;
-		height: 300px;
+		width: 100px;
+		height: 100px;
 		border-radius: 50%;
 		background-color: gray;
 		transition: background-color 0.2s;
@@ -235,8 +235,8 @@
 		box-shadow: 0 0 20px #ff0000;
 	}
 	.peli-ohjaus {
-		position: fixed;
-		top: 500px;
+		position: relative;
+		/* top: 500px; */
 		height: 50px;
 		left: 50%;
 		transform: translateX(-50%);
@@ -257,7 +257,7 @@
 	}
 	.bg-box-game {
 		position: fixed;
-		top: 100px;
+		top: 350px;
 		left: 50%;
 		transform: translateX(-50%);
 		width: 100%;
@@ -270,13 +270,15 @@
 	}
 	.bg-box {
 		width: 100%;
+		margin: 0;
 		height: 1080px;
 
 		background-image: url('$lib/assets/tausta.png');
-		background-size: cover; /* 👈 THIS is the important one */
+		background-size: cover;
 
 		background-position: top center;
 		background-repeat: no-repeat;
+		background-attachment: fixed;
 	}
 	.bg-image {
 	}
