@@ -2,6 +2,8 @@
 	import Button from './Button.svelte';
 	import type Player from '$lib/components/Pelaaja.d.ts';
 	import Character from './Character.svelte';
+	import Modal from './Modal.svelte';
+	import Etusivu from './Etusivu.svelte';
 
 	let maaliviiva: number = 750;
 	let korkeus: number = $state(180);
@@ -9,6 +11,9 @@
 	let viesti = $state('Liikennevalot');
 	let pelaajamaara: number = $state(2);
 	let loopinVoitto: boolean = $state(false);
+	let voittajanNimi: string = $state('');
+	let naytaModal: boolean = $state(false);
+	let nakyma: 'etusivu' | 'peli' = $state('etusivu');
 
 	const speed: number = 150;
 
@@ -54,7 +59,10 @@
 		tarkistaVoittaja();
 		//voittaja jos maaliviiva ylitetään
 		if (newPos >= maaliviiva) {
-			setTimeout(() => alert(`${player.name} voitti!`), 100);
+			setTimeout(() => {
+				voittajanNimi = player.name;
+				naytaModal = true;
+			}, 100);
 
 			peliKaynnissa = false;
 			valo = 'pois';
@@ -70,11 +78,15 @@
 		if (alivePlayers.length === 1) {
 			const winner = alivePlayers[0];
 
-			setTimeout(() => alert(`${winner.name} voitti!`), 100);
+			setTimeout(() => {
+				naytaModal = true;
+				voittajanNimi = winner.name;
+			}, 100);
 
 			peliKaynnissa = false;
 			valo = 'pois';
 			viesti = 'Peli ohi! Aloita uusi kierros?';
+			voittajanNimi = winner.name;
 		}
 	}
 
@@ -148,39 +160,58 @@
 		const p = players[x];
 		p.c = (p.c + 36) % 360; // kierrä väriä 36 astetta (10 eri väriä)
 	}
+
+	function suljeModal() {
+		naytaModal = false;
+	}
 </script>
 
-<div class="bg-box">
-	<div class="bg-box-game">
-		<div class="fixed-pelialue">
-			<div class="game-area" style="height: {korkeus}px;">
-				{#each players.slice(0, pelaajamaara) as player, i (player.key)}
-					<div
-						class="character"
-						style="transform: translateX({player.x}px); bottom: {20 + i * 80}px; "
-					>
-						<Character text={player.key.toUpperCase()} color={player.c} />
-					</div>
-				{/each}
+{#if nakyma === 'etusivu'}
+	<Etusivu aloita={() => (nakyma = 'peli')} {lisaaPelaaja} {poistaPelaaja} {pelaajamaara} />
+{:else}
+	<div class="bg-box">
+		<div class="bg-box-game">
+			<div class="fixed-pelialue">
+				<div class="game-area" style="height: {korkeus}px;">
+					{#each players.slice(0, pelaajamaara) as player, i (player.key)}
+						<div
+							class="character"
+							style="transform: translateX({player.x}px); bottom: {20 + i * 80}px; "
+						>
+							<Character text={player.key.toUpperCase()} color={player.c} />
+						</div>
+					{/each}
+				</div>
 			</div>
 		</div>
+
+		<div class="peli-ohjaus">
+			<Button onclick={aloitaPeli} text="Aloita uusi kierros" disabled={peliKaynnissa} />
+
+			<Button onclick={() => vaihdaVari(0)} text="{players[0].name} väri" />
+			<Button onclick={() => vaihdaVari(1)} text="{players[1].name} väri" />
+			<Button onclick={() => vaihdaVari(2)} text="{players[2].name} väri" />
+			<Button onclick={() => vaihdaVari(3)} text="{players[3].name} väri" />
+
+			<p>{viesti}</p>
+
+			<div class="liikennevalo {valo}"></div>
+		</div>
 	</div>
-
-	<div class="peli-ohjaus">
-		<Button onclick={aloitaPeli} text="Aloita uusi kierros" disabled={peliKaynnissa} />
-		<Button onclick={lisaaPelaaja} text="Lisää pelaaja +" disabled={pelaajamaara >= 4} />
-		<Button onclick={poistaPelaaja} text="Poista pelaaja -" disabled={pelaajamaara <= 2} />
-		<Button onclick={() => vaihdaVari(0)} text="{players[0].name} väri" />
-		<Button onclick={() => vaihdaVari(1)} text="{players[1].name} väri" />
-		<Button onclick={() => vaihdaVari(2)} text="{players[2].name} väri" />
-		<Button onclick={() => vaihdaVari(3)} text="{players[3].name} väri" />
-
-		<p>{viesti}</p>
-
-		<div class="liikennevalo {valo}"></div>
-	</div>
-</div>
+{/if}
 <svelte:window onkeydown={handleKeydown} />
+
+{#if naytaModal}
+	<Modal>
+		{#snippet header()}
+			<h2>Voittaja!</h2>
+		{/snippet}
+		<p>Pelin voittaja on {voittajanNimi}!</p>
+		{#snippet footer()}
+			<Button onclick={suljeModal} disabled={false} text="Sulje" />
+		{/snippet}
+	</Modal>
+{/if}
 
 <style>
 	:root {
@@ -277,7 +308,5 @@
 
 		background-position: top center;
 		background-repeat: no-repeat;
-	}
-	.bg-image {
 	}
 </style>
