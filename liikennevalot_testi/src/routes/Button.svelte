@@ -8,29 +8,10 @@
 	let { text, onclick, disabled = false }: Props = $props();
 </script>
 
-<button {onclick} {disabled}>{text}</button>
-
-<style>
-	button {
-		font-family: Arial, sans-serif;
-		font-size: 1.2rem;
-		margin: 10px;
-		padding: 10px 20px;
-		background-color: grey;
-		color: rgb(35, 230, 0);
-		border: none;
-		border-radius: 5px;
-		cursor: pointer;
-		transition: background-color 0.3s ease;
-		min-width: 15rem;
-	}
-
-	button:hover {
-		background-color: rgba(0, 0, 0, 0.25);
-	}
-
-	button:disabled {
-		background-color: #cccccc;
-		cursor: not-allowed;
-	}
-</style>
+<button
+	{onclick}
+	{disabled}
+	class="border-4 border-black bg-yellow-400 p-4 font-['Press_Start_2P'] text-xs shadow-[6px_6px_0px_rgba(0,0,0,0.3)] transition-transform hover:scale-110"
+>
+	{text}
+</button>

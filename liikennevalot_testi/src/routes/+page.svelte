@@ -7,6 +7,8 @@
 	import Modal from './Modal.svelte';
 	import Etusivu from './Etusivu.svelte';
 	import Pelaajavalinta from './Pelaajavalinta.svelte';
+	import Tulostaulukko from './Tulostaulukko.svelte';
+	import Asetukset from './Asetukset.svelte';
 
 	let maaliviiva: number = 750;
 	let korkeus: number = $state(180);
@@ -17,6 +19,8 @@
 	let voittaja: Player | null = $state(null);
 	let naytaModal: boolean = $state(false);
 	let nakyma: 'etusivu' | 'valinta' | 'peli' = $state('etusivu');
+	let naytaScoreboard: boolean = $state(false);
+	let naytaAsetukset = $state(false);
 
 	const speed: number = 150;
 
@@ -24,10 +28,10 @@
 	// let varit = ['red', 'blue', 'pink', 'purple'];
 
 	let players: Player[] = $state([
-		{ key: 'q', x: 150, name: 'Pelaaja 1', dead: false, c: 0, character: 1 },
-		{ key: 'p', x: 150, name: 'Pelaaja 2', dead: false, c: 72, character: 2 },
-		{ key: 'c', x: 150, name: 'Pelaaja 3', dead: false, c: 144, character: 3 },
-		{ key: 'm', x: 150, name: 'Pelaaja 4', dead: false, c: 288, character: 4 }
+		{ key: 'q', x: 150, name: 'Pelaaja 1', dead: false, c: 0, character: 1, wins: 0 },
+		{ key: 'p', x: 150, name: 'Pelaaja 2', dead: false, c: 72, character: 2, wins: 0 },
+		{ key: 'c', x: 150, name: 'Pelaaja 3', dead: false, c: 144, character: 3, wins: 0 },
+		{ key: 'm', x: 150, name: 'Pelaaja 4', dead: false, c: 288, character: 4, wins: 0 }
 	]);
 
 	// näppäin funktio
@@ -64,6 +68,7 @@
 		if (newPos >= maaliviiva) {
 			setTimeout(() => {
 				voittaja = player;
+				voittaja.wins++;
 				naytaModal = true;
 			}, 100);
 
@@ -83,6 +88,7 @@
 
 			setTimeout(() => {
 				voittaja = winner;
+				voittaja.wins++;
 				naytaModal = true;
 			}, 100);
 
@@ -211,12 +217,20 @@
 			</div>
 
 			<div class="peli-ohjaus">
-				<Button onclick={aloitaPeli} text="Aloita uusi kierros" disabled={peliKaynnissa} />
+				<Button onclick={aloitaPeli} text="ALOITA UUSI KIERROS" disabled={peliKaynnissa} />
+				<Button onclick={() => (naytaScoreboard = true)} text="TULOKSET" />
+				<Button onclick={() => (naytaAsetukset = true)} text="ASETUKSET" />
 
 				<p>{viesti}</p>
 			</div>
 		</div>
 	</div>
+{/if}
+{#if naytaAsetukset}
+	<Asetukset sulje={() => (naytaAsetukset = false)} />
+{/if}
+{#if naytaScoreboard}
+	<Tulostaulukko {players} sulje={() => (naytaScoreboard = false)} />
 {/if}
 
 <svelte:window onkeydown={handleKeydown} />

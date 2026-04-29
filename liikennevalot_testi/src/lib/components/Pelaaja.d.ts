@@ -5,4 +5,5 @@ export default interface IPlayer {
 	dead: boolean;
 	c: number;
 	character: number;
+	wins: number;
 }
