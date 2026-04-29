@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { fade } from 'svelte/transition';
 	import Button from './Button.svelte';
 	import type Player from '$lib/components/Pelaaja.d.ts';
 	import Character from './Character.svelte';
@@ -169,46 +170,51 @@
 </script>
 
 {#if nakyma === 'etusivu'}
-	<Etusivu aloita={() => (nakyma = 'valinta')} {lisaaPelaaja} {poistaPelaaja} {pelaajamaara} />
+	<div transition:fade={{ duration: 300 }}>
+		<Etusivu aloita={() => (nakyma = 'valinta')} {lisaaPelaaja} {poistaPelaaja} {pelaajamaara} />
+	</div>
 {:else if nakyma === 'valinta'}
-	<!-- Pelaajavalinta leijuu täällä omana ruutunaan -->
-	<Pelaajavalinta
-		{players}
-		{pelaajamaara}
-		{vaihdaVari}
-		pelaa={() => {
-			nakyma = 'peli';
-		}}
-		takaisin={() => (nakyma = 'etusivu')}
-	/>
+	<div transition:fade={{ duration: 300 }}>
+		<Pelaajavalinta
+			{players}
+			{pelaajamaara}
+			{vaihdaVari}
+			pelaa={() => {
+				nakyma = 'peli';
+			}}
+			takaisin={() => (nakyma = 'etusivu')}
+		/>
+	</div>
 {:else}
-	<div class="bg-box">
-		<div class="bg-box-game">
-			<div class="fixed-pelialue">
-				<div class="game-area" style="height: {korkeus}px;">
-					{#each players.slice(0, pelaajamaara) as player, i (player.key)}
-						<div
-							class="character"
-							style="transform: translateX({player.x}px); bottom: {20 + i * 80}px; "
-						>
-							<Character
-								text={player.key.toUpperCase()}
-								color={player.c}
-								character={player.character}
-							/>
-						</div>
-					{/each}
-				</div>
-				<div class="fixedvalo">
-					<Valotolppa valocolor={valo} />
+	<div transition:fade={{ duration: 300 }}>
+		<div class="bg-box">
+			<div class="bg-box-game">
+				<div class="fixed-pelialue">
+					<div class="game-area" style="height: {korkeus}px;">
+						{#each players.slice(0, pelaajamaara) as player, i (player.key)}
+							<div
+								class="character"
+								style="transform: translateX({player.x}px); bottom: {20 + i * 80}px; "
+							>
+								<Character
+									text={player.key.toUpperCase()}
+									color={player.c}
+									character={player.character}
+								/>
+							</div>
+						{/each}
+					</div>
+					<div class="fixedvalo">
+						<Valotolppa valocolor={valo} />
+					</div>
 				</div>
 			</div>
-		</div>
 
-		<div class="peli-ohjaus">
-			<Button onclick={aloitaPeli} text="Aloita uusi kierros" disabled={peliKaynnissa} />
+			<div class="peli-ohjaus">
+				<Button onclick={aloitaPeli} text="Aloita uusi kierros" disabled={peliKaynnissa} />
 
-			<p>{viesti}</p>
+				<p>{viesti}</p>
+			</div>
 		</div>
 	</div>
 {/if}

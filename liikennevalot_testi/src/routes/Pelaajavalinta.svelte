@@ -1,9 +1,9 @@
 <script lang="ts">
 	import type Player from '$lib/components/Pelaaja.d.ts';
-	import Character from './Character.svelte'; // HAHMO MUKAAN!
+	import Character from './Character.svelte';
 
 	let { players, pelaajamaara, vaihdaVari, pelaa, takaisin } = $props<{
-		players: Player[]; // Oikea tyyppimäärittely
+		players: Player[];
 		pelaajamaara: number;
 		vaihdaVari: (index: number) => void;
 		pelaa: () => void;
@@ -13,6 +13,7 @@
 
 <div
 	class="fixed inset-0 z-50 flex min-h-screen items-center justify-center bg-black/60 p-4 font-['Press_Start_2P'] select-none"
+	style="background-image: url('/src/lib/assets/tausta.png');"
 >
 	<div
 		class="pixel-shadow flex w-full max-w-5xl flex-col items-center gap-10 border-[6px] border-black bg-[#9dc2e0] p-6 md:p-12"
@@ -20,11 +21,9 @@
 		<div class="grid w-full grid-cols-1 gap-8 lg:grid-cols-2">
 			{#each players.slice(0, pelaajamaara) as player, i (player.key)}
 				<div class="pixel-shadow flex gap-4 border-[4px] border-black bg-white p-4">
-					<!-- TÄSSÄ ON NYT OIKEA HAHMO ESIKATSELUSSA -->
 					<div
 						class="relative flex h-20 w-20 flex-shrink-0 items-center justify-center overflow-hidden border-[4px] border-black bg-[#c0c0c0] shadow-[4px_4px_0px_0px_rgba(0,0,0,0.25),_inset_0_-8px_0_rgba(0,0,0,0.3)] md:h-28 md:w-28"
 					>
-						<!-- Skaalataan ja sijoitetaan hahmo laatikon sisään -->
 						<div style="transform: scale(1.5) translateY(10px);">
 							<Character color={player.c} character={player.character} />
 						</div>
