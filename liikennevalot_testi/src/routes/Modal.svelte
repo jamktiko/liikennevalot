@@ -1,7 +1,6 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
 
-	// Määritellään propsit: children on Snippet, header ja footer ovat valinnaisia Snippetejä
 	let {
 		children,
 		header,
@@ -13,20 +12,22 @@
 	} = $props();
 </script>
 
-<div class="backdrop"></div>
+<div class="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm"></div>
 
-<div class="modal">
-	<header>
+<div
+	class="fixed top-1/2 left-1/2 z-50 flex aspect-square w-[90%] max-w-[500px] -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-start border-[6px] border-black bg-[#9dc2e0] p-8 text-center font-['Press_Start_2P'] shadow-2xl md:p-12"
+>
+	<header class="mb-8 w-full leading-tight uppercase">
 		{#if header}
 			{@render header()}
 		{/if}
 	</header>
 
-	<main>
+	<main class="mb-8 flex flex-col items-center justify-center">
 		{@render children()}
 	</main>
 
-	<footer>
+	<footer class="mt-auto w-full space-y-4">
 		{#if footer}
 			{@render footer()}
 		{/if}
@@ -34,27 +35,15 @@
 </div>
 
 <style>
-	/* Lisää tähän antamasi CSS-tyylit */
-	.backdrop {
-		position: fixed;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100vh;
-		background: rgba(0, 0, 0, 0.75);
-		z-index: 10;
+	:global(.btn-shadow) {
+		box-shadow:
+			4px 4px 0px 0px rgba(0, 0, 0, 0.25),
+			inset 0 -6px 0 rgba(0, 0, 0, 0.3);
 	}
 
-	.modal {
-		padding: 1rem;
-		position: fixed;
-		top: 10vh;
-		left: 10vw;
-		width: 80%;
-		max-height: 80vh;
-		background: white;
-		border-radius: 5px;
-		z-index: 100;
-		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+	:global(.char-box-shadow) {
+		box-shadow:
+			4px 4px 0px 0px rgba(0, 0, 0, 0.25),
+			inset 0 -8px 0 rgba(0, 0, 0, 0.3);
 	}
 </style>

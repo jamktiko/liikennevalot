@@ -14,7 +14,7 @@
 	let viesti = $state('Liikennevalot');
 	let pelaajamaara: number = $state(2);
 	let loopinVoitto: boolean = $state(false);
-	let voittajanNimi: string = $state('');
+	let voittaja: Player | null = $state(null);
 	let naytaModal: boolean = $state(false);
 	let nakyma: 'etusivu' | 'valinta' | 'peli' = $state('etusivu');
 
@@ -63,7 +63,7 @@
 		//voittaja jos maaliviiva ylitetään
 		if (newPos >= maaliviiva) {
 			setTimeout(() => {
-				voittajanNimi = player.name;
+				voittaja = player;
 				naytaModal = true;
 			}, 100);
 
@@ -82,14 +82,14 @@
 			const winner = alivePlayers[0];
 
 			setTimeout(() => {
-				voittajanNimi = winner.name;
+				voittaja = winner;
 				naytaModal = true;
 			}, 100);
 
 			peliKaynnissa = false;
 			valo = 'pois';
 			viesti = 'Peli ohi! Aloita uusi kierros?';
-			voittajanNimi = winner.name;
+			voittaja = winner;
 		}
 	}
 
@@ -221,14 +221,26 @@
 
 <svelte:window onkeydown={handleKeydown} />
 
-{#if naytaModal}
+{#if naytaModal && voittaja}
 	<Modal>
 		{#snippet header()}
 			<h2>Voittaja!</h2>
 		{/snippet}
-		<p>Pelin voittaja on {voittajanNimi}!</p>
+		<p>Pelin voittaja on {voittaja?.name}!</p>
+		<div
+			class="char-box-shadow flex h-32 w-32 items-center justify-center overflow-hidden border-[4px] border-black bg-[#c0c0c0] md:h-40 md:w-40"
+		>
+			<div style="transform: scale(1.5) translateY(5px);">
+				<Character color={voittaja.c} character={voittaja.character} />
+			</div>
+		</div>
 		{#snippet footer()}
-			<Button onclick={suljeModal} disabled={false} text="Sulje" />
+			<button
+				onclick={suljeModal}
+				class="btn-shadow w-full border-4 border-black bg-white py-4 text-[10px] font-bold uppercase transition-all [text-shadow:2px_2px_0px_rgba(0,0,0,0.2)] hover:bg-gray-50 active:translate-y-1 active:bg-gray-100 md:text-[12px]"
+			>
+				Pelaa uudelleen
+			</button>
 		{/snippet}
 	</Modal>
 {/if}
