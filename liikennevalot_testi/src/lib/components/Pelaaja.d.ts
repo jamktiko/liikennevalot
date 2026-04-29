@@ -4,4 +4,5 @@ export default interface IPlayer {
 	name: string;
 	dead: boolean;
 	c: number;
+	character: number;
 }

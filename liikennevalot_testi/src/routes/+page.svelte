@@ -5,6 +5,7 @@
 	import Valotolppa from './Valo.svelte';
 	import Modal from './Modal.svelte';
 	import Etusivu from './Etusivu.svelte';
+	import Pelaajavalinta from './Pelaajavalinta.svelte';
 
 	let maaliviiva: number = 750;
 	let korkeus: number = $state(180);
@@ -14,7 +15,7 @@
 	let loopinVoitto: boolean = $state(false);
 	let voittajanNimi: string = $state('');
 	let naytaModal: boolean = $state(false);
-	let nakyma: 'etusivu' | 'peli' = $state('etusivu');
+	let nakyma: 'etusivu' | 'valinta' | 'peli' = $state('etusivu');
 
 	const speed: number = 150;
 
@@ -22,10 +23,10 @@
 	// let varit = ['red', 'blue', 'pink', 'purple'];
 
 	let players: Player[] = $state([
-		{ key: 'q', x: 150, name: 'Pelaaja 1', dead: false, c: 0 },
-		{ key: 'p', x: 150, name: 'Pelaaja 2', dead: false, c: 72 },
-		{ key: 'c', x: 150, name: 'Pelaaja 3', dead: false, c: 144 },
-		{ key: 'm', x: 150, name: 'Pelaaja 4', dead: false, c: 288 }
+		{ key: 'q', x: 150, name: 'Pelaaja 1', dead: false, c: 0, character: 1 },
+		{ key: 'p', x: 150, name: 'Pelaaja 2', dead: false, c: 72, character: 2 },
+		{ key: 'c', x: 150, name: 'Pelaaja 3', dead: false, c: 144, character: 3 },
+		{ key: 'm', x: 150, name: 'Pelaaja 4', dead: false, c: 288, character: 4 }
 	]);
 
 	// näppäin funktio
@@ -168,7 +169,18 @@
 </script>
 
 {#if nakyma === 'etusivu'}
-	<Etusivu aloita={() => (nakyma = 'peli')} {lisaaPelaaja} {poistaPelaaja} {pelaajamaara} />
+	<Etusivu aloita={() => (nakyma = 'valinta')} {lisaaPelaaja} {poistaPelaaja} {pelaajamaara} />
+{:else if nakyma === 'valinta'}
+	<!-- Pelaajavalinta leijuu täällä omana ruutunaan -->
+	<Pelaajavalinta
+		{players}
+		{pelaajamaara}
+		{vaihdaVari}
+		pelaa={() => {
+			nakyma = 'peli';
+		}}
+		takaisin={() => (nakyma = 'etusivu')}
+	/>
 {:else}
 	<div class="bg-box">
 		<div class="bg-box-game">
@@ -179,7 +191,11 @@
 							class="character"
 							style="transform: translateX({player.x}px); bottom: {20 + i * 80}px; "
 						>
-							<Character text={player.key.toUpperCase()} color={player.c} />
+							<Character
+								text={player.key.toUpperCase()}
+								color={player.c}
+								character={player.character}
+							/>
 						</div>
 					{/each}
 				</div>
@@ -191,10 +207,6 @@
 
 		<div class="peli-ohjaus">
 			<Button onclick={aloitaPeli} text="Aloita uusi kierros" disabled={peliKaynnissa} />
-			<Button onclick={() => vaihdaVari(0)} text="{players[0].name} väri" />
-			<Button onclick={() => vaihdaVari(1)} text="{players[1].name} väri" />
-			<Button onclick={() => vaihdaVari(2)} text="{players[2].name} väri" />
-			<Button onclick={() => vaihdaVari(3)} text="{players[3].name} väri" />
 
 			<p>{viesti}</p>
 		</div>
