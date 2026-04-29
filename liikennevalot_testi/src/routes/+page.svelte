@@ -32,6 +32,7 @@
 	let maaliviiva: number = 750;
 	let korkeus: number = $state(180);
 	let peliKaynnissa: boolean = $state(false);
+	let laskentaKaynnissa = $state(false);
 	let viesti = $state('Liikennevalot');
 	let pelaajamaara: number = $state(2);
 	let loopinVoitto: boolean = $state(false);
@@ -42,10 +43,10 @@
 	// let varit = ['red', 'blue', 'pink', 'purple'];
 
 	let players: Player[] = $state([
-		{ key: 'q', x: 150, name: 'Pelaaja 1', dead: false, c: 0, character: 1 },
-		{ key: 'p', x: 150, name: 'Pelaaja 2', dead: false, c: 72, character: 2 },
-		{ key: 'c', x: 150, name: 'Pelaaja 3', dead: false, c: 144, character: 3 },
-		{ key: 'm', x: 150, name: 'Pelaaja 4', dead: false, c: 288, character: 4 }
+		{ key: 'q', x: 150, name: 'Pelaaja 1', dead: false, c: 0, character: 1, wins: 0 },
+		{ key: 'p', x: 150, name: 'Pelaaja 2', dead: false, c: 72, character: 2, wins: 0 },
+		{ key: 'c', x: 150, name: 'Pelaaja 3', dead: false, c: 144, character: 3, wins: 0 },
+		{ key: 'm', x: 150, name: 'Pelaaja 4', dead: false, c: 288, character: 4, wins: 0 }
 	]);
 
 	// näppäin funktio
@@ -81,7 +82,8 @@
 		//voittaja jos maaliviiva ylitetään
 		if (newPos >= maaliviiva) {
 			setTimeout(() => alert(`${player.name} voitti!`), 100);
-
+			player.wins++;
+			loggaaVoitot();
 			peliKaynnissa = false;
 			clearTimeout(valoTimeout);
 			valo = 'pois';
@@ -98,7 +100,8 @@
 			const winner = alivePlayers[0];
 
 			setTimeout(() => alert(`${winner.name} voitti!`), 100);
-
+			winner.wins++;
+			loggaaVoitot();
 			peliKaynnissa = false;
 			clearTimeout(valoTimeout);
 			valo = 'pois';
@@ -107,6 +110,10 @@
 	}
 
 	function aloitaPeli() {
+		if (laskentaKaynnissa || peliKaynnissa) return;
+
+		laskentaKaynnissa = true;
+
 		players.forEach((p) => {
 			p.x = 150;
 			p.dead = false;
@@ -114,8 +121,27 @@
 
 		paivitaPelaajat();
 
-		peliKaynnissa = true;
-		pyoritaValoa();
+		peliKaynnissa = false; // varmistetaan ettei peli ala liian aikaisin
+
+		viesti = '3';
+
+		setTimeout(() => {
+			viesti = '2';
+
+			setTimeout(() => {
+				viesti = '1';
+
+				setTimeout(() => {
+					viesti = 'GO!';
+
+					setTimeout(() => {
+						peliKaynnissa = true;
+						laskentaKaynnissa = false;
+						pyoritaValoa();
+					}, 500);
+				}, 1000);
+			}, 1000);
+		}, 1000);
 	}
 
 	let valoTimeout: ReturnType<typeof setTimeout>;
@@ -178,6 +204,15 @@
 		const p = players[x];
 		p.c = Math.floor(Math.random() * 360); // kierrä väriä 36 astetta (10 eri väriä)
 	}
+
+	function loggaaVoitot() {
+		console.table(
+			players.map((p) => ({
+				nimi: p.name,
+				voitot: p.wins
+			}))
+		);
+	}
 </script>
 
 <div class="wrapper">
@@ -210,14 +245,20 @@
 			</div>
 
 			<div class="peli-ohjaus">
-				<Button onclick={aloitaPeli} text="Aloita uusi kierros" disabled={peliKaynnissa} />
+				<Button
+					onclick={aloitaPeli}
+					text="Aloita uusi kierros"
+					disabled={peliKaynnissa || laskentaKaynnissa}
+				/>
 				<Button onclick={lisaaPelaaja} text="Lisää pelaaja +" disabled={pelaajamaara >= 4} />
 				<Button onclick={poistaPelaaja} text="Poista pelaaja -" disabled={pelaajamaara <= 2} />
 				<Button onclick={() => vaihdaVari(0)} text="{players[0].name} väri" />
 				<Button onclick={() => vaihdaVari(1)} text="{players[1].name} väri" />
 				<Button onclick={() => vaihdaVari(2)} text="{players[2].name} väri" />
 				<Button onclick={() => vaihdaVari(3)} text="{players[3].name} väri" />
-
+				{#each players.slice(0, pelaajamaara) as player (player.character)}
+					<input type="text" bind:value={player.name} placeholder={player.name} />
+				{/each}
 				<p>{viesti}</p>
 			</div>
 		</div>
