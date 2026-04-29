@@ -4,6 +4,31 @@
 	import Character from './Character.svelte';
 	import Valotolppa from './Valo.svelte';
 
+	// SKAALASAUSASETUKSET ALKAA
+
+	import { onMount } from 'svelte';
+
+	let scale = $state(1);
+
+	function updateScale() {
+		const baseWidth = 1280;
+		const baseHeight = 720;
+
+		const scaleX = window.innerWidth / baseWidth;
+		const scaleY = window.innerHeight / baseHeight;
+
+		scale = Math.min(scaleX, scaleY);
+	}
+
+	onMount(() => {
+		updateScale();
+		window.addEventListener('resize', updateScale);
+
+		return () => window.removeEventListener('resize', updateScale);
+	});
+
+	// SKAALAUSASETUKSET LOPPUUU
+
 	let maaliviiva: number = 750;
 	let korkeus: number = $state(180);
 	let peliKaynnissa: boolean = $state(false);
@@ -151,39 +176,50 @@
 	}
 </script>
 
-<div class="bg-box">
-	<div class="bg-box-game">
-		<div class="fixed-pelialue">
-			<div class="game-area" style="height: {korkeus}px;">
-				{#each players.slice(0, pelaajamaara) as player, i (player.key)}
-					<div
-						class="character"
-						style="transform: translateX({player.x}px); bottom: {20 + i * 80}px; "
-					>
-						<Character
-							text={player.key.toUpperCase()}
-							color={player.c}
-							character={player.character}
-						/>
+<div class="wrapper">
+	<div class="game" style="transform: translate(-50%, -50%) scale({scale});">
+		<div class="bg-box">
+			<div class="bg-box-game">
+				<div class="charcontentbox">
+					<div class="charcontent">
+						<div class="fixed-pelialue">
+							<div class="game-area" style="height: {korkeus}px;">
+								{#each players.slice(0, pelaajamaara) as player, i (player.key)}
+									<div
+										class="character"
+										style="transform: translateX({player.x}px); bottom: {20 + i * 80}px; "
+									>
+										<Character
+											text={player.key.toUpperCase()}
+											color={player.c}
+											character={player.character}
+										/>
+									</div>
+								{/each}
+							</div>
+							<div class="fixedvalo">
+								<Valotolppa valocolor={valo} />
+							</div>
+						</div>
 					</div>
-				{/each}
+				</div>
 			</div>
-			<div class="fixedvalo">
-				<Valotolppa valocolor={valo} />
+
+			<div class="peli-ohjaus">
+				<Button onclick={aloitaPeli} text="Aloita uusi kierros" disabled={peliKaynnissa} />
+				<Button onclick={lisaaPelaaja} text="Lisää pelaaja +" disabled={pelaajamaara >= 4} />
+				<Button onclick={poistaPelaaja} text="Poista pelaaja -" disabled={pelaajamaara <= 2} />
+				<Button onclick={() => vaihdaVari(0)} text="{players[0].name} väri" />
+				<Button onclick={() => vaihdaVari(1)} text="{players[1].name} väri" />
+				<Button onclick={() => vaihdaVari(2)} text="{players[2].name} väri" />
+				<Button onclick={() => vaihdaVari(3)} text="{players[3].name} väri" />
+
+				<p>{viesti}</p>
 			</div>
 		</div>
-	</div>
-
-	<div class="peli-ohjaus">
-		<Button onclick={aloitaPeli} text="Aloita uusi kierros" disabled={peliKaynnissa} />
-		<Button onclick={lisaaPelaaja} text="Lisää pelaaja +" disabled={pelaajamaara >= 4} />
-		<Button onclick={poistaPelaaja} text="Poista pelaaja -" disabled={pelaajamaara <= 2} />
-		<Button onclick={() => vaihdaVari(0)} text="{players[0].name} väri" />
-		<Button onclick={() => vaihdaVari(1)} text="{players[1].name} väri" />
-		<Button onclick={() => vaihdaVari(2)} text="{players[2].name} väri" />
-		<Button onclick={() => vaihdaVari(3)} text="{players[3].name} väri" />
-
-		<p>{viesti}</p>
+		<div class="ui top-left">HUD</div>
+		<div class="ui center">Game Area</div>
+		<div class="ui bottom-right">Controls</div>
 	</div>
 </div>
 
@@ -214,7 +250,21 @@
 		transition: height 0.3s ease;
 		margin: 0 auto;
 	}
-
+	.charcontentbox {
+		position: fixed;
+		left: 300px;
+		top: 70px;
+		width: 1280px; /* fixed size */
+		height: 720px;
+		overflow: hidden;
+		position: relative;
+	}
+	.charcontent {
+		transform: scale(0.75); /* adjust scale */
+		transform-origin: top left; /* keep alignment */
+		width: 900px; /* original size before scaling */
+		height: 340px;
+	}
 	.character {
 		width: 1em;
 		font-size: 3rem;
@@ -238,11 +288,9 @@
 	}
 	.fixed-pelialue {
 		position: fixed;
-		top: 480px;
+		top: 300px;
 		left: 50%;
 		transform: translateX(-50%);
-		height: 320px;
-		width: 900px;
 		margin: 0 auto;
 		/* border: solid; */
 		/* background-color: #00ff00; */
@@ -256,7 +304,7 @@
 		max-width: 100%;
 		height: 100%; /* or whatever height you need */
 
-		background-image: url('$lib/assets/Game-area5_fhd.png');
+		background-image: url('$lib/assets/720p/Full_area.png');
 		/* background-color: #ff0000; */
 		background-position: center; /* keeps it centered */
 		background-repeat: no-repeat; /* prevents tiling */
@@ -264,10 +312,10 @@
 	.bg-box {
 		width: 100%;
 		margin: 0;
-		height: 1080px;
+		height: 720px;
 		max-width: 100%;
 
-		background-image: url('$lib/assets/tausta.png');
+		background-image: url('$lib/assets/720p/Bg_ai.png');
 		background-size: cover;
 
 		background-position: top center;
@@ -278,5 +326,43 @@
 		left: 920px;
 		top: -200px;
 		position: fixed;
+	}
+	.wrapper {
+		width: 100vw;
+		height: 100vh;
+		position: relative;
+		background: #111;
+		overflow: hidden;
+	}
+
+	.game {
+		width: 1280px;
+		height: 720px;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform-origin: center;
+		background: #222;
+	}
+
+	.ui {
+		position: absolute;
+		color: white;
+	}
+
+	.top-left {
+		top: 10px;
+		left: 10px;
+	}
+
+	.center {
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+	}
+
+	.bottom-right {
+		bottom: 10px;
+		right: 10px;
 	}
 </style>

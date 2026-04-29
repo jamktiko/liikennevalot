@@ -35,7 +35,8 @@
 		color: rgb(24, 24, 24);
 	}
 	img {
-		height: 80px;
+		height: 90px;
+		width: 100%;
 	}
 	.stack {
 		--size: 40px; /* positio ylös alas että näkyy kaikki pelaajat. 40px */
