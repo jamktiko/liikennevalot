@@ -3,6 +3,7 @@
 	import type Player from '$lib/components/Pelaaja.d.ts';
 	import Character from './Character.svelte';
 	import Valotolppa from './Valo.svelte';
+	import Laskenta from './Laskenta.svelte';
 
 	// SKAALASAUSASETUKSET ALKAA
 
@@ -33,6 +34,7 @@
 	let korkeus: number = $state(180);
 	let peliKaynnissa: boolean = $state(false);
 	let laskentaKaynnissa = $state(false);
+	let laskentaNro = $state(3);
 	let viesti = $state('Liikennevalot');
 	let pelaajamaara: number = $state(2);
 	let loopinVoitto: boolean = $state(false);
@@ -124,16 +126,16 @@
 		peliKaynnissa = false; // varmistetaan ettei peli ala liian aikaisin
 
 		viesti = '3';
-
+		laskentaNro = 3;
 		setTimeout(() => {
 			viesti = '2';
-
+			laskentaNro = 2;
 			setTimeout(() => {
 				viesti = '1';
-
+				laskentaNro = 1;
 				setTimeout(() => {
 					viesti = 'GO!';
-
+					laskentaNro = 0;
 					setTimeout(() => {
 						peliKaynnissa = true;
 						laskentaKaynnissa = false;
@@ -259,6 +261,9 @@
 				{#each players.slice(0, pelaajamaara) as player (player.character)}
 					<input type="text" bind:value={player.name} placeholder={player.name} />
 				{/each}
+				{#if laskentaKaynnissa}
+					<Laskenta {laskentaNro} />
+				{/if}
 				<p>{viesti}</p>
 			</div>
 		</div>
