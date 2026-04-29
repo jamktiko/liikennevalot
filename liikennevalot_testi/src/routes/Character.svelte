@@ -35,7 +35,7 @@
 		color: rgb(24, 24, 24);
 	}
 	img {
-		height: 90px;
+		height: 80px;
 		width: 100%;
 	}
 	.stack {

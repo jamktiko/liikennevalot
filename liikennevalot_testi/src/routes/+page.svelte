@@ -83,6 +83,7 @@
 			setTimeout(() => alert(`${player.name} voitti!`), 100);
 
 			peliKaynnissa = false;
+			clearTimeout(valoTimeout);
 			valo = 'pois';
 			viesti = 'Peli ohi! Aloita uusi kierros?';
 		}
@@ -99,6 +100,7 @@
 			setTimeout(() => alert(`${winner.name} voitti!`), 100);
 
 			peliKaynnissa = false;
+			clearTimeout(valoTimeout);
 			valo = 'pois';
 			viesti = 'Peli ohi! Aloita uusi kierros?';
 		}
@@ -116,6 +118,8 @@
 		pyoritaValoa();
 	}
 
+	let valoTimeout: ReturnType<typeof setTimeout>;
+
 	function pyoritaValoa() {
 		if (!peliKaynnissa) return;
 
@@ -124,7 +128,7 @@
 
 		const odotusaika = Math.floor(Math.random() * 4001) + 2000;
 
-		setTimeout(() => {
+		valoTimeout = setTimeout(() => {
 			if (!peliKaynnissa) return;
 
 			valo = Math.random() > 0.3 ? 'vihrea' : 'punainen'; // todennäköisyys vihreälle valolle
@@ -133,7 +137,7 @@
 			if (valo === 'vihrea') {
 				loopinVoitto = false;
 			}
-			setTimeout(() => {
+			valoTimeout = setTimeout(() => {
 				if (!peliKaynnissa) return;
 				valo = 'pois';
 				pyoritaValoa();
@@ -172,7 +176,7 @@
 
 	function vaihdaVari(x: number) {
 		const p = players[x];
-		p.c = (p.c + 36) % 360; // kierrä väriä 36 astetta (10 eri väriä)
+		p.c = Math.floor(Math.random() * 360); // kierrä väriä 36 astetta (10 eri väriä)
 	}
 </script>
 
@@ -273,7 +277,7 @@
 		left: 40px;
 		text-align: center;
 
-		transition: transform 0.1s ease-out;
+		transition: transform 0.6s ease-out;
 	}
 
 	.peli-ohjaus {
@@ -288,7 +292,7 @@
 	}
 	.fixed-pelialue {
 		position: fixed;
-		top: 300px;
+		top: 320px;
 		left: 50%;
 		transform: translateX(-50%);
 		margin: 0 auto;
@@ -323,8 +327,8 @@
 		background-attachment: fixed;
 	}
 	.fixedvalo {
-		left: 920px;
-		top: -200px;
+		left: 940px;
+		top: 0px;
 		position: fixed;
 	}
 	.wrapper {
