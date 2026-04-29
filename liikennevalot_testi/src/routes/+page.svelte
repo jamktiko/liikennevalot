@@ -17,10 +17,10 @@
 	// let varit = ['red', 'blue', 'pink', 'purple'];
 
 	let players: Player[] = $state([
-		{ key: 'q', x: 150, name: 'Pelaaja 1', dead: false, c: 0 },
-		{ key: 'p', x: 150, name: 'Pelaaja 2', dead: false, c: 72 },
-		{ key: 'c', x: 150, name: 'Pelaaja 3', dead: false, c: 144 },
-		{ key: 'm', x: 150, name: 'Pelaaja 4', dead: false, c: 288 }
+		{ key: 'q', x: 150, name: 'Pelaaja 1', dead: false, c: 0, character: 1 },
+		{ key: 'p', x: 150, name: 'Pelaaja 2', dead: false, c: 72, character: 2 },
+		{ key: 'c', x: 150, name: 'Pelaaja 3', dead: false, c: 144, character: 3 },
+		{ key: 'm', x: 150, name: 'Pelaaja 4', dead: false, c: 288, character: 4 }
 	]);
 
 	// näppäin funktio
@@ -160,7 +160,11 @@
 						class="character"
 						style="transform: translateX({player.x}px); bottom: {20 + i * 80}px; "
 					>
-						<Character text={player.key.toUpperCase()} color={player.c} />
+						<Character
+							text={player.key.toUpperCase()}
+							color={player.c}
+							character={player.character}
+						/>
 					</div>
 				{/each}
 			</div>
