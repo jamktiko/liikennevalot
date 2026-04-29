@@ -238,7 +238,7 @@
 	}
 	.fixed-pelialue {
 		position: fixed;
-		top: 0px;
+		top: 480px;
 		left: 50%;
 		transform: translateX(-50%);
 		height: 320px;
@@ -249,13 +249,14 @@
 	}
 	.bg-box-game {
 		position: fixed;
-		top: 350px;
+		top: 0px;
 		left: 50%;
 		transform: translateX(-50%);
 		width: 100%;
-		height: 320px; /* or whatever height you need */
+		max-width: 100%;
+		height: 100%; /* or whatever height you need */
 
-		background-image: url('$lib/assets/Game-area2.png');
+		background-image: url('$lib/assets/Game-area5_fhd.png');
 		/* background-color: #ff0000; */
 		background-position: center; /* keeps it centered */
 		background-repeat: no-repeat; /* prevents tiling */
@@ -264,6 +265,7 @@
 		width: 100%;
 		margin: 0;
 		height: 1080px;
+		max-width: 100%;
 
 		background-image: url('$lib/assets/tausta.png');
 		background-size: cover;
