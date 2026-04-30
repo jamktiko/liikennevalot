@@ -34,7 +34,7 @@
 	let korkeus: number = $state(180);
 	let peliKaynnissa: boolean = $state(false);
 	let laskentaKaynnissa = $state(false);
-	let laskentaNro = $state(3);
+	let laskentaNro = $state(-1);
 	let viesti = $state('Liikennevalot');
 	let pelaajamaara: number = $state(2);
 	let loopinVoitto: boolean = $state(false);
@@ -137,9 +137,15 @@
 					viesti = 'GO!';
 					laskentaNro = 0;
 					setTimeout(() => {
-						peliKaynnissa = true;
-						laskentaKaynnissa = false;
-						pyoritaValoa();
+						// trigger OUT animation
+						laskentaNro = -1;
+
+						// wait for transition to finish before removing component
+						setTimeout(() => {
+							peliKaynnissa = true;
+							laskentaKaynnissa = false;
+							pyoritaValoa();
+						}, 300); // match your out: duration
 					}, 500);
 				}, 1000);
 			}, 1000);
@@ -261,12 +267,13 @@
 				{#each players.slice(0, pelaajamaara) as player (player.character)}
 					<input type="text" bind:value={player.name} placeholder={player.name} />
 				{/each}
-				{#if laskentaKaynnissa}
-					<Laskenta {laskentaNro} />
-				{/if}
+
 				<p>{viesti}</p>
 			</div>
 		</div>
+		{#if laskentaKaynnissa}
+			<Laskenta {laskentaNro} />
+		{/if}
 		<div class="ui top-left">HUD</div>
 		<div class="ui center">Game Area</div>
 		<div class="ui bottom-right">Controls</div>

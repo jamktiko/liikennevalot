@@ -14,7 +14,7 @@
 	<img src={Tolppa} alt="Tolppa" class="layer" />
 
 	<div class="liikennevalo {valocolor}"></div>
-	<img src={Overlay} alt="Overlay" class="layer" />
+	<img src={Overlay} alt="Overlay" class="layer2" />
 </div>
 
 <style>
@@ -35,11 +35,11 @@
 	}
 	.vihrea {
 		background-color: #00ff00;
-		box-shadow: 0 0 40px #00ff00;
+		box-shadow: 0 0 1000px 50px #00ff00;
 	}
 	.punainen {
 		background-color: #ff0000;
-		box-shadow: 0 0 40px #ff0000;
+		box-shadow: 0 0 1000px 50px #ff0000;
 	}
 	img {
 		width: 100%;
@@ -59,5 +59,12 @@
 		inset: 0; /* shorthand for top/left/right/bottom = 0 */
 		width: 100%;
 		height: 100%;
+	}
+	.layer2 {
+		position: absolute;
+		inset: 0; /* shorthand for top/left/right/bottom = 0 */
+		width: 100%;
+		height: 100%;
+		opacity: 0.4;
 	}
 </style>
