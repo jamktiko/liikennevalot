@@ -11,6 +11,7 @@
 		name: string;
 		dead: boolean;
 		c: string[];
+		wins: number;
 	}
 
 	let { kaikkiPelaajat }: Props = $props();

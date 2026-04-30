@@ -1,9 +1,15 @@
 <script lang="ts">
+	import { fade } from 'svelte/transition';
 	import Button from './Button.svelte';
 	import type Player from '$lib/components/Pelaaja.d.ts';
 	import Character from './Character.svelte';
 	import Valotolppa from './Valo.svelte';
 	import Laskenta from './Laskenta.svelte';
+	import Modal from './Modal.svelte';
+	import Etusivu from './Etusivu.svelte';
+	import Pelaajavalinta from './Pelaajavalinta.svelte';
+	import Tulostaulukko from './Tulostaulukko.svelte';
+	import Asetukset from './Asetukset.svelte';
 
 	// SKAALASAUSASETUKSET ALKAA
 
@@ -38,6 +44,11 @@
 	let viesti = $state('Liikennevalot');
 	let pelaajamaara: number = $state(2);
 	let loopinVoitto: boolean = $state(false);
+	let voittaja: Player | null = $state(null);
+	let naytaModal: boolean = $state(false);
+	let nakyma: 'etusivu' | 'valinta' | 'peli' = $state('etusivu');
+	let naytaScoreboard: boolean = $state(false);
+	let naytaAsetukset = $state(false);
 
 	const speed: number = 150;
 
@@ -83,9 +94,12 @@
 		tarkistaVoittaja();
 		//voittaja jos maaliviiva ylitetään
 		if (newPos >= maaliviiva) {
-			setTimeout(() => alert(`${player.name} voitti!`), 100);
-			player.wins++;
-			loggaaVoitot();
+			setTimeout(() => {
+				voittaja = player;
+				voittaja.wins++;
+				naytaModal = true;
+			}, 100);
+
 			peliKaynnissa = false;
 			clearTimeout(valoTimeout);
 			valo = 'pois';
@@ -101,13 +115,17 @@
 		if (alivePlayers.length === 1) {
 			const winner = alivePlayers[0];
 
-			setTimeout(() => alert(`${winner.name} voitti!`), 100);
-			winner.wins++;
-			loggaaVoitot();
+			setTimeout(() => {
+				voittaja = winner;
+				voittaja.wins++;
+				naytaModal = true;
+			}, 100);
+
 			peliKaynnissa = false;
 			clearTimeout(valoTimeout);
 			valo = 'pois';
 			viesti = 'Peli ohi! Aloita uusi kierros?';
+			voittaja = winner;
 		}
 	}
 
@@ -213,72 +231,107 @@
 		p.c = Math.floor(Math.random() * 360); // kierrä väriä 36 astetta (10 eri väriä)
 	}
 
-	function loggaaVoitot() {
-		console.table(
-			players.map((p) => ({
-				nimi: p.name,
-				voitot: p.wins
-			}))
-		);
+	function suljeModal() {
+		naytaModal = false;
 	}
 </script>
 
-<div class="wrapper">
-	<div class="game" style="transform: translate(-50%, -50%) scale({scale});">
-		<div class="bg-box">
-			<div class="bg-box-game">
-				<div class="charcontentbox">
-					<div class="charcontent">
-						<div class="fixed-pelialue">
-							<div class="game-area" style="height: {korkeus}px;">
-								{#each players.slice(0, pelaajamaara) as player, i (player.key)}
-									<div
-										class="character"
-										style="transform: translateX({player.x}px); bottom: {20 + i * 80}px; "
-									>
-										<Character
-											text={player.key.toUpperCase()}
-											color={player.c}
-											character={player.character}
-										/>
+{#if nakyma === 'etusivu'}
+	<div transition:fade={{ duration: 300 }}>
+		<Etusivu aloita={() => (nakyma = 'valinta')} {lisaaPelaaja} {poistaPelaaja} {pelaajamaara} />
+	</div>
+{:else if nakyma === 'valinta'}
+	<div transition:fade={{ duration: 300 }}>
+		<Pelaajavalinta
+			{players}
+			{pelaajamaara}
+			{vaihdaVari}
+			pelaa={() => {
+				nakyma = 'peli';
+			}}
+			takaisin={() => (nakyma = 'etusivu')}
+		/>
+	</div>
+{:else}
+	<div transition:fade={{ duration: 300 }}>
+		<div class="wrapper">
+			<div class="game" style="transform: translate(-50%, -50%) scale({scale});">
+				<div class="bg-box">
+					<div class="bg-box-game">
+						<div class="charcontentbox">
+							<div class="charcontent">
+								<div class="fixed-pelialue">
+									<div class="game-area" style="height: {korkeus}px;">
+										{#each players.slice(0, pelaajamaara) as player, i (player.key)}
+											<div
+												class="character"
+												style="transform: translateX({player.x}px); bottom: {20 + i * 80}px; "
+											>
+												<Character
+													text={player.key.toUpperCase()}
+													color={player.c}
+													character={player.character}
+												/>
+											</div>
+										{/each}
 									</div>
-								{/each}
-							</div>
-							<div class="fixedvalo">
-								<Valotolppa valocolor={valo} />
+									<div class="fixedvalo">
+										<Valotolppa valocolor={valo} />
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
+
+					<div class="peli-ohjaus">
+						<Button onclick={aloitaPeli} text="ALOITA UUSI KIERROS" disabled={peliKaynnissa} />
+						<Button onclick={() => (naytaScoreboard = true)} text="TULOKSET" />
+						<Button onclick={() => (naytaAsetukset = true)} text="ASETUKSET" />
+
+						<p>{viesti}</p>
+					</div>
 				</div>
-			</div>
 
-			<div class="peli-ohjaus">
-				<Button
-					onclick={aloitaPeli}
-					text="Aloita uusi kierros"
-					disabled={peliKaynnissa || laskentaKaynnissa}
-				/>
-				<Button onclick={lisaaPelaaja} text="Lisää pelaaja +" disabled={pelaajamaara >= 4} />
-				<Button onclick={poistaPelaaja} text="Poista pelaaja -" disabled={pelaajamaara <= 2} />
-				<Button onclick={() => vaihdaVari(0)} text="{players[0].name} väri" />
-				<Button onclick={() => vaihdaVari(1)} text="{players[1].name} väri" />
-				<Button onclick={() => vaihdaVari(2)} text="{players[2].name} väri" />
-				<Button onclick={() => vaihdaVari(3)} text="{players[3].name} väri" />
-				{#each players.slice(0, pelaajamaara) as player (player.character)}
-					<input type="text" bind:value={player.name} placeholder={player.name} />
-				{/each}
-
-				<p>{viesti}</p>
+				{#if laskentaKaynnissa}
+					<Laskenta {laskentaNro} />
+				{/if}
+				<div class="ui top-left">HUD</div>
+				<div class="ui center">Game Area</div>
+				<div class="ui bottom-right">Controls</div>
 			</div>
 		</div>
-		{#if laskentaKaynnissa}
-			<Laskenta {laskentaNro} />
-		{/if}
-		<div class="ui top-left">HUD</div>
-		<div class="ui center">Game Area</div>
-		<div class="ui bottom-right">Controls</div>
 	</div>
-</div>
+{/if}
+{#if naytaAsetukset}
+	<Asetukset sulje={() => (naytaAsetukset = false)} />
+{/if}
+{#if naytaScoreboard}
+	<Tulostaulukko {players} sulje={() => (naytaScoreboard = false)} />
+{/if}
+
+{#if naytaModal && voittaja}
+	<Modal>
+		{#snippet header()}
+			<h2>Voittaja!</h2>
+		{/snippet}
+		<p>Pelin voittaja on {voittaja?.name}!</p>
+		<div
+			class="char-box-shadow flex h-32 w-32 items-center justify-center overflow-hidden border-[4px] border-black bg-[#c0c0c0] md:h-40 md:w-40"
+		>
+			<div style="transform: scale(1.5) translateY(5px);">
+				<Character color={voittaja.c} character={voittaja.character} />
+			</div>
+		</div>
+		{#snippet footer()}
+			<button
+				onclick={suljeModal}
+				class="btn-shadow w-full border-4 border-black bg-white py-4 text-[10px] font-bold uppercase transition-all [text-shadow:2px_2px_0px_rgba(0,0,0,0.2)] hover:bg-gray-50 active:translate-y-1 active:bg-gray-100 md:text-[12px]"
+			>
+				Pelaa uudelleen
+			</button>
+		{/snippet}
+	</Modal>
+{/if}
 
 <svelte:window onkeydown={handleKeydown} />
 
