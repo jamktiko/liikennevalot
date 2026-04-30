@@ -283,21 +283,21 @@
 						</div>
 					</div>
 
-					<div class="peli-ohjaus">
-						<Button onclick={aloitaPeli} text="ALOITA UUSI KIERROS" disabled={peliKaynnissa} />
-						<Button onclick={() => (naytaScoreboard = true)} text="TULOKSET" />
-						<Button onclick={() => (naytaAsetukset = true)} text="ASETUKSET" />
-
-						<p>{viesti}</p>
-					</div>
+					<div class="peli-ohjaus"></div>
 				</div>
 
 				{#if laskentaKaynnissa}
 					<Laskenta {laskentaNro} />
 				{/if}
-				<div class="ui top-left">HUD</div>
+				<div class="ui top-left">
+					<Button onclick={aloitaPeli} text="ALOITA UUSI KIERROS" disabled={peliKaynnissa} />
+					<Button onclick={() => (naytaScoreboard = true)} text="TULOKSET" />
+					<Button onclick={() => (naytaAsetukset = true)} text="ASETUKSET" />
+				</div>
 				<div class="ui center">Game Area</div>
-				<div class="ui bottom-right">Controls</div>
+				<div class="ui bottom-right">
+					<p>{viesti}</p>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -457,7 +457,7 @@
 
 	.ui {
 		position: absolute;
-		color: white;
+		/* color: white; */
 	}
 
 	.top-left {
