@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { fade } from 'svelte/transition';
+	import { fade, fly } from 'svelte/transition';
+	import { cubicIn } from 'svelte/easing';
 	import Button from './Button.svelte';
 	import type Player from '$lib/components/Pelaaja.d.ts';
 	import Character from './Character.svelte';
@@ -10,7 +11,7 @@
 	import Pelaajavalinta from './Pelaajavalinta.svelte';
 	import Tulostaulukko from './Tulostaulukko.svelte';
 	import Asetukset from './Asetukset.svelte';
-
+	import Raffle from './raffle.svelte';
 	// SKAALASAUSASETUKSET ALKAA
 
 	import { onMount } from 'svelte';
@@ -49,6 +50,7 @@
 	let nakyma: 'etusivu' | 'valinta' | 'peli' = $state('etusivu');
 	let naytaScoreboard: boolean = $state(false);
 	let naytaAsetukset = $state(false);
+	let juomapeli: boolean = $state(false);
 
 	const speed: number = 150;
 
@@ -56,11 +58,16 @@
 	// let varit = ['red', 'blue', 'pink', 'purple'];
 
 	let players: Player[] = $state([
-		{ key: 'q', x: 150, name: 'Pelaaja 1', dead: false, c: 0, character: 1, wins: 0 },
-		{ key: 'p', x: 150, name: 'Pelaaja 2', dead: false, c: 72, character: 2, wins: 0 },
-		{ key: 'c', x: 150, name: 'Pelaaja 3', dead: false, c: 144, character: 3, wins: 0 },
-		{ key: 'm', x: 150, name: 'Pelaaja 4', dead: false, c: 288, character: 4, wins: 0 }
+		{ key: 'q', x: 150, name: 'Pelaaja 1', dead: true, c: 0, character: 1, wins: 0 },
+		{ key: 'p', x: 150, name: 'Pelaaja 2', dead: true, c: 72, character: 2, wins: 0 },
+		{ key: 'c', x: 150, name: 'Pelaaja 3', dead: true, c: 144, character: 3, wins: 0 },
+		{ key: 'm', x: 150, name: 'Pelaaja 4', dead: true, c: 288, character: 4, wins: 0 }
 	]);
+
+	//pelkät nimet shotti komponenteille ja muille
+	// let names = $derived(players.map((p) => p.name));
+
+	let aktiivisetPelaajat: string[] = $state([]); // aktiivisten pelaajien nimet taulukkoon. funktiossa aloitaPeli
 
 	// näppäin funktio
 	function handleKeydown(event: KeyboardEvent): void {
@@ -140,6 +147,8 @@
 		});
 
 		paivitaPelaajat();
+
+		aktiivisetPelaajat = players.filter((p) => !p.dead).map((p) => p.name.toUpperCase());
 
 		peliKaynnissa = false; // varmistetaan ettei peli ala liian aikaisin
 
@@ -234,6 +243,8 @@
 	function suljeModal() {
 		naytaModal = false;
 	}
+
+	paivitaPelaajat();
 </script>
 
 {#if nakyma === 'etusivu'}
@@ -263,16 +274,19 @@
 								<div class="fixed-pelialue">
 									<div class="game-area" style="height: {korkeus}px;">
 										{#each players.slice(0, pelaajamaara) as player, i (player.key)}
-											<div
-												class="character"
-												style="transform: translateX({player.x}px); bottom: {20 + i * 80}px; "
-											>
-												<Character
-													text={player.key.toUpperCase()}
-													color={player.c}
-													character={player.character}
-												/>
-											</div>
+											{#if !player.dead}
+												<div
+													class="character"
+													style="transform: translateX({player.x}px); bottom: {20 + i * 80}px;"
+													out:fly={{ x: -150, y: 200, duration: 1000, easing: cubicIn }}
+												>
+													<Character
+														text={player.key.toUpperCase()}
+														color={player.c}
+														character={player.character}
+													/>
+												</div>
+											{/if}
 										{/each}
 									</div>
 									<div class="fixedvalo">
@@ -303,7 +317,7 @@
 	</div>
 {/if}
 {#if naytaAsetukset}
-	<Asetukset sulje={() => (naytaAsetukset = false)} />
+	<Asetukset sulje={() => (naytaAsetukset = false)} bind:juomapeli />
 {/if}
 {#if naytaScoreboard}
 	<Tulostaulukko {players} sulje={() => (naytaScoreboard = false)} />
@@ -323,12 +337,28 @@
 			</div>
 		</div>
 		{#snippet footer()}
-			<button
-				onclick={suljeModal}
-				class="btn-shadow w-full border-4 border-black bg-white py-4 text-[10px] font-bold uppercase transition-all [text-shadow:2px_2px_0px_rgba(0,0,0,0.2)] hover:bg-gray-50 active:translate-y-1 active:bg-gray-100 md:text-[12px]"
-			>
-				Pelaa uudelleen
-			</button>
+			{#if !juomapeli}
+				<button
+					onclick={suljeModal}
+					class="btn-shadow w-full border-4 border-black bg-white py-4 text-[10px] font-bold uppercase transition-all [text-shadow:2px_2px_0px_rgba(0,0,0,0.2)] hover:bg-gray-50 active:translate-y-1 active:bg-gray-100 md:text-[12px]"
+				>
+					Pelaa uudelleen
+				</button>
+			{/if}
+			{#if juomapeli}
+				{#if Math.random() < 0.5}
+					<div class="rafflecontainer">
+						<Raffle nimet={aktiivisetPelaajat} {suljeModal} />
+					</div>
+				{:else}
+					<button
+						onclick={suljeModal}
+						class="btn-shadow w-full border-4 border-black bg-white py-4 text-[10px] font-bold uppercase transition-all [text-shadow:2px_2px_0px_rgba(0,0,0,0.2)] hover:bg-gray-50 active:translate-y-1 active:bg-gray-100 md:text-[12px]"
+					>
+						Pelaa uudelleen
+					</button>
+				{/if}
+			{/if}
 		{/snippet}
 	</Modal>
 {/if}
@@ -474,5 +504,10 @@
 	.bottom-right {
 		bottom: 10px;
 		right: 10px;
+	}
+	.rafflecontainer {
+		display: flex;
+		justify-content: center; /* vaakasuora keskitys */
+		align-items: center;
 	}
 </style>

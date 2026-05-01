@@ -1,9 +1,14 @@
 <script lang="ts">
 	// Otetaan vastaan sulje-funktio propseina
-	let { sulje } = $props<{ sulje: () => void }>();
+
+	interface Props {
+		juomapeli: boolean;
+		sulje: () => void;
+	}
+
+	let { juomapeli = $bindable(), sulje }: Props = $props();
 
 	// Asetusten tilanhallinta
-	let juomapeli = $state(true);
 	let musiikki = $state(true);
 	let aanet = $state(true);
 </script>
