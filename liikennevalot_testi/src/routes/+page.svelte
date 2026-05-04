@@ -426,7 +426,7 @@
 		--fixed-top: 100px;
 	}
 	.game-area {
-		position: fixed;
+		position: absolute;
 		top: 0px;
 		left: 50%;
 		transform: translateX(-50%);
@@ -447,7 +447,7 @@
 		margin: 0 auto;
 	}
 	.charcontentbox {
-		position: fixed;
+		position: absolute;
 		left: 300px;
 		top: 70px;
 		width: 1280px; /* fixed size */
@@ -456,7 +456,7 @@
 		position: relative;
 	}
 	.charcontent {
-		transform: scale(0.75); /* adjust scale */
+		transform: scale(0.75);
 		transform-origin: top left; /* keep alignment */
 		width: 900px; /* original size before scaling */
 		height: 340px;
@@ -483,7 +483,7 @@
 		font-family: Arial, sans-serif;
 	}
 	.fixed-pelialue {
-		position: fixed;
+		position: absolute;
 		top: 320px;
 		left: 50%;
 		transform: translateX(-50%);
@@ -492,7 +492,7 @@
 		/* background-color: #00ff00; */
 	}
 	.bg-box-game {
-		position: fixed;
+		position: absolute;
 		top: 0px;
 		left: 50%;
 		transform: translateX(-50%);
@@ -516,12 +516,12 @@
 
 		background-position: top center;
 		background-repeat: no-repeat;
-		background-attachment: fixed;
+		background-attachment: absolute;
 	}
 	.fixedvalo {
 		left: 940px;
 		top: 0px;
-		position: fixed;
+		position: absolute;
 	}
 	.wrapper {
 		width: 100vw;
