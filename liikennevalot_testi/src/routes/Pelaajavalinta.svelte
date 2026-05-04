@@ -11,10 +11,7 @@
 	}>();
 </script>
 
-<div
-	class="fixed inset-0 z-50 flex min-h-screen items-center justify-center bg-black/60 p-4 font-['Press_Start_2P'] select-none"
-	style="background-image: url('/src/lib/assets/tausta.png');"
->
+<div class="flex min-h-screen items-center justify-center p-4 font-['Press_Start_2P'] select-none">
 	<div
 		class="pixel-shadow flex w-full max-w-5xl flex-col items-center gap-10 border-[6px] border-black bg-[#9dc2e0] p-6 md:p-12"
 	>

@@ -297,77 +297,107 @@
 
 <div class="wrapper">
 	<div class="game" style="transform: translate(-50%, -50%) scale({scale});">
-		{#if nakyma === 'etusivu'}
-			<div transition:fade={{ duration: 300 }}>
-				<Etusivu
-					aloita={() => (nakyma = 'valinta')}
-					{lisaaPelaaja}
-					{poistaPelaaja}
-					{pelaajamaara}
-				/>
-			</div>
-		{:else if nakyma === 'valinta'}
-			<div transition:fade={{ duration: 300 }}>
-				<Pelaajavalinta
-					{players}
-					{pelaajamaara}
-					{vaihdaVari}
-					pelaa={() => {
-						nakyma = 'peli';
-					}}
-					takaisin={() => (nakyma = 'etusivu')}
-				/>
-			</div>
-		{:else}
-			<div transition:fade={{ duration: 300 }}>
-				<div class="bg-box">
-					<div class="bg-box-game">
-						<div class="charcontentbox">
-							<div class="charcontent">
-								<div class="fixed-pelialue">
-									<div class="game-area" style="height: {korkeus}px;">
-										{#each players.slice(0, pelaajamaara) as player, i (player.key)}
-											{#if !player.dead}
-												<div
-													class="character"
-													style="transform: translateX({player.x}px); bottom: {20 + i * 80}px;"
-													out:fly={{ x: -150, y: 200, duration: 1000, easing: cubicIn }}
-												>
-													<Character
-														text={player.key.toUpperCase()}
-														color={player.c}
-														character={player.character}
-													/>
-												</div>
-											{/if}
-										{/each}
-									</div>
-									<div class="fixedvalo">
-										<Valotolppa valocolor={valo} />
+		<div class="bg-box">
+			{#if nakyma === 'etusivu'}
+				<div class="logo" transition:fade={{ duration: 300 }}>
+					<div class="mb-6 text-center font-['Press_start_2P']">
+						<h1
+							class="p-1.5 text-4xl font-black tracking-widest text-red-600 uppercase drop-shadow-[3px_3px_0px_rgba(0,0,0,1)]"
+						>
+							Liikenne
+						</h1>
+						<h1
+							class="-mt-2 text-5xl font-black tracking-widest text-green-500 uppercase drop-shadow-[3px_3px_0px_rgba(0,0,0,1)]"
+						>
+							Valo
+						</h1>
+					</div>
+				</div>
+				<div transition:fade={{ duration: 300 }}>
+					<Etusivu
+						aloita={() => (nakyma = 'valinta')}
+						{lisaaPelaaja}
+						{poistaPelaaja}
+						{pelaajamaara}
+					/>
+				</div>
+			{:else if nakyma === 'valinta'}
+				<div class="logo" transition:fade={{ duration: 300 }}>
+					<div class="mb-6 text-center font-['Press_start_2P']">
+						<h1
+							class="p-1.5 text-4xl font-black tracking-widest text-red-600 uppercase drop-shadow-[3px_3px_0px_rgba(0,0,0,1)]"
+						>
+							Liikenne
+						</h1>
+						<h1
+							class="-mt-2 text-5xl font-black tracking-widest text-green-500 uppercase drop-shadow-[3px_3px_0px_rgba(0,0,0,1)]"
+						>
+							Valot
+						</h1>
+					</div>
+				</div>
+				<div transition:fade={{ duration: 300 }}>
+					<Pelaajavalinta
+						{players}
+						{pelaajamaara}
+						{vaihdaVari}
+						pelaa={() => {
+							nakyma = 'peli';
+						}}
+						takaisin={() => (nakyma = 'etusivu')}
+					/>
+				</div>
+			{:else}
+				<div transition:fade={{ duration: 300 }}>
+					<div class="bg-box">
+						<div class="bg-box-game">
+							<div class="charcontentbox">
+								<div class="charcontent">
+									<div class="fixed-pelialue">
+										<div class="game-area" style="height: {korkeus}px;">
+											{#each players.slice(0, pelaajamaara) as player, i (player.key)}
+												{#if !player.dead}
+													<div
+														class="character"
+														style="transform: translateX({player.x}px); bottom: {20 + i * 80}px;"
+														out:fly={{ x: -150, y: 200, duration: 1000, easing: cubicIn }}
+													>
+														<Character
+															text={player.key.toUpperCase()}
+															color={player.c}
+															character={player.character}
+														/>
+													</div>
+												{/if}
+											{/each}
+										</div>
+										<div class="fixedvalo">
+											<Valotolppa valocolor={valo} />
+										</div>
 									</div>
 								</div>
 							</div>
 						</div>
+
+						<div class="peli-ohjaus"></div>
 					</div>
 
-					<div class="peli-ohjaus"></div>
+					{#if laskentaKaynnissa}
+						<Laskenta {laskentaNro} />
+					{/if}
+					<div class="ui top-left">
+						<Button onclick={aloitaPeli} text="ALOITA UUSI KIERROS" disabled={peliKaynnissa} />
+						<Button onclick={() => (naytaScoreboard = true)} text="TULOKSET" />
+						<Button onclick={() => (naytaAsetukset = true)} text="ASETUKSET" />
+					</div>
+					<div class="ui center">Game Area</div>
+					<div class="ui bottom-right">
+						<p>{viesti}</p>
+						<Audiotesti />
+					</div>
 				</div>
-
-				{#if laskentaKaynnissa}
-					<Laskenta {laskentaNro} />
-				{/if}
-				<div class="ui top-left">
-					<Button onclick={aloitaPeli} text="ALOITA UUSI KIERROS" disabled={peliKaynnissa} />
-					<Button onclick={() => (naytaScoreboard = true)} text="TULOKSET" />
-					<Button onclick={() => (naytaAsetukset = true)} text="ASETUKSET" />
-				</div>
-				<div class="ui center">Game Area</div>
-				<div class="ui bottom-right">
-					<p>{viesti}</p>
-					<Audiotesti />
-				</div>
-			</div>
-		{/if}
+			{/if}
+		</div>
 	</div>
 </div>
 {#if naytaAsetukset}
@@ -382,7 +412,7 @@
 		{#snippet header()}
 			<h2>Voittaja!</h2>
 		{/snippet}
-		<p>Pelin voittaja on {voittaja?.name}!</p>
+		<p>Pelin voittaja on {voittaja?.name.toUpperCase()}!</p>
 		<div
 			class="char-box-shadow flex h-32 w-32 items-center justify-center overflow-hidden border-[4px] border-black bg-[#c0c0c0] md:h-40 md:w-40"
 		>
@@ -414,9 +444,9 @@
 				{/if}
 				{#each players.slice(0, pelaajamaara) as player (player.key)}
 					{#if player.wrongInputs === 1}
-						<p>{player.name}: {player.wrongInputs} hörppy</p>
+						<p>{player.name.toUpperCase()}: {player.wrongInputs} hörppy</p>
 					{:else if player.wrongInputs > 1}
-						<p>{player.name}: {player.wrongInputs} hörppyä</p>
+						<p>{player.name.toUpperCase()}: {player.wrongInputs} hörppyä</p>
 					{/if}
 				{/each}
 			{/if}
@@ -570,5 +600,11 @@
 		display: flex;
 		justify-content: center; /* vaakasuora keskitys */
 		align-items: center;
+	}
+	.logo {
+		position: absolute;
+		top: 10%;
+		left: 50%;
+		transform: translate(-50%, -50%);
 	}
 </style>
