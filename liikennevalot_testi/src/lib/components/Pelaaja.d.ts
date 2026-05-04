@@ -6,4 +6,5 @@ export default interface IPlayer {
 	c: number;
 	character: number;
 	wins: number;
+	wrongInputs: number;
 }

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onDestroy } from 'svelte';
+	import { playSound } from '$lib/components/sound';
 
 	let { nimet, suljeModal }: Props = $props();
 
@@ -44,6 +45,7 @@
 			interval = setInterval(() => {
 				index = (index + 1) % nimet.length;
 				current = nimet[index];
+				playSound('hover');
 			}, speed);
 		}
 
@@ -89,7 +91,7 @@
 
 <div>
 	<div class="raffle">
-		{current} takes a shot!
+		{current} ottaa shotin!
 	</div>
 	{#if !shuffling}
 		<button

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { fade, fly } from 'svelte/transition';
 	import { cubicIn } from 'svelte/easing';
+	import { playSound, registerSound } from '$lib/components/sound';
 	import Button from './Button.svelte';
 	import type Player from '$lib/components/Pelaaja.d.ts';
 	import Character from './Character.svelte';
@@ -12,6 +13,7 @@
 	import Tulostaulukko from './Tulostaulukko.svelte';
 	import Asetukset from './Asetukset.svelte';
 	import Raffle from './raffle.svelte';
+	import Audiotesti from './audiotesti.svelte';
 	// SKAALASAUSASETUKSET ALKAA
 
 	import { onMount } from 'svelte';
@@ -31,6 +33,12 @@
 	onMount(() => {
 		updateScale();
 		window.addEventListener('resize', updateScale);
+
+		// äänten rekisteröinti NIMI ja POLKU (tämän jälkeen käyttö playSound(NIMI))
+		registerSound('hover', '/sounds/hover2.mp3');
+		registerSound('countdown', '/sounds/countdown.mp3');
+		registerSound('click', '/sounds/click.mp3');
+		registerSound('light', '/sounds/redlight.mp3');
 
 		return () => window.removeEventListener('resize', updateScale);
 	});
@@ -58,10 +66,46 @@
 	// let varit = ['red', 'blue', 'pink', 'purple'];
 
 	let players: Player[] = $state([
-		{ key: 'q', x: 150, name: 'Pelaaja 1', dead: true, c: 0, character: 1, wins: 0 },
-		{ key: 'p', x: 150, name: 'Pelaaja 2', dead: true, c: 72, character: 2, wins: 0 },
-		{ key: 'c', x: 150, name: 'Pelaaja 3', dead: true, c: 144, character: 3, wins: 0 },
-		{ key: 'm', x: 150, name: 'Pelaaja 4', dead: true, c: 288, character: 4, wins: 0 }
+		{
+			key: 'q',
+			x: 150,
+			name: 'Pelaaja 1',
+			dead: true,
+			c: 0,
+			character: 1,
+			wins: 0,
+			wrongInputs: 0
+		},
+		{
+			key: 'p',
+			x: 150,
+			name: 'Pelaaja 2',
+			dead: true,
+			c: 72,
+			character: 2,
+			wins: 0,
+			wrongInputs: 0
+		},
+		{
+			key: 'c',
+			x: 150,
+			name: 'Pelaaja 3',
+			dead: true,
+			c: 144,
+			character: 3,
+			wins: 0,
+			wrongInputs: 0
+		},
+		{
+			key: 'm',
+			x: 150,
+			name: 'Pelaaja 4',
+			dead: true,
+			c: 288,
+			character: 4,
+			wins: 0,
+			wrongInputs: 0
+		}
 	]);
 
 	//pelkät nimet shotti komponenteille ja muille
@@ -85,8 +129,10 @@
 			loopinVoitto = true;
 		} else if (valo === 'punainen') {
 			newPos -= speed; // rangaistus punaisella valolla
+			player.wrongInputs++;
 		} else if (valo === 'pois') {
 			newPos -= speed; // rangaistus myös jos valo 'pois'
+			player.wrongInputs++;
 		}
 
 		// pelaaja kuolee jos positio alle 0, samalla tarkastetaan onko voittajaa (jos yksi jäljellä)
@@ -140,10 +186,11 @@
 		if (laskentaKaynnissa || peliKaynnissa) return;
 
 		laskentaKaynnissa = true;
-
+		playSound('countdown');
 		players.forEach((p) => {
 			p.x = 150;
 			p.dead = false;
+			p.wrongInputs = 0;
 		});
 
 		paivitaPelaajat();
@@ -194,7 +241,7 @@
 
 			valo = Math.random() > 0.3 ? 'vihrea' : 'punainen'; // todennäköisyys vihreälle valolle
 			viesti = valo === 'vihrea' ? 'Vihreä valo!' : 'Punainen valo!';
-
+			playSound('light');
 			if (valo === 'vihrea') {
 				loopinVoitto = false;
 			}
@@ -238,6 +285,7 @@
 	function vaihdaVari(x: number) {
 		const p = players[x];
 		p.c = Math.floor(Math.random() * 360); // kierrä väriä 36 astetta (10 eri väriä)
+		playSound('click');
 	}
 
 	function suljeModal() {
@@ -311,6 +359,7 @@
 				<div class="ui center">Game Area</div>
 				<div class="ui bottom-right">
 					<p>{viesti}</p>
+					<Audiotesti />
 				</div>
 			</div>
 		</div>
@@ -320,7 +369,7 @@
 	<Asetukset sulje={() => (naytaAsetukset = false)} bind:juomapeli />
 {/if}
 {#if naytaScoreboard}
-	<Tulostaulukko {players} sulje={() => (naytaScoreboard = false)} />
+	<Tulostaulukko players={players.slice(0, pelaajamaara)} sulje={() => (naytaScoreboard = false)} />
 {/if}
 
 {#if naytaModal && voittaja}
@@ -358,6 +407,13 @@
 						Pelaa uudelleen
 					</button>
 				{/if}
+				{#each players.slice(0, pelaajamaara) as player (player.key)}
+					{#if player.wrongInputs === 1}
+						<p>{player.name}: {player.wrongInputs} hörppy</p>
+					{:else if player.wrongInputs > 1}
+						<p>{player.name}: {player.wrongInputs} hörppyä</p>
+					{/if}
+				{/each}
 			{/if}
 		{/snippet}
 	</Modal>
