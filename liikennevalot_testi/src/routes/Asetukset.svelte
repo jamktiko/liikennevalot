@@ -71,7 +71,7 @@
 			<div class="mt-12 flex justify-center">
 				<button
 					onclick={sulje}
-					class="border-4 border-black bg-white px-8 py-3 text-sm font-black text-black uppercase shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all hover:bg-gray-100 active:translate-y-1 active:shadow-none"
+					class="border-2 border-black bg-white px-8 py-3 text-sm font-black text-black uppercase shadow-[inset_0px_-6px_0px_rgba(0,0,0,0.4)] transition-all [text-shadow:2px_2px_0px_rgba(0,0,0,0.3)] hover:bg-gray-100 active:translate-y-1 active:shadow-none"
 				>
 					Sulje
 				</button>
