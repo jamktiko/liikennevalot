@@ -295,26 +295,31 @@
 	paivitaPelaajat();
 </script>
 
-{#if nakyma === 'etusivu'}
-	<div transition:fade={{ duration: 300 }}>
-		<Etusivu aloita={() => (nakyma = 'valinta')} {lisaaPelaaja} {poistaPelaaja} {pelaajamaara} />
-	</div>
-{:else if nakyma === 'valinta'}
-	<div transition:fade={{ duration: 300 }}>
-		<Pelaajavalinta
-			{players}
-			{pelaajamaara}
-			{vaihdaVari}
-			pelaa={() => {
-				nakyma = 'peli';
-			}}
-			takaisin={() => (nakyma = 'etusivu')}
-		/>
-	</div>
-{:else}
-	<div transition:fade={{ duration: 300 }}>
-		<div class="wrapper">
-			<div class="game" style="transform: translate(-50%, -50%) scale({scale});">
+<div class="wrapper">
+	<div class="game" style="transform: translate(-50%, -50%) scale({scale});">
+		{#if nakyma === 'etusivu'}
+			<div transition:fade={{ duration: 300 }}>
+				<Etusivu
+					aloita={() => (nakyma = 'valinta')}
+					{lisaaPelaaja}
+					{poistaPelaaja}
+					{pelaajamaara}
+				/>
+			</div>
+		{:else if nakyma === 'valinta'}
+			<div transition:fade={{ duration: 300 }}>
+				<Pelaajavalinta
+					{players}
+					{pelaajamaara}
+					{vaihdaVari}
+					pelaa={() => {
+						nakyma = 'peli';
+					}}
+					takaisin={() => (nakyma = 'etusivu')}
+				/>
+			</div>
+		{:else}
+			<div transition:fade={{ duration: 300 }}>
 				<div class="bg-box">
 					<div class="bg-box-game">
 						<div class="charcontentbox">
@@ -362,9 +367,9 @@
 					<Audiotesti />
 				</div>
 			</div>
-		</div>
+		{/if}
 	</div>
-{/if}
+</div>
 {#if naytaAsetukset}
 	<Asetukset sulje={() => (naytaAsetukset = false)} bind:juomapeli />
 {/if}
