@@ -8,10 +8,7 @@
 	}>();
 </script>
 
-<div
-	class="flex min-h-screen items-center justify-center bg-slate-900 bg-cover bg-center bg-no-repeat"
-	style="background-image: url('/src/lib/assets/tausta.png');"
->
+<div class="flex min-h-screen items-center justify-center">
 	<div class="flex min-h-screen items-center justify-center">
 		<div
 			class="flex aspect-square w-[500px] flex-col items-center justify-between border-[6px] border-black bg-[#9dc2e0] p-8 font-mono shadow-[10px_10px_0px_0px_rgba(0,0,0,0.2)]"
