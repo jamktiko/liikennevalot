@@ -11,9 +11,11 @@
 	}>();
 </script>
 
-<div class="flex min-h-screen items-center justify-center p-4 font-['Press_Start_2P'] select-none">
+<div
+	class="fixed inset-0 z-[60] flex items-center justify-center bg-black/70 font-['Press_Start_2P'] select-none"
+>
 	<div
-		class="pixel-shadow flex w-full max-w-5xl flex-col items-center gap-10 border-[6px] border-black bg-[#9dc2e0] p-6 md:p-12"
+		class="pixel-shadow flex max-h-[500px] w-full max-w-5xl flex-col gap-6 overflow-y-auto border-[6px] border-black bg-[#9dc2e0] p-6 md:p-12"
 	>
 		<div class="grid w-full grid-cols-1 gap-8 lg:grid-cols-2">
 			{#each players.slice(0, pelaajamaara) as player, i (player.key)}
@@ -52,17 +54,17 @@
 			{/each}
 		</div>
 
-		<div class="mt-6 flex w-full items-center justify-between">
+		<div class="flex w-full items-center justify-between">
 			<button
 				onclick={takaisin}
-				class="flex h-14 w-14 items-center justify-center border-[4px] border-black bg-[#d1d5db] text-xl shadow-[8px_8px_0px_0px_rgba(0,0,0,0.25),_inset_0_-6px_0_rgba(0,0,0,0.5)] transition-all active:translate-y-1 active:shadow-none"
+				class="-mt-2 flex h-14 w-14 items-center justify-center border-[4px] border-black bg-[#d1d5db] text-xl shadow-[8px_8px_0px_0px_rgba(0,0,0,0.25),_inset_0_-6px_0_rgba(0,0,0,0.5)] transition-all active:translate-y-1 active:shadow-none"
 			>
 				&lt;
 			</button>
 
 			<button
 				onclick={pelaa}
-				class="text-pixel-shadow cursor-pointer text-3xl font-bold tracking-tight text-black uppercase transition-transform hover:scale-105 active:scale-95 md:text-5xl"
+				class="text-pixel-shadow -mt-0 cursor-pointer text-3xl font-bold tracking-tight text-black uppercase transition-transform hover:scale-105 active:scale-95 md:text-4xl"
 			>
 				PELAA
 			</button>

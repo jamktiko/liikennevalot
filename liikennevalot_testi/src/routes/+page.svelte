@@ -318,7 +318,7 @@
 						</h1>
 					</div>
 				</div>
-				<div transition:fade={{ duration: 300 }}>
+				<div class="valikkocontainer" transition:fade={{ duration: 300 }}>
 					<Etusivu
 						aloita={() => (nakyma = 'valinta')}
 						{lisaaPelaaja}
@@ -341,7 +341,7 @@
 						</h1>
 					</div>
 				</div>
-				<div transition:fade={{ duration: 300 }}>
+				<div class="valikkocontainer" transition:fade={{ duration: 300 }}>
 					<Pelaajavalinta
 						{players}
 						{pelaajamaara}
@@ -608,8 +608,15 @@
 	}
 	.logo {
 		position: absolute;
-		top: 10%;
+		top: 12%;
 		left: 50%;
 		transform: translate(-50%, -50%);
+	}
+	.valikkocontainer {
+		position: absolute;
+		top: 55%;
+		left: 50%;
+		transform: translate(-50%);
+		width: 70%;
 	}
 </style>
