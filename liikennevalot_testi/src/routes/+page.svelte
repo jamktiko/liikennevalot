@@ -43,6 +43,11 @@
 		return () => window.removeEventListener('resize', updateScale);
 	});
 
+	//äänten muuttujat
+
+	const click = 'click';
+	const greenlight = 'light';
+
 	// SKAALAUSASETUKSET LOPPUUU
 
 	let maaliviiva: number = 750;
@@ -241,7 +246,7 @@
 
 			valo = Math.random() > 0.3 ? 'vihrea' : 'punainen'; // todennäköisyys vihreälle valolle
 			viesti = valo === 'vihrea' ? 'Vihreä valo!' : 'Punainen valo!';
-			playSound('light');
+			playSound(greenlight);
 			if (valo === 'vihrea') {
 				loopinVoitto = false;
 			}
@@ -285,7 +290,7 @@
 	function vaihdaVari(x: number) {
 		const p = players[x];
 		p.c = Math.floor(Math.random() * 360); // kierrä väriä 36 astetta (10 eri väriä)
-		playSound('click');
+		playSound(click);
 	}
 
 	function suljeModal() {
@@ -309,7 +314,7 @@
 						<h1
 							class="-mt-2 text-5xl font-black tracking-widest text-green-500 uppercase drop-shadow-[3px_3px_0px_rgba(0,0,0,1)]"
 						>
-							Valo
+							Valot
 						</h1>
 					</div>
 				</div>
