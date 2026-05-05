@@ -15,7 +15,7 @@
 >
 	<div class="relative w-full max-w-xs sm:max-w-sm">
 		<div
-			class="pixel-shadow flex w-full flex-col items-center gap-6 border-[6px] border-black bg-[#9dc2e0] p-8"
+			class="pixel-shadow flex w-full flex-col items-center gap-6 border-[6px] border-black bg-[#9dc2e0] p-6"
 		>
 			<h2 class="text-2xl text-black uppercase [text-shadow:3px_3px_0px_rgba(0,0,0,0.2)]">
 				Asetukset

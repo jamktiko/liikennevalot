@@ -25,7 +25,7 @@
 		aspect-ratio: 1; /* keeps it a perfect circle */
 
 		top: 7%; /* 👈 adjust these visually */
-		left: 47%;
+		left: 47.2%;
 		transform: translateX(-50%);
 
 		border-radius: 50%;

@@ -409,61 +409,65 @@
 				</div>
 			{/if}
 		</div>
+
+		{#if naytaAsetukset}
+			<Asetukset sulje={() => (naytaAsetukset = false)} bind:juomapeli />
+		{/if}
+		{#if naytaScoreboard}
+			<Tulostaulukko
+				players={players.slice(0, pelaajamaara)}
+				sulje={() => (naytaScoreboard = false)}
+			/>
+		{/if}
+
+		{#if naytaModal && voittaja}
+			<Modal>
+				{#snippet header()}
+					<h2>Voittaja!</h2>
+				{/snippet}
+				<p>Pelin voittaja on {voittaja?.name.toUpperCase()}!</p>
+				<div
+					class="char-box-shadow flex h-32 w-32 items-center justify-center overflow-hidden border-[4px] border-black bg-[#c0c0c0] md:h-40 md:w-40"
+				>
+					<div style="transform: scale(1.5) translateY(5px);">
+						<Character color={voittaja.c} character={voittaja.character} />
+					</div>
+				</div>
+				{#snippet footer()}
+					{#if !juomapeli}
+						<button
+							onclick={suljeModal}
+							class="btn-shadow w-full border-4 border-black bg-white py-4 text-[10px] font-bold uppercase transition-all [text-shadow:2px_2px_0px_rgba(0,0,0,0.2)] hover:bg-gray-50 active:translate-y-1 active:bg-gray-100 md:text-[12px]"
+						>
+							Pelaa uudelleen
+						</button>
+					{/if}
+					{#if juomapeli}
+						{#if Math.random() < 0.5}
+							<div class="rafflecontainer">
+								<Raffle nimet={aktiivisetPelaajat} {suljeModal} />
+							</div>
+						{:else}
+							<button
+								onclick={suljeModal}
+								class="btn-shadow w-full border-4 border-black bg-white py-4 text-[10px] font-bold uppercase transition-all [text-shadow:2px_2px_0px_rgba(0,0,0,0.2)] hover:bg-gray-50 active:translate-y-1 active:bg-gray-100 md:text-[12px]"
+							>
+								Pelaa uudelleen
+							</button>
+						{/if}
+						{#each players.slice(0, pelaajamaara) as player (player.key)}
+							{#if player.wrongInputs === 1}
+								<p>{player.name.toUpperCase()}: {player.wrongInputs} hörppy</p>
+							{:else if player.wrongInputs > 1}
+								<p>{player.name.toUpperCase()}: {player.wrongInputs} hörppyä</p>
+							{/if}
+						{/each}
+					{/if}
+				{/snippet}
+			</Modal>
+		{/if}
 	</div>
 </div>
-{#if naytaAsetukset}
-	<Asetukset sulje={() => (naytaAsetukset = false)} bind:juomapeli />
-{/if}
-{#if naytaScoreboard}
-	<Tulostaulukko players={players.slice(0, pelaajamaara)} sulje={() => (naytaScoreboard = false)} />
-{/if}
-
-{#if naytaModal && voittaja}
-	<Modal>
-		{#snippet header()}
-			<h2>Voittaja!</h2>
-		{/snippet}
-		<p>Pelin voittaja on {voittaja?.name.toUpperCase()}!</p>
-		<div
-			class="char-box-shadow flex h-32 w-32 items-center justify-center overflow-hidden border-[4px] border-black bg-[#c0c0c0] md:h-40 md:w-40"
-		>
-			<div style="transform: scale(1.5) translateY(5px);">
-				<Character color={voittaja.c} character={voittaja.character} />
-			</div>
-		</div>
-		{#snippet footer()}
-			{#if !juomapeli}
-				<button
-					onclick={suljeModal}
-					class="btn-shadow w-full border-4 border-black bg-white py-4 text-[10px] font-bold uppercase transition-all [text-shadow:2px_2px_0px_rgba(0,0,0,0.2)] hover:bg-gray-50 active:translate-y-1 active:bg-gray-100 md:text-[12px]"
-				>
-					Pelaa uudelleen
-				</button>
-			{/if}
-			{#if juomapeli}
-				{#if Math.random() < 0.5}
-					<div class="rafflecontainer">
-						<Raffle nimet={aktiivisetPelaajat} {suljeModal} />
-					</div>
-				{:else}
-					<button
-						onclick={suljeModal}
-						class="btn-shadow w-full border-4 border-black bg-white py-4 text-[10px] font-bold uppercase transition-all [text-shadow:2px_2px_0px_rgba(0,0,0,0.2)] hover:bg-gray-50 active:translate-y-1 active:bg-gray-100 md:text-[12px]"
-					>
-						Pelaa uudelleen
-					</button>
-				{/if}
-				{#each players.slice(0, pelaajamaara) as player (player.key)}
-					{#if player.wrongInputs === 1}
-						<p>{player.name.toUpperCase()}: {player.wrongInputs} hörppy</p>
-					{:else if player.wrongInputs > 1}
-						<p>{player.name.toUpperCase()}: {player.wrongInputs} hörppyä</p>
-					{/if}
-				{/each}
-			{/if}
-		{/snippet}
-	</Modal>
-{/if}
 
 <svelte:window onkeydown={handleKeydown} />
 
