@@ -12,7 +12,7 @@
 </script>
 
 <div
-	class="fixed inset-0 z-[60] flex items-center justify-center bg-black/70 font-['Press_Start_2P'] select-none"
+	class="fixed inset-0 z-[60] flex items-center justify-center bg-black/60 font-['Press_Start_2P'] backdrop-blur-sm select-none"
 >
 	<div
 		class="pixel-shadow flex w-[450px] flex-col items-center gap-6 border-[6px] border-black bg-[#9dc2e0] p-8"

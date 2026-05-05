@@ -14,6 +14,7 @@
 	import Asetukset from './Asetukset.svelte';
 	import Raffle from './raffle.svelte';
 	import Audiotesti from './audiotesti.svelte';
+	import Nappaimetguide from './Nappaimetguide.svelte';
 	// SKAALASAUSASETUKSET ALKAA
 
 	import { onMount } from 'svelte';
@@ -356,6 +357,11 @@
 				<div transition:fade={{ duration: 300 }}>
 					<div class="bg-box">
 						<div class="bg-box-game">
+							{#if !peliKaynnissa}
+								<div transition:fade={{ duration: 1000 }}>
+									<Nappaimetguide players={players.slice(0, pelaajamaara)} />
+								</div>
+							{/if}
 							<div class="charcontentbox">
 								<div class="charcontent">
 									<div class="fixed-pelialue">
@@ -493,7 +499,6 @@
 		width: 1280px; /* fixed size */
 		height: 720px;
 		overflow: hidden;
-		position: relative;
 	}
 	.charcontent {
 		transform: scale(0.75);
@@ -528,6 +533,7 @@
 		left: 50%;
 		transform: translateX(-50%);
 		margin: 0 auto;
+		z-index: 10;
 		/* border: solid; */
 		/* background-color: #00ff00; */
 	}
@@ -552,6 +558,7 @@
 		max-width: 100%;
 
 		background-image: url('$lib/assets/720p/Bg_ai.png');
+
 		background-size: cover;
 
 		background-position: top center;
