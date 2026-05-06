@@ -17,6 +17,8 @@ class Pelimoottori {
 	valo: 'pois' | 'vihrea' | 'punainen' = $state('pois');
 	voittaja: Player | null = $state(null);
 	aktiivisetPelaajat: string[] = $state([]);
+	vitsi = $state('');
+	ladataanVitsiä = $state(false);
 
 	valoTimeout: ReturnType<typeof setTimeout> | undefined;
 
@@ -93,6 +95,7 @@ class Pelimoottori {
 			player.dead = true;
 			this.tarkistaVoittaja();
 			playSound('scream');
+			this.haeDadJoke();
 			return;
 		}
 
@@ -107,6 +110,7 @@ class Pelimoottori {
 			}, 100);
 
 			this.peliKaynnissa = false;
+			this.haeDadJoke();
 			clearTimeout(this.valoTimeout);
 			this.valo = 'pois';
 			this.viesti = 'Peli ohi! Aloita uusi kierros?';
@@ -222,6 +226,27 @@ class Pelimoottori {
 		p.c = Math.floor(Math.random() * 360);
 		playSound('click');
 	};
+	async haeDadJoke() {
+		this.ladataanVitsiä = true;
+
+		try {
+			const response = await fetch('https://icanhazdadjoke.com/', {
+				headers: { Accept: 'application/json' }
+			});
+
+			if (!response.ok) throw new Error('Yhteysvirhe');
+
+			const data = await response.json();
+			this.vitsi = data.joke;
+
+			this.ladataanVitsiä = false;
+		} catch (error) {
+			console.error('Virhe:', error);
+			this.vitsi = 'Vitsien haku epäonnistui, mutta olet silti voittaja!';
+
+			this.ladataanVitsiä = false;
+		}
+	}
 }
 
 export const moottori = new Pelimoottori();
