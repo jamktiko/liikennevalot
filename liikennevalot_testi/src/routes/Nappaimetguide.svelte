@@ -20,7 +20,7 @@
 				<div class="w-full space-y-4">
 					{#each jarjestetytPelaajat.reverse() as p (p.key)}
 						<div
-							class="flex items-center justify-between border-4 border-black bg-yellow-400 p-3 text-xs shadow-[6px_6px_0px_rgba(0,0,0,0.3)]"
+							class="taustavari flex items-center justify-between border-4 border-black p-3 text-xs shadow-[4px_4px_0px_0px_rgba(0,0,0,0.25),inset_0_-6px_0_rgba(0,0,0,0.5)] [text-shadow:2px_2px_0px_rgba(0,0,0,0.3)]"
 						>
 							<div class="flex items-center gap-3">
 								<div style="transform: scale(0.6);"></div>
@@ -47,6 +47,9 @@
 		/* top: 61%; */
 		left: 15%;
 		transform: translate(-50%, -50%);
-		opacity: 0.9;
+		opacity: 0.8;
+	}
+	.taustavari {
+		background-color: #c0c0c0;
 	}
 </style>

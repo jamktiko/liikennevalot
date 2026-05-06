@@ -1,4 +1,7 @@
 <script lang="ts">
+	import Button from './Button.svelte';
+	import { playSound } from '$lib/components/sound';
+
 	interface Props {
 		juomapeli: boolean;
 		sulje: () => void;
@@ -32,6 +35,7 @@
 						type="checkbox"
 						bind:checked={juomapeli}
 						class="h-6 w-6 cursor-pointer border-2 border-black accent-green-500"
+						onchange={() => playSound('click')}
 					/>
 				</label>
 
@@ -45,6 +49,7 @@
 						type="checkbox"
 						bind:checked={musiikki}
 						class="h-6 w-6 cursor-pointer border-2 border-black accent-green-500"
+						onchange={() => playSound('click')}
 					/>
 				</label>
 
@@ -58,16 +63,12 @@
 						type="checkbox"
 						bind:checked={aanet}
 						class="h-6 w-6 cursor-pointer border-2 border-black accent-green-500"
+						onchange={() => playSound('click')}
 					/>
 				</label>
 			</div>
 
-			<button
-				onclick={sulje}
-				class="mt-4 border-4 border-black bg-white px-6 py-3 text-[12px] font-black text-black uppercase shadow-[4px_4px_0px_rgba(0,0,0,0.2)] active:translate-y-1 active:shadow-none"
-			>
-				Sulje
-			</button>
+			<Button text="SULJE" onclick={sulje} />
 		</div>
 	</div>
 </div>

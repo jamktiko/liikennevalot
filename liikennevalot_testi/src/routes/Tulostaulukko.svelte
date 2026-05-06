@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type Player from '$lib/components/Pelaaja.d.ts';
+	import Button from './Button.svelte';
 	import Character from './Character.svelte';
 
 	let { players, sulje } = $props<{
@@ -37,12 +38,7 @@
 			{/each}
 		</div>
 
-		<button
-			onclick={sulje}
-			class="mt-4 border-4 border-black bg-white px-6 py-3 text-[12px] uppercase shadow-[4px_4px_0px_rgba(0,0,0,0.2)] active:translate-y-1 active:shadow-none"
-		>
-			Sulje
-		</button>
+		<Button text="SULJE" onclick={sulje} />
 	</div>
 </div>
 
