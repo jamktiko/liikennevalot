@@ -40,6 +40,7 @@
 		registerSound('countdown', '/sounds/countdown.mp3');
 		registerSound('click', '/sounds/click.mp3');
 		registerSound('light', '/sounds/redlight.mp3');
+		registerSound('scream', '/sounds/scream.mp3');
 
 		return () => window.removeEventListener('resize', updateScale);
 	});
@@ -48,6 +49,7 @@
 
 	const click = 'click';
 	const greenlight = 'light';
+	const fail = 'scream';
 
 	// SKAALAUSASETUKSET LOPPUUU
 
@@ -146,6 +148,7 @@
 			player.x = newPos;
 			player.dead = true;
 			tarkistaVoittaja();
+			playSound(fail);
 			return;
 		}
 
