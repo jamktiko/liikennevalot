@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { withClickSound } from '$lib/components/sound';
+
 	// Otetaan vastaan propsit pääohjelmasta
 	let { aloita, lisaaPelaaja, poistaPelaaja, pelaajamaara } = $props<{
 		aloita: () => void;
@@ -9,8 +11,7 @@
 </script>
 
 <div
-	class="flex min-h-screen items-center justify-center bg-slate-900 bg-cover bg-center bg-no-repeat"
-	style="background-image: url('/src/lib/assets/tausta.png');"
+	class="fixed inset-0 z-[60] flex items-center justify-center bg-black/70 font-['Press_Start_2P'] select-none"
 >
 	<div class="flex min-h-screen items-center justify-center">
 		<div
@@ -41,7 +42,7 @@
 					class="flex items-center gap-4 border-4 border-black bg-white p-4 shadow-[6px_6px_0px_rgba(0,0,0,0.3)]"
 				>
 					<button
-						onclick={poistaPelaaja}
+						onclick={withClickSound(poistaPelaaja)}
 						disabled={pelaajamaara <= 2}
 						class="flex h-16 w-16 items-center justify-center border-4 border-black bg-[#eb4c34] text-4xl font-bold text-white shadow-[inset_0px_-6px_0px_rgba(0,0,0,0.4)] active:translate-y-1 disabled:opacity-50 disabled:grayscale disabled:active:translate-y-0"
 					>
@@ -55,7 +56,7 @@
 					</div>
 
 					<button
-						onclick={lisaaPelaaja}
+						onclick={withClickSound(lisaaPelaaja)}
 						disabled={pelaajamaara >= 4}
 						class="flex h-16 w-16 items-center justify-center border-4 border-black bg-[#63a352] text-4xl font-bold text-white shadow-[inset_0px_-6px_0px_rgba(0,0,0,0.4)] active:translate-y-1 disabled:opacity-50 disabled:grayscale disabled:active:translate-y-0"
 					>
@@ -65,7 +66,7 @@
 			</div>
 
 			<button
-				onclick={aloita}
+				onclick={withClickSound(aloita)}
 				class="p-7 text-center font-['Press_Start_2P'] text-3xl leading-none font-black text-black uppercase transition-transform [text-shadow:5px_5px_0px_rgba(0,0,0,0.3)] hover:scale-105"
 			>
 				Aloita<br />peli

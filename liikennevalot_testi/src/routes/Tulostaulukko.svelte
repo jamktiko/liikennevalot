@@ -12,10 +12,10 @@
 </script>
 
 <div
-	class="fixed inset-0 z-[60] flex items-center justify-center bg-black/70 font-['Press_Start_2P'] select-none"
+	class="fixed inset-0 z-[60] flex items-center justify-center bg-black/60 font-['Press_Start_2P'] backdrop-blur-sm select-none"
 >
 	<div
-		class="pixel-shadow flex w-[450px] flex-col items-center gap-6 border-[6px] border-black bg-[#9dc2e0] p-8"
+		class="pixel-shadow flex w-[450px] flex-col items-center gap-6 border-[6px] border-black bg-[#9dc2e0] p-6"
 	>
 		<h2 class="text-2xl text-black uppercase [text-shadow:3px_3px_0px_rgba(0,0,0,0.2)]">
 			Tulokset
