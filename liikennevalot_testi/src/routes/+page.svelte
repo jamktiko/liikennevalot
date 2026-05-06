@@ -15,6 +15,7 @@
 	import Raffle from './raffle.svelte';
 	import Audiotesti from './audiotesti.svelte';
 	import Nappaimetguide from './Nappaimetguide.svelte';
+	import Otsikko from './Otsikko.svelte';
 	// SKAALASAUSASETUKSET ALKAA
 
 	import { onMount } from 'svelte';
@@ -306,18 +307,7 @@
 		<div class="bg-box">
 			{#if nakyma === 'etusivu'}
 				<div class="logo" transition:fade={{ duration: 300 }}>
-					<div class="mb-6 text-center font-['Press_start_2P']">
-						<h1
-							class="p-1.5 text-4xl font-black tracking-widest text-red-600 uppercase drop-shadow-[3px_3px_0px_rgba(0,0,0,1)]"
-						>
-							Liikenne
-						</h1>
-						<h1
-							class="-mt-2 text-5xl font-black tracking-widest text-green-500 uppercase drop-shadow-[3px_3px_0px_rgba(0,0,0,1)]"
-						>
-							Valot
-						</h1>
-					</div>
+					<Otsikko />
 				</div>
 				<div class="valikkocontainer" transition:fade={{ duration: 300 }}>
 					<Etusivu
@@ -329,18 +319,7 @@
 				</div>
 			{:else if nakyma === 'valinta'}
 				<div class="logo" transition:fade={{ duration: 300 }}>
-					<div class="mb-6 text-center font-['Press_start_2P']">
-						<h1
-							class="p-1.5 text-4xl font-black tracking-widest text-red-600 uppercase drop-shadow-[3px_3px_0px_rgba(0,0,0,1)]"
-						>
-							Liikenne
-						</h1>
-						<h1
-							class="-mt-2 text-5xl font-black tracking-widest text-green-500 uppercase drop-shadow-[3px_3px_0px_rgba(0,0,0,1)]"
-						>
-							Valot
-						</h1>
-					</div>
+					<Otsikko />
 				</div>
 				<div class="valikkocontainer" transition:fade={{ duration: 300 }}>
 					<Pelaajavalinta
