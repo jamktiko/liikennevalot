@@ -13,7 +13,6 @@
 	import Tulostaulukko from './Tulostaulukko.svelte';
 	import Asetukset from './Asetukset.svelte';
 	import Raffle from './raffle.svelte';
-	import Audiotesti from './audiotesti.svelte';
 	import Nappaimetguide from './Nappaimetguide.svelte';
 	import Otsikko from './Otsikko.svelte';
 	// SKAALASAUSASETUKSET ALKAA
@@ -380,10 +379,9 @@
 						<Button onclick={() => (naytaScoreboard = true)} text="TULOKSET" />
 						<Button onclick={() => (naytaAsetukset = true)} text="ASETUKSET" />
 					</div>
-					<div class="ui center">Game Area</div>
+					<div class="ui center"></div>
 					<div class="ui bottom-right">
 						<p>{viesti}</p>
-						<Audiotesti />
 					</div>
 				</div>
 			{/if}
