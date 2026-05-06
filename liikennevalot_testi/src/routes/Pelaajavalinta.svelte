@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type Player from '$lib/components/Pelaaja.d.ts';
 	import Character from './Character.svelte';
+	import { withClickSound } from '$lib/components/sound';
 
 	let { players, pelaajamaara, vaihdaVari, pelaa, takaisin } = $props<{
 		players: Player[];
@@ -56,14 +57,14 @@
 
 		<div class="flex w-full items-center justify-between">
 			<button
-				onclick={takaisin}
+				onclick={withClickSound(takaisin)}
 				class="-mt-2 flex h-14 w-14 items-center justify-center border-[4px] border-black bg-[#d1d5db] text-xl shadow-[8px_8px_0px_0px_rgba(0,0,0,0.25),_inset_0_-6px_0_rgba(0,0,0,0.5)] transition-all active:translate-y-1 active:shadow-none"
 			>
 				&lt;
 			</button>
 
 			<button
-				onclick={pelaa}
+				onclick={withClickSound(pelaa)}
 				class="text-pixel-shadow -mt-0 cursor-pointer text-3xl font-bold tracking-tight text-black uppercase transition-transform hover:scale-105 active:scale-95 md:text-4xl"
 			>
 				PELAA

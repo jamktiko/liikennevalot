@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { fade, fly } from 'svelte/transition';
 	import { cubicIn } from 'svelte/easing';
-	import { registerSound } from '$lib/components/sound';
+	import { registerSound, withClickSound } from '$lib/components/sound';
 	import { onMount } from 'svelte';
 
 	// Tuodaan pelimoottori
