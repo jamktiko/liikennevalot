@@ -1,7 +1,13 @@
 <script lang="ts">
 	import { fade, fly } from 'svelte/transition';
 	import { cubicIn } from 'svelte/easing';
-	import { registerSound, registerMusic, playMusic, pauseMusic } from '$lib/components/sound';
+	import {
+		registerSound,
+		registerMusic,
+		playMusic,
+		pauseMusic,
+		setMute
+	} from '$lib/components/sound';
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
@@ -30,7 +36,7 @@
 	let naytaAsetukset = $state(false);
 	let juomapeli: boolean = $state(false);
 	let musiikki: boolean = $state(false);
-	let aanet: boolean = $state(false);
+	let aanet: boolean = $state(true);
 
 	// Kytketään moottorin voitto-tapahtuma käyttöliittymän modaaliin
 	moottori.onWin = () => {
@@ -74,6 +80,9 @@
 		} else {
 			pauseMusic();
 		}
+	});
+	$effect(() => {
+		setMute(!aanet);
 	});
 </script>
 
