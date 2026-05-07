@@ -25,13 +25,13 @@
 		<div class="w-full space-y-4">
 			{#each jarjestetytPelaajat as p (p.key)}
 				<div
-					class="flex items-center justify-between border-4 border-black bg-white p-3 shadow-[4px_4px_0px_rgba(0,0,0,0.2)]"
+					class="flex items-center justify-between border-4 border-black bg-white p-3 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.25),inset_0_-6px_0_rgba(0,0,0,0.5)] [text-shadow:2px_2px_0px_rgba(0,0,0,0.3)]"
 				>
 					<div class="flex items-center gap-3">
 						<div style="transform: scale(0.6);">
 							<Character color={p.c} character={p.character} />
 						</div>
-						<span class="text-[10px] text-black uppercase">{p.name}</span>
+						<span class="text-[13px] text-black uppercase">{p.name}</span>
 					</div>
 					<span class="text-xl font-bold text-black">{p.wins}</span>
 				</div>

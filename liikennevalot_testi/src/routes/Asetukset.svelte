@@ -30,7 +30,7 @@
 
 			<div class="w-full space-y-4">
 				<label
-					class="flex cursor-pointer items-center justify-between border-4 border-black bg-white p-3 shadow-[4px_4px_0px_rgba(0,0,0,0.2)] active:translate-y-1"
+					class="flex cursor-pointer items-center justify-between border-4 border-black bg-white p-3 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.25),inset_0_-6px_0_rgba(0,0,0,0.5)] active:translate-y-1"
 				>
 					<span class="text-[10px] font-black tracking-tighter text-black uppercase">
 						Juomapeli
@@ -44,7 +44,7 @@
 				</label>
 
 				<label
-					class="flex cursor-pointer items-center justify-between border-4 border-black bg-white p-3 shadow-[4px_4px_0px_rgba(0,0,0,0.2)] active:translate-y-1"
+					class="flex cursor-pointer items-center justify-between border-4 border-black bg-white p-3 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.25),inset_0_-6px_0_rgba(0,0,0,0.5)] active:translate-y-1"
 				>
 					<span class="text-[10px] font-black tracking-tighter text-black uppercase">
 						Musiikki
@@ -58,7 +58,7 @@
 				</label>
 
 				<label
-					class="flex cursor-pointer items-center justify-between border-4 border-black bg-white p-3 shadow-[4px_4px_0px_rgba(0,0,0,0.2)] active:translate-y-1"
+					class="flex cursor-pointer items-center justify-between border-4 border-black bg-white p-3 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.25),inset_0_-6px_0_rgba(0,0,0,0.5)] active:translate-y-1"
 				>
 					<span class="text-[10px] font-black tracking-tighter text-black uppercase">
 						Pelin äänet
@@ -70,6 +70,14 @@
 						onchange={() => playSound('click')}
 					/>
 				</label>
+				<button
+					class="flex w-full cursor-pointer items-center justify-between border-4 border-black bg-white p-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.25),inset_0_-6px_0_rgba(0,0,0,0.5)] active:translate-y-1"
+					onclick={() => playSound('click')}
+				>
+					<span class="text-[10px] font-black tracking-tighter text-black uppercase"> Teema </span>
+
+					<span class="text-[10px] font-black text-black"> › </span>
+				</button>
 			</div>
 
 			<Button text="SULJE" onclick={sulje} />
