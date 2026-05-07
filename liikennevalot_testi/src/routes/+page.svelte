@@ -83,6 +83,11 @@
 	});
 	$effect(() => {
 		setMute(!aanet);
+		if (!aanet) {
+			pauseMusic();
+		} else if (musiikki) {
+			playMusic();
+		}
 	});
 </script>
 
@@ -117,6 +122,11 @@
 						pelaajamaara={moottori.pelaajamaara}
 						vaihdaVari={moottori.vaihdaVari}
 						pelaa={() => {
+							musiikki = true;
+							if (musiikki) {
+								playMusic();
+							}
+
 							nakyma = 'peli';
 						}}
 						takaisin={() => (nakyma = 'etusivu')}
@@ -173,7 +183,13 @@
 						/>
 						<Button onclick={() => (naytaScoreboard = true)} text="TULOKSET" />
 						<Button onclick={() => (naytaAsetukset = true)} text="ASETUKSET" />
-						<Button onclick={() => (nakyma = 'etusivu')} text="ETUSIVU" />
+						<Button
+							onclick={() => {
+								goto(resolve('/'));
+								window.location.reload();
+							}}
+							text="ETUSIVU"
+						/>
 					</div>
 					<div class="ui center"></div>
 					<div class="ui bottom-right">
