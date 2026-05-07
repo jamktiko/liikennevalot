@@ -1,7 +1,13 @@
 <script lang="ts">
 	import { fade, fly } from 'svelte/transition';
 	import { cubicIn } from 'svelte/easing';
-	import { registerSound, registerMusic, playMusic, pauseMusic } from '$lib/components/sound';
+	import {
+		registerSound,
+		registerMusic,
+		playMusic,
+		pauseMusic,
+		setMute
+	} from '$lib/components/sound';
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
@@ -30,7 +36,7 @@
 	let naytaAsetukset = $state(false);
 	let juomapeli: boolean = $state(false);
 	let musiikki: boolean = $state(false);
-	let aanet: boolean = $state(false);
+	let aanet: boolean = $state(true);
 
 	// Kytketään moottorin voitto-tapahtuma käyttöliittymän modaaliin
 	moottori.onWin = () => {
@@ -75,6 +81,14 @@
 			pauseMusic();
 		}
 	});
+	$effect(() => {
+		setMute(!aanet);
+		if (!aanet) {
+			pauseMusic();
+		} else if (musiikki) {
+			playMusic();
+		}
+	});
 </script>
 
 <svelte:window onkeydown={moottori.handleKeydown} />
@@ -108,6 +122,11 @@
 						pelaajamaara={moottori.pelaajamaara}
 						vaihdaVari={moottori.vaihdaVari}
 						pelaa={() => {
+							musiikki = true;
+							if (musiikki) {
+								playMusic();
+							}
+
 							nakyma = 'peli';
 						}}
 						takaisin={() => (nakyma = 'etusivu')}
@@ -164,7 +183,13 @@
 						/>
 						<Button onclick={() => (naytaScoreboard = true)} text="TULOKSET" />
 						<Button onclick={() => (naytaAsetukset = true)} text="ASETUKSET" />
-						<Button onclick={() => (nakyma = 'etusivu')} text="ETUSIVU" />
+						<Button
+							onclick={() => {
+								goto(resolve('/'));
+								window.location.reload();
+							}}
+							text="ETUSIVU"
+						/>
 					</div>
 					<div class="ui center"></div>
 					<div class="ui bottom-right">

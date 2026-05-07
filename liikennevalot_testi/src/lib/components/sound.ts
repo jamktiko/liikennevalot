@@ -51,7 +51,7 @@ export async function playMusic() {
 	try {
 		await backgroundMusic.play();
 	} catch (err) {
-		console.log('Music autoplay blocked');
+		console.log(err);
 	}
 }
 
