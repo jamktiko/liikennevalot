@@ -18,7 +18,7 @@
 </script>
 
 <div
-	class="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 p-4 font-['Press_Start_2P'] backdrop-blur-sm select-none"
+	class="fixed inset-0 z-100 flex items-center justify-center bg-black/60 p-4 font-['Press_Start_2P'] backdrop-blur-sm select-none"
 >
 	<div class="relative w-full max-w-xs sm:max-w-sm">
 		<div

@@ -15,7 +15,7 @@
 <div class="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm"></div>
 
 <div
-	class="pixel-shadow fixed top-1/2 left-1/2 z-50 flex aspect-square w-[90%] max-w-[500px] -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-start border-[6px] border-black bg-[#9dc2e0] p-8 text-center font-['Press_Start_2P'] md:p-12"
+	class="pixel-shadow fixed top-1/2 left-1/2 z-50 flex aspect-square w-[90%] max-w-125 -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-start border-[6px] border-black bg-[#9dc2e0] p-8 text-center font-['Press_Start_2P'] md:p-12"
 >
 	<header class="mb-8 w-full leading-tight uppercase">
 		{#if header}

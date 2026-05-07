@@ -11,11 +11,11 @@
 </script>
 
 <div
-	class="fixed inset-0 z-[60] flex items-center justify-center bg-black/70 font-['Press_Start_2P'] select-none"
+	class="fixed inset-0 z-60 flex items-center justify-center bg-black/70 font-['Press_Start_2P'] select-none"
 >
 	<div class="flex min-h-screen items-center justify-center">
 		<div
-			class="flex aspect-square w-[500px] flex-col items-center justify-between border-[6px] border-black bg-[#9dc2e0] p-8 font-mono shadow-[10px_10px_0px_0px_rgba(0,0,0,0.2)]"
+			class="flex aspect-square w-125 flex-col items-center justify-between border-[6px] border-black bg-[#9dc2e0] p-8 font-mono shadow-[10px_10px_0px_0px_rgba(0,0,0,0.2)]"
 		>
 			<div class="text-center">
 				<h2
@@ -24,7 +24,7 @@
 					Ohjeet
 				</h2>
 				<p
-					class="max-w-[400px] font-['Press_Start_2P'] text-[12px] leading-tight font-black text-black uppercase [text-shadow:2px_2px_0px_rgba(0,0,0,0.3)]"
+					class="max-w-100 font-['Press_Start_2P'] text-[12px] leading-tight font-black text-black uppercase [text-shadow:2px_2px_0px_rgba(0,0,0,0.3)]"
 				>
 					Valon ollessa vihreä, paina nappia. Liian aikaisesta reaktiosta rangaistaan. Ensimmäinen
 					maalissa voittaa.
