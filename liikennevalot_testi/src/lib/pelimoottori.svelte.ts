@@ -10,15 +10,15 @@ class Pelimoottori {
 	korkeus: number = $state(180);
 	pelaajamaara: number = $state(2);
 	peliKaynnissa: boolean = $state(false);
-	laskentaKaynnissa = $state(false);
-	laskentaNro = $state(-1);
-	viesti = $state('Liikennevalot');
+	laskentaKaynnissa: boolean = $state(false);
+	laskentaNro: number = $state(-1);
+	viesti: string = $state('Liikennevalot');
 	loopinVoitto: boolean = $state(false);
 	valo: 'pois' | 'vihrea' | 'punainen' = $state('pois');
 	voittaja: Player | null = $state(null);
 	aktiivisetPelaajat: string[] = $state([]);
-	vitsi = $state('');
-	ladataanVitsiä = $state(false);
+	vitsi: string = $state('');
+	ladataanVitsiä: boolean = $state(false);
 
 	valoTimeout: ReturnType<typeof setTimeout> | undefined;
 
