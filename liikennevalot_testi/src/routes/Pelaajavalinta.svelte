@@ -95,7 +95,7 @@
 			</button>
 
 			<div class="virhe w-14">
-				<div class="absolute bottom-[-24px] left-[320px] w-40 text-left">
+				<div class="absolute bottom-[-10px] left-[320px] w-40 text-left">
 					{#if !kaikkiValidit}
 						<p class="text-[8px] uppercase">{virhe}</p>
 					{/if}
