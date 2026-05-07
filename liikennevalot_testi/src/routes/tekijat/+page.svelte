@@ -3,7 +3,7 @@
 	import { resolve } from '$app/paths';
 	import { onMount } from 'svelte';
 	import Modal from '../Modal.svelte';
-
+	import Button from '../Button.svelte';
 	let scale = $state(1);
 	function updateScale() {
 		const baseWidth = 1280;
@@ -25,9 +25,19 @@
 				{#snippet header()}
 					CREDITS
 				{/snippet}
-				asds
+				<h2>Koodaus:</h2>
+				<div class="nimet">
+					<p>Oula Hämäläinen</p>
+					<p>Juho Rajala</p>
+				</div>
+
+				<h2>Käyttöliittymä:</h2>
+				<div class="nimet">
+					<p>Hilla Korkiakoski</p>
+					<p>Elias Hakala</p>
+				</div>
 				{#snippet footer()}
-					asdasd
+					<Button text="ETUSIVU" onclick={() => goto(resolve('/'))} />
 				{/snippet}
 			</Modal>
 		</div>
@@ -61,5 +71,31 @@
 		left: 50%;
 		transform-origin: center;
 		background: #222;
+	}
+	h2 {
+		text-transform: uppercase;
+		font-size: 14px;
+		letter-spacing: 2px;
+		margin-top: 12px;
+		margin-bottom: 6px;
+		text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.2);
+	}
+
+	.nimet {
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+		margin-bottom: 10px;
+	}
+
+	.nimet p {
+		margin: 0;
+		font-size: 12px;
+		letter-spacing: 1px;
+		background: rgba(255, 255, 255, 0.2);
+		padding: 4px 8px;
+		border: 2px solid black;
+		box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.2);
+		width: fit-content;
 	}
 </style>
