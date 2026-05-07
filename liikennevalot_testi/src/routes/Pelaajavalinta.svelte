@@ -10,6 +10,16 @@
 		pelaa: () => void;
 		takaisin: () => void;
 	}>();
+
+	function validiNimi(nimi: string) {
+		const trimattu = nimi.trim();
+
+		return trimattu.length >= 1 && trimattu.length <= 15;
+	}
+	let virhe: string = $state('Virheellinen nimi.');
+	let kaikkiValidit = $derived(
+		players.slice(0, pelaajamaara).every((p: Player) => validiNimi(p.name))
+	);
 </script>
 
 <div
@@ -55,7 +65,7 @@
 			{/each}
 		</div>
 
-		<div class="flex w-full items-center justify-between">
+		<div class="relative flex w-full items-center justify-between">
 			<button
 				onclick={withClickSound(takaisin)}
 				class="-mt-2 flex h-14 w-14 items-center justify-center border-4 border-black bg-[#d1d5db] text-xl shadow-[8px_8px_0px_0px_rgba(0,0,0,0.25),inset_0_-6px_0_rgba(0,0,0,0.5)] transition-all active:translate-y-1 active:shadow-none"
@@ -64,12 +74,33 @@
 			</button>
 
 			<button
-				onclick={withClickSound(pelaa)}
-				class="text-pixel-shadow mt-0 cursor-pointer text-3xl font-bold tracking-tight text-black uppercase transition-transform hover:scale-105 active:scale-95 md:text-4xl"
+				onclick={withClickSound(() => {
+					const kaikkiValidit = players
+						.slice(0, pelaajamaara)
+						.every((p: Player) => validiNimi(p.name));
+
+					if (!kaikkiValidit) {
+						virhe = 'Nimen pitää olla 1-15 merkkiä.';
+						return;
+					}
+
+					pelaa();
+				})}
+				class="text-pixel-shadow -mt-0 cursor-pointer text-3xl font-bold tracking-tight text-black uppercase transition-transform hover:scale-105 active:scale-95 md:text-4xl"
+				disabled={!kaikkiValidit}
+				class:opacity-50={!kaikkiValidit}
+				class:cursor-not-allowed={!kaikkiValidit}
 			>
 				PELAA
 			</button>
-			<div class="w-14"></div>
+
+			<div class="virhe w-14">
+				<div class="absolute bottom-[-24px] left-[320px] w-40 text-left">
+					{#if !kaikkiValidit}
+						<p class="text-[8px] uppercase">{virhe}</p>
+					{/if}
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
