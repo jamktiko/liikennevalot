@@ -52,4 +52,18 @@
 		width: 100%;
 		height: 100%;
 	}
+	.stack {
+		--size: 40px; /* positio ylös alas että näkyy kaikki pelaajat. 40px */
+
+		position: relative;
+		width: var(--size);
+		height: calc(var(--size) * 2); /* keep aspect ratio */
+	}
+
+	.layer {
+		position: absolute;
+		inset: 0; /* shorthand for top/left/right/bottom = 0 */
+		width: 100%;
+		height: 100%;
+	}
 </style>

@@ -3,6 +3,8 @@
 	import { cubicIn } from 'svelte/easing';
 	import { registerSound } from '$lib/components/sound';
 	import { onMount } from 'svelte';
+	import { goto } from '$app/navigation';
+	import { resolve } from '$app/paths';
 
 	// Tuodaan pelimoottori
 	import { moottori } from '$lib/pelimoottori.svelte';
@@ -69,6 +71,10 @@
 	<div class="game" style="transform: translate(-50%, -50%) scale({scale});">
 		<div class="bg-box">
 			{#if nakyma === 'etusivu'}
+				<div class="ui top-left">
+					<Button onclick={() => (naytaAsetukset = true)} text="ASETUKSET" />
+					<Button onclick={() => goto(resolve('/tekijat'))} text="TEKIJÄT" />
+				</div>
 				<div class="logo" transition:fade={{ duration: 300 }}>
 					<Otsikko />
 				</div>
@@ -146,6 +152,7 @@
 						/>
 						<Button onclick={() => (naytaScoreboard = true)} text="TULOKSET" />
 						<Button onclick={() => (naytaAsetukset = true)} text="ASETUKSET" />
+						<Button onclick={() => (nakyma = 'etusivu')} text="ETUSIVU" />
 					</div>
 					<div class="ui center"></div>
 					<div class="ui bottom-right">
@@ -171,6 +178,7 @@
 					<h2>Voittaja!</h2>
 				{/snippet}
 				<p>Pelin voittaja on {moottori.voittaja?.name.toUpperCase()}!</p>
+				<p>{moottori.vitsi}</p>
 				<div
 					class="char-box-shadow flex h-32 w-32 items-center justify-center overflow-hidden border-[4px] border-black bg-[#c0c0c0] md:h-40 md:w-40"
 				>
