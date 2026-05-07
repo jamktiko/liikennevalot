@@ -5,6 +5,7 @@
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
+	import puhekuplaImg from '$lib/assets/puhekupla.png';
 
 	// Tuodaan pelimoottori
 	import { moottori } from '$lib/pelimoottori.svelte';
@@ -83,7 +84,7 @@
 	<div class="game" style="transform: translate(-50%, -50%) scale({scale});">
 		<div class="bg-box">
 			{#if nakyma === 'etusivu'}
-				<div class="ui top-left">
+				<div class="ui top-left" transition:fade={{ duration: 300 }}>
 					<Button onclick={() => (naytaAsetukset = true)} text="ASETUKSET" />
 					<Button onclick={() => goto(resolve('/tekijat'))} text="TEKIJÄT" />
 				</div>
@@ -162,6 +163,8 @@
 							text="ALOITA UUSI KIERROS"
 							disabled={moottori.peliKaynnissa}
 						/>
+					</div>
+					<div class="ui top-right">
 						<Button onclick={() => (naytaScoreboard = true)} text="TULOKSET" />
 						<Button onclick={() => (naytaAsetukset = true)} text="ASETUKSET" />
 						<Button onclick={() => (nakyma = 'etusivu')} text="ETUSIVU" />
@@ -190,7 +193,23 @@
 					<h2>Voittaja!</h2>
 				{/snippet}
 				<p>Pelin voittaja on {moottori.voittaja?.name.toUpperCase()}!</p>
-				<p>{moottori.vitsi}</p>
+				<div class="absolute -top-40 -right-[210px] z-60 w-85">
+					<img src={puhekuplaImg} alt="Puhekupla" class="h-auto w-full drop-shadow-lg" />
+					<div class="absolute inset-0 flex items-center justify-center p-8 pb-12">
+						{#if moottori.ladataanVitsiä}
+							<p class="animate-pulse font-mono text-xs text-gray-500 uppercase">
+								Mietitään vitsiä...
+							</p>
+						{:else}
+							<p
+								class="text-center font-['Press_Start_2P'] text-[10px] leading-relaxed text-black md:text-[12px]"
+							>
+								"{moottori.vitsi}"
+							</p>
+						{/if}
+					</div>
+				</div>
+
 				<div
 					class="char-box-shadow flex h-32 w-32 items-center justify-center overflow-hidden border-[4px] border-black bg-[#c0c0c0] md:h-40 md:w-40"
 				>
@@ -346,6 +365,16 @@
 	.top-left {
 		top: 10px;
 		left: 10px;
+		margin: 10px;
+		gap: 10px;
+		display: flex;
+	}
+	.top-right {
+		top: 10px;
+		right: 10px;
+		margin: 10px;
+		gap: 10px;
+		display: flex;
 	}
 	.center {
 		top: 50%;
