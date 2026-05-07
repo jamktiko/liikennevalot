@@ -4,13 +4,17 @@
 
 	interface Props {
 		juomapeli: boolean;
+		musiikki: boolean;
+		aanet: boolean;
 		sulje: () => void;
 	}
 
-	let { juomapeli = $bindable(), sulje }: Props = $props();
-
-	let musiikki = $state(true);
-	let aanet = $state(true);
+	let {
+		juomapeli = $bindable(),
+		musiikki = $bindable(),
+		aanet = $bindable(),
+		sulje
+	}: Props = $props();
 </script>
 
 <div

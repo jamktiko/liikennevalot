@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { fade, fly } from 'svelte/transition';
 	import { cubicIn } from 'svelte/easing';
-	import { registerSound } from '$lib/components/sound';
+	import { registerSound, registerMusic, playMusic, pauseMusic } from '$lib/components/sound';
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
@@ -29,6 +29,8 @@
 	let naytaScoreboard: boolean = $state(false);
 	let naytaAsetukset = $state(false);
 	let juomapeli: boolean = $state(false);
+	let musiikki: boolean = $state(false);
+	let aanet: boolean = $state(false);
 
 	// Kytketään moottorin voitto-tapahtuma käyttöliittymän modaaliin
 	moottori.onWin = () => {
@@ -58,10 +60,20 @@
 		registerSound('light', '/sounds/redlight.mp3');
 		registerSound('scream', '/sounds/scream.mp3');
 
+		// taustamusiikki
+		registerMusic('/sounds/music.mp3');
+
 		// Varmistetaan, että pelaajat päivitetään kerran mounttauksen yhteydessä
 		moottori.paivitaPelaajat();
 
 		return () => window.removeEventListener('resize', updateScale);
+	});
+	$effect(() => {
+		if (musiikki) {
+			playMusic();
+		} else {
+			pauseMusic();
+		}
 	});
 </script>
 
@@ -163,7 +175,7 @@
 		</div>
 
 		{#if naytaAsetukset}
-			<Asetukset sulje={() => (naytaAsetukset = false)} bind:juomapeli />
+			<Asetukset sulje={() => (naytaAsetukset = false)} bind:juomapeli bind:musiikki bind:aanet />
 		{/if}
 		{#if naytaScoreboard}
 			<Tulostaulukko
