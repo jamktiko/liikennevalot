@@ -228,22 +228,42 @@ class Pelimoottori {
 	};
 	async haeDadJoke() {
 		this.ladataanVitsiä = true;
+		let vitsiLoytyi = false;
+		let yritykset = 0;
+
+		// Määritä maksimipituus merkeissä
+		const MAX_PITUUS = 100;
 
 		try {
-			const response = await fetch('https://icanhazdadjoke.com/', {
-				headers: { Accept: 'application/json' }
-			});
+			// Yritetään hakea vitsiä enintään 5 kertaa
+			while (!vitsiLoytyi && yritykset < 5) {
+				yritykset++;
 
-			if (!response.ok) throw new Error('Yhteysvirhe');
+				const response = await fetch('https://icanhazdadjoke.com/', {
+					headers: { Accept: 'application/json' }
+				});
 
-			const data = await response.json();
-			this.vitsi = data.joke;
+				if (!response.ok) throw new Error('Yhteysvirhe');
+
+				const data = await response.json();
+
+				// Tarkistetaan, onko vitsi riittävän lyhyt
+				if (data.joke.length <= MAX_PITUUS) {
+					this.vitsi = data.joke;
+					vitsiLoytyi = true;
+				}
+			}
+
+			// Jos 5 yrityksen jälkeenkään ei löytynyt lyhyttä vitsiä, annetaan oletusvitsi
+			if (!vitsiLoytyi) {
+				this.vitsi =
+					'Why do fathers take an extra pair of socks when they go golfing? In case they get a hole in one!';
+			}
 
 			this.ladataanVitsiä = false;
 		} catch (error) {
 			console.error('Virhe:', error);
 			this.vitsi = 'Vitsien haku epäonnistui, mutta olet silti voittaja!';
-
 			this.ladataanVitsiä = false;
 		}
 	}
