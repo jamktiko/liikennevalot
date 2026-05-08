@@ -104,11 +104,17 @@
 		switch (teema) {
 			case 2:
 				return {
+					left: '940px',
+					top: '310px'
+				};
+
+			case 3:
+				return {
 					left: '1010px',
 					top: '130px'
 				};
 
-			case 3:
+			case 4:
 				return {
 					left: '940px',
 					top: '310px'
