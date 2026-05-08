@@ -105,7 +105,7 @@
 			case 2:
 				return {
 					left: '1000px',
-					top: '50px'
+					top: '100px'
 				};
 
 			case 3:
