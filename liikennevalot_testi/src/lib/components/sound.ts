@@ -4,6 +4,7 @@ const POOL_SIZE = 5;
 
 // 🔊 globaalit asetukset
 let globalVolume = 1; // 0–1
+const musicVolume = 0.5;
 let muted = false;
 let backgroundMusic: HTMLAudioElement | null = null;
 
@@ -26,7 +27,7 @@ export function registerMusic(src: string) {
 	backgroundMusic = new Audio(src);
 	backgroundMusic.loop = true;
 	backgroundMusic.preload = 'auto';
-	backgroundMusic.volume = globalVolume;
+	backgroundMusic.volume = musicVolume;
 }
 
 // ------------------
