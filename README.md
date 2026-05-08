@@ -1,5 +1,3 @@
-# liikennevalot_esituotanto
-
 # Liikennevalot
 
 Reaction-based game testing the user's reflexes.
@@ -43,27 +41,17 @@ To install the program, you can download Liikennevalot_testi through a Github re
 
 Clone repository:
 
-    ```sh
     git clone <repository-url>
-    ```
 
 Install dependencies:
 
-    ```sh
     npm install
-    ```
 
     Open your local host:
 
-    ```sh
     npm run dev
-    ```
 
-    Open the game in your local host through the given link.
-
-    ```sh
-    http://localhost:5173
-    ```
+    Open the game in your local host through the given link:  http://localhost:5173
 
 ## Help
 
