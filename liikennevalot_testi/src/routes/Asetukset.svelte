@@ -7,13 +7,15 @@
 		musiikki: boolean;
 		aanet: boolean;
 		sulje: () => void;
+		vaihdaTeema: () => void;
 	}
 
 	let {
 		juomapeli = $bindable(),
 		musiikki = $bindable(),
 		aanet = $bindable(),
-		sulje
+		sulje,
+		vaihdaTeema
 	}: Props = $props();
 </script>
 
@@ -72,7 +74,10 @@
 				</label>
 				<button
 					class="flex w-full cursor-pointer items-center justify-between border-4 border-black bg-white p-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.25),inset_0_-6px_0_rgba(0,0,0,0.5)] active:translate-y-1"
-					onclick={() => playSound('click')}
+					onclick={() => {
+						playSound('click');
+						vaihdaTeema();
+					}}
 				>
 					<span class="text-[10px] font-black tracking-tighter text-black uppercase"> Teema </span>
 
