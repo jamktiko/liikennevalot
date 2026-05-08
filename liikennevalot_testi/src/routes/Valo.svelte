@@ -44,11 +44,11 @@
 	}
 	.vihrea {
 		background-color: #00ff00;
-		box-shadow: 0 0 1000px 50px #00ff00;
+		box-shadow: 0 0 200px 50px #00ff00;
 	}
 	.punainen {
 		background-color: #ff0000;
-		box-shadow: 0 0 1000px 50px #ff0000;
+		box-shadow: 0 0 200px 50px #ff0000;
 	}
 	img {
 		width: 100%;
