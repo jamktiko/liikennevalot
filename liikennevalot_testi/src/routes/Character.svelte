@@ -12,6 +12,7 @@
 		text?: string;
 		color: number;
 		character: number;
+		theme: number;
 	}
 	let { color, character }: Props = $props();
 

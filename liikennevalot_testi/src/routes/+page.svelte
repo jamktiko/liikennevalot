@@ -185,9 +185,9 @@
 														out:fly={{ x: -150, y: 200, duration: 1000, easing: cubicIn }}
 													>
 														<Character
-															text={player.key.toUpperCase()}
 															color={player.c}
 															character={player.character}
+															theme={teema}
 														/>
 													</div>
 												{/if}
@@ -297,7 +297,11 @@
 					class="char-box-shadow flex h-32 w-32 items-center justify-center overflow-hidden border-[4px] border-black bg-[#c0c0c0] md:h-40 md:w-40"
 				>
 					<div style="transform: scale(1.5) translateY(5px);">
-						<Character color={moottori.voittaja.c} character={moottori.voittaja.character} />
+						<Character
+							color={moottori.voittaja.c}
+							character={moottori.voittaja.character}
+							theme={teema}
+						/>
 					</div>
 				</div>
 				{#snippet footer()}
