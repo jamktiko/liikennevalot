@@ -22,7 +22,7 @@ class Pelimoottori {
 
 	valoTimeout: ReturnType<typeof setTimeout> | undefined;
 
-	// Callback-funktio, jota kutsutaan kun peli voitetaan. UI ylikirjoittaa tämän.
+	// Callback-funktio, jota kutsutaan kun peli voitetaan
 	onWin: () => void = () => {};
 
 	players: Player[] = $state([

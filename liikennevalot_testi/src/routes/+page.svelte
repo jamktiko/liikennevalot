@@ -219,9 +219,23 @@
 				{/snippet}
 				<p>Pelin voittaja on</p>
 				<p>{moottori.voittaja?.name.toUpperCase()}!</p>
-				<div class="absolute -top-40 -right-[210px] z-60 w-85">
-					<img src={puhekuplaImg} alt="Puhekupla" class="h-auto w-full drop-shadow-lg" />
-					<div class="absolute inset-0 flex items-center justify-center p-8 pb-12">
+				<div
+					class="absolute {juomapeli
+						? 'top-40 -right-[260px] rotate-[-5deg]'
+						: '-top-40 -right-[210px]'} z-60 w-[280px] md:w-[320px]"
+				>
+					<img
+						src={puhekuplaImg}
+						alt="Puhekupla"
+						class="h-auto w-full drop-shadow-lg"
+						style={juomapeli ? 'transform: scaleY(-1);' : ''}
+					/>
+
+					<div
+						class="absolute inset-0 flex items-center justify-center {juomapeli
+							? 'p-8 pt-12'
+							: 'p-8 pb-12'}"
+					>
 						{#if moottori.ladataanVitsiä}
 							<p class="animate-pulse font-mono text-xs text-gray-500 uppercase">
 								Mietitään vitsiä...
