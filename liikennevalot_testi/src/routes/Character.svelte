@@ -22,10 +22,10 @@
 <div class="stack">
 	<div class="layer">
 		<div class="vari" style="filter: sepia(1) saturate(1000%) hue-rotate({color}deg);">
-			<img src={paidat[character - 1]} alt="Pixel art walking character" />
+			<img src={paidat[character]} alt="Pixel art walking character" />
 		</div>
 	</div>
-	<img src={characters[character - 1]} alt="Pixel art walking character" />
+	<img src={characters[character]} alt="Pixel art walking character" />
 	<div class="layer"></div>
 </div>
 

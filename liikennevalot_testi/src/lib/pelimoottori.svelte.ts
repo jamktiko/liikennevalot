@@ -32,7 +32,7 @@ class Pelimoottori {
 			name: 'Pelaaja 1',
 			dead: true,
 			c: 0,
-			character: 1,
+			character: 0,
 			wins: 0,
 			wrongInputs: 0
 		},
@@ -42,7 +42,7 @@ class Pelimoottori {
 			name: 'Pelaaja 2',
 			dead: true,
 			c: 72,
-			character: 2,
+			character: 1,
 			wins: 0,
 			wrongInputs: 0
 		},
@@ -52,7 +52,7 @@ class Pelimoottori {
 			name: 'Pelaaja 3',
 			dead: true,
 			c: 144,
-			character: 3,
+			character: 2,
 			wins: 0,
 			wrongInputs: 0
 		},
@@ -62,7 +62,7 @@ class Pelimoottori {
 			name: 'Pelaaja 4',
 			dead: true,
 			c: 288,
-			character: 4,
+			character: 3,
 			wins: 0,
 			wrongInputs: 0
 		}
