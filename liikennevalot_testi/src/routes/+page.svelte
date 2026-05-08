@@ -180,7 +180,8 @@
 				{#snippet header()}
 					<h2>Voittaja!</h2>
 				{/snippet}
-				<p>Pelin voittaja on {moottori.voittaja?.name.toUpperCase()}!</p>
+				<p>Pelin voittaja on</p>
+				<p>{moottori.voittaja?.name.toUpperCase()}!</p>
 				<div class="absolute -top-40 -right-[210px] z-60 w-85">
 					<img src={puhekuplaImg} alt="Puhekupla" class="h-auto w-full drop-shadow-lg" />
 					<div class="absolute inset-0 flex items-center justify-center p-8 pb-12">
