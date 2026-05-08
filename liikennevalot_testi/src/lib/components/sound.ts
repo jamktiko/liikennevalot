@@ -5,6 +5,7 @@ const POOL_SIZE = 5;
 // 🔊 globaalit asetukset
 let globalVolume = 1; // 0–1
 let muted = false;
+let backgroundMusic: HTMLAudioElement | null = null;
 
 // ------------------
 // REGISTER
@@ -18,6 +19,14 @@ export function registerSound(name: string, src: string) {
 		audio.volume = globalVolume;
 		return audio;
 	});
+}
+export function registerMusic(src: string) {
+	if (backgroundMusic) return;
+
+	backgroundMusic = new Audio(src);
+	backgroundMusic.loop = true;
+	backgroundMusic.preload = 'auto';
+	backgroundMusic.volume = globalVolume;
 }
 
 // ------------------
@@ -36,6 +45,15 @@ export function playSound(name: string) {
 
 	audio.play().catch(() => {});
 }
+export async function playMusic() {
+	if (!backgroundMusic || muted) return;
+
+	try {
+		await backgroundMusic.play();
+	} catch (err) {
+		console.log(err);
+	}
+}
 
 // ------------------
 // STOP
@@ -48,6 +66,17 @@ export function stopSound(name: string) {
 		audio.pause();
 		audio.currentTime = 0;
 	});
+}
+export function stopMusic() {
+	if (!backgroundMusic) return;
+
+	backgroundMusic.pause();
+	backgroundMusic.currentTime = 0;
+}
+export function pauseMusic() {
+	if (!backgroundMusic) return;
+
+	backgroundMusic.pause();
 }
 
 // ------------------

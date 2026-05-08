@@ -14,9 +14,9 @@
 <div class="parent">
 	<div class="contentbox" style="top: {50 + pelaajaMaara * 2.5}%;">
 		<div
-			class="fixed inset-0 z-[60] flex items-center justify-center font-['Press_Start_2P'] select-none"
+			class="fixed inset-0 z-60 flex items-center justify-center font-['Press_Start_2P'] select-none"
 		>
-			<div class=" flex w-[600px] flex-col items-center gap-6 p-8">
+			<div class=" flex w-150 flex-col items-center gap-6 p-8">
 				<div class="w-full space-y-4">
 					{#each jarjestetytPelaajat.reverse() as p (p.key)}
 						<div

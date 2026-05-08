@@ -1,7 +1,13 @@
 <script lang="ts">
 	import { fade, fly } from 'svelte/transition';
 	import { cubicIn } from 'svelte/easing';
-	import { registerSound } from '$lib/components/sound';
+	import {
+		registerSound,
+		registerMusic,
+		playMusic,
+		pauseMusic,
+		setMute
+	} from '$lib/components/sound';
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
@@ -30,6 +36,8 @@
 	let naytaScoreboard: boolean = $state(false);
 	let naytaAsetukset = $state(false);
 	let juomapeli: boolean = $state(false);
+	let musiikki: boolean = $state(false);
+	let aanet: boolean = $state(true);
 
 	// Kytketään moottorin voitto-tapahtuma käyttöliittymän modaaliin
 	moottori.onWin = () => {
@@ -59,10 +67,28 @@
 		registerSound('light', '/sounds/redlight.mp3');
 		registerSound('scream', '/sounds/scream.mp3');
 
+		// taustamusiikki
+		registerMusic('/sounds/music.mp3');
+
 		// Varmistetaan, että pelaajat päivitetään kerran mounttauksen yhteydessä
 		moottori.paivitaPelaajat();
 
 		return () => window.removeEventListener('resize', updateScale);
+	});
+	$effect(() => {
+		if (musiikki) {
+			playMusic();
+		} else {
+			pauseMusic();
+		}
+	});
+	$effect(() => {
+		setMute(!aanet);
+		if (!aanet) {
+			pauseMusic();
+		} else if (musiikki) {
+			playMusic();
+		}
 	});
 </script>
 
@@ -97,6 +123,11 @@
 						pelaajamaara={moottori.pelaajamaara}
 						vaihdaVari={moottori.vaihdaVari}
 						pelaa={() => {
+							// musiikki = true;    // musiikki pelin alkaessa päälle/pois -asetuksista riippuen
+							// if (musiikki) {
+							// 	playMusic();
+							// }
+
 							nakyma = 'peli';
 						}}
 						takaisin={() => (nakyma = 'etusivu')}
@@ -155,7 +186,13 @@
 					<div class="ui top-right">
 						<Button onclick={() => (naytaScoreboard = true)} text="TULOKSET" />
 						<Button onclick={() => (naytaAsetukset = true)} text="ASETUKSET" />
-						<Button onclick={() => (nakyma = 'etusivu')} text="ETUSIVU" />
+						<Button
+							onclick={() => {
+								goto(resolve('/'));
+								window.location.reload();
+							}}
+							text="ETUSIVU"
+						/>
 					</div>
 					<div class="ui center"></div>
 					<div class="ui bottom-right">
@@ -166,7 +203,7 @@
 		</div>
 
 		{#if naytaAsetukset}
-			<Asetukset sulje={() => (naytaAsetukset = false)} bind:juomapeli />
+			<Asetukset sulje={() => (naytaAsetukset = false)} bind:juomapeli bind:musiikki bind:aanet />
 		{/if}
 		{#if naytaScoreboard}
 			<Tulostaulukko
@@ -182,9 +219,23 @@
 				{/snippet}
 				<p>Pelin voittaja on</p>
 				<p>{moottori.voittaja?.name.toUpperCase()}!</p>
-				<div class="absolute -top-40 -right-[210px] z-60 w-85">
-					<img src={puhekuplaImg} alt="Puhekupla" class="h-auto w-full drop-shadow-lg" />
-					<div class="absolute inset-0 flex items-center justify-center p-8 pb-12">
+				<div
+					class="absolute {juomapeli
+						? 'top-40 -right-[260px] rotate-[-5deg]'
+						: '-top-40 -right-[210px]'} z-60 w-[280px] md:w-[320px]"
+				>
+					<img
+						src={puhekuplaImg}
+						alt="Puhekupla"
+						class="h-auto w-full drop-shadow-lg"
+						style={juomapeli ? 'transform: scaleY(-1);' : ''}
+					/>
+
+					<div
+						class="absolute inset-0 flex items-center justify-center {juomapeli
+							? 'p-8 pt-12'
+							: 'p-8 pb-12'}"
+					>
 						{#if moottori.ladataanVitsiä}
 							<p class="animate-pulse font-mono text-xs text-gray-500 uppercase">
 								Mietitään vitsiä...
@@ -216,6 +267,13 @@
 						</button>
 					{/if}
 					{#if juomapeli}
+						{#each moottori.players.slice(0, moottori.pelaajamaara) as player (player.key)}
+							{#if player.wrongInputs === 1}
+								<p>{player.name.toUpperCase()}: {player.wrongInputs} hörppy</p>
+							{:else if player.wrongInputs > 1}
+								<p>{player.name.toUpperCase()}: {player.wrongInputs} hörppyä</p>
+							{/if}
+						{/each}
 						{#if Math.random() < 0.5}
 							<div class="rafflecontainer">
 								<Raffle nimet={moottori.aktiivisetPelaajat} {suljeModal} />
@@ -228,13 +286,6 @@
 								Pelaa uudelleen
 							</button>
 						{/if}
-						{#each moottori.players.slice(0, moottori.pelaajamaara) as player (player.key)}
-							{#if player.wrongInputs === 1}
-								<p>{player.name.toUpperCase()}: {player.wrongInputs} hörppy</p>
-							{:else if player.wrongInputs > 1}
-								<p>{player.name.toUpperCase()}: {player.wrongInputs} hörppyä</p>
-							{/if}
-						{/each}
 					{/if}
 				{/snippet}
 			</Modal>

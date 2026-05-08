@@ -4,17 +4,21 @@
 
 	interface Props {
 		juomapeli: boolean;
+		musiikki: boolean;
+		aanet: boolean;
 		sulje: () => void;
 	}
 
-	let { juomapeli = $bindable(), sulje }: Props = $props();
-
-	let musiikki = $state(true);
-	let aanet = $state(true);
+	let {
+		juomapeli = $bindable(),
+		musiikki = $bindable(),
+		aanet = $bindable(),
+		sulje
+	}: Props = $props();
 </script>
 
 <div
-	class="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 p-4 font-['Press_Start_2P'] backdrop-blur-sm select-none"
+	class="fixed inset-0 z-100 flex items-center justify-center bg-black/60 p-4 font-['Press_Start_2P'] backdrop-blur-sm select-none"
 >
 	<div class="relative w-full max-w-xs sm:max-w-sm">
 		<div
@@ -26,7 +30,7 @@
 
 			<div class="w-full space-y-4">
 				<label
-					class="flex cursor-pointer items-center justify-between border-4 border-black bg-white p-3 shadow-[4px_4px_0px_rgba(0,0,0,0.2)] active:translate-y-1"
+					class="flex cursor-pointer items-center justify-between border-4 border-black bg-white p-3 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.25),inset_0_-6px_0_rgba(0,0,0,0.5)] active:translate-y-1"
 				>
 					<span class="text-[10px] font-black tracking-tighter text-black uppercase">
 						Juomapeli
@@ -40,7 +44,7 @@
 				</label>
 
 				<label
-					class="flex cursor-pointer items-center justify-between border-4 border-black bg-white p-3 shadow-[4px_4px_0px_rgba(0,0,0,0.2)] active:translate-y-1"
+					class="flex cursor-pointer items-center justify-between border-4 border-black bg-white p-3 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.25),inset_0_-6px_0_rgba(0,0,0,0.5)] active:translate-y-1"
 				>
 					<span class="text-[10px] font-black tracking-tighter text-black uppercase">
 						Musiikki
@@ -54,7 +58,7 @@
 				</label>
 
 				<label
-					class="flex cursor-pointer items-center justify-between border-4 border-black bg-white p-3 shadow-[4px_4px_0px_rgba(0,0,0,0.2)] active:translate-y-1"
+					class="flex cursor-pointer items-center justify-between border-4 border-black bg-white p-3 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.25),inset_0_-6px_0_rgba(0,0,0,0.5)] active:translate-y-1"
 				>
 					<span class="text-[10px] font-black tracking-tighter text-black uppercase">
 						Pelin äänet
@@ -66,6 +70,14 @@
 						onchange={() => playSound('click')}
 					/>
 				</label>
+				<button
+					class="flex w-full cursor-pointer items-center justify-between border-4 border-black bg-white p-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.25),inset_0_-6px_0_rgba(0,0,0,0.5)] active:translate-y-1"
+					onclick={() => playSound('click')}
+				>
+					<span class="text-[10px] font-black tracking-tighter text-black uppercase"> Teema </span>
+
+					<span class="text-[10px] font-black text-black"> › </span>
+				</button>
 			</div>
 
 			<Button text="SULJE" onclick={sulje} />

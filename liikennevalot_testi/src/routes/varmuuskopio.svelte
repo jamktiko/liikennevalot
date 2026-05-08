@@ -425,7 +425,7 @@
 		{/snippet}
 		<p>Pelin voittaja on {voittaja?.name.toUpperCase()}!</p>
 		<div
-			class="char-box-shadow flex h-32 w-32 items-center justify-center overflow-hidden border-[4px] border-black bg-[#c0c0c0] md:h-40 md:w-40"
+			class="char-box-shadow flex h-32 w-32 items-center justify-center overflow-hidden border-4 border-black bg-[#c0c0c0] md:h-40 md:w-40"
 		>
 			<div style="transform: scale(1.5) translateY(5px);">
 				<Character color={voittaja.c} character={voittaja.character} />
