@@ -123,10 +123,10 @@
 						pelaajamaara={moottori.pelaajamaara}
 						vaihdaVari={moottori.vaihdaVari}
 						pelaa={() => {
-							musiikki = true;
-							if (musiikki) {
-								playMusic();
-							}
+							// musiikki = true;    // musiikki pelin alkaessa päälle/pois -asetuksista riippuen
+							// if (musiikki) {
+							// 	playMusic();
+							// }
 
 							nakyma = 'peli';
 						}}
@@ -253,6 +253,13 @@
 						</button>
 					{/if}
 					{#if juomapeli}
+						{#each moottori.players.slice(0, moottori.pelaajamaara) as player (player.key)}
+							{#if player.wrongInputs === 1}
+								<p>{player.name.toUpperCase()}: {player.wrongInputs} hörppy</p>
+							{:else if player.wrongInputs > 1}
+								<p>{player.name.toUpperCase()}: {player.wrongInputs} hörppyä</p>
+							{/if}
+						{/each}
 						{#if Math.random() < 0.5}
 							<div class="rafflecontainer">
 								<Raffle nimet={moottori.aktiivisetPelaajat} {suljeModal} />
@@ -265,13 +272,6 @@
 								Pelaa uudelleen
 							</button>
 						{/if}
-						{#each moottori.players.slice(0, moottori.pelaajamaara) as player (player.key)}
-							{#if player.wrongInputs === 1}
-								<p>{player.name.toUpperCase()}: {player.wrongInputs} hörppy</p>
-							{:else if player.wrongInputs > 1}
-								<p>{player.name.toUpperCase()}: {player.wrongInputs} hörppyä</p>
-							{/if}
-						{/each}
 					{/if}
 				{/snippet}
 			</Modal>

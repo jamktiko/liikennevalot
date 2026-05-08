@@ -28,9 +28,12 @@
 	<div
 		class="pixel-shadow flex max-h-125 w-full max-w-5xl flex-col gap-6 overflow-y-auto border-[6px] border-black bg-[#9dc2e0] p-6 md:p-12"
 	>
-		<div class="grid w-full grid-cols-1 gap-8 lg:grid-cols-2">
+		<div class="grid w-full grid-cols-1 gap-4 lg:grid-cols-2">
 			{#each players.slice(0, pelaajamaara) as player, i (player.key)}
-				<div class="pixel-shadow flex gap-4 border-4 border-black bg-white p-4">
+				<div
+					class="pixel-shadow flex gap-3 border-[4px] border-black bg-white p-3"
+					class:compact={pelaajamaara >= 4}
+				>
 					<div
 						class="relative flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden border-4 border-black bg-[#c0c0c0] shadow-[4px_4px_0px_0px_rgba(0,0,0,0.25),inset_0_-8px_0_rgba(0,0,0,0.3)] md:h-28 md:w-28"
 					>
@@ -95,7 +98,7 @@
 			</button>
 
 			<div class="virhe w-14">
-				<div class="absolute bottom-[-24px] left-[320px] w-40 text-left">
+				<div class="absolute bottom-[-10px] left-[320px] w-40 text-left">
 					{#if !kaikkiValidit}
 						<p class="text-[8px] uppercase">{virhe}</p>
 					{/if}
@@ -109,10 +112,22 @@
 	.pixel-shadow {
 		box-shadow: 8px 8px 0px 0px rgba(0, 0, 0, 0.5);
 	}
+
 	.btn-shadow {
 		box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 0.25);
 	}
+
 	.text-pixel-shadow {
 		text-shadow: 4px 4px 0px rgba(0, 0, 0, 0.2);
+	}
+
+	.compact {
+		padding: 0.75rem;
+		gap: 0.5rem;
+	}
+
+	.compact :global(.character-box) {
+		width: 72px;
+		height: 72px;
 	}
 </style>
