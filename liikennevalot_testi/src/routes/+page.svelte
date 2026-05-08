@@ -98,7 +98,7 @@
 	});
 
 	function vaihdaTeema() {
-		teema = teema >= 3 ? 1 : teema + 1;
+		teema = teema >= 4 ? 1 : teema + 1;
 	}
 	const valoPosition = $derived.by(() => {
 		switch (teema) {
