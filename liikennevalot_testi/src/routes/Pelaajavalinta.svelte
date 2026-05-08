@@ -3,12 +3,13 @@
 	import Character from './Character.svelte';
 	import { withClickSound } from '$lib/components/sound';
 
-	let { players, pelaajamaara, vaihdaVari, pelaa, takaisin } = $props<{
+	let { players, pelaajamaara, vaihdaVari, pelaa, takaisin, theme } = $props<{
 		players: Player[];
 		pelaajamaara: number;
 		vaihdaVari: (index: number) => void;
 		pelaa: () => void;
 		takaisin: () => void;
+		theme: number;
 	}>();
 
 	function validiNimi(nimi: string) {
@@ -38,7 +39,7 @@
 						class="relative flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden border-4 border-black bg-[#c0c0c0] shadow-[4px_4px_0px_0px_rgba(0,0,0,0.25),inset_0_-8px_0_rgba(0,0,0,0.3)] md:h-28 md:w-28"
 					>
 						<div style="transform: scale(1.5) translateY(10px);">
-							<Character color={player.c} character={player.character} />
+							<Character color={player.c} character={player.character} {theme} />
 						</div>
 					</div>
 

@@ -162,6 +162,7 @@
 							nakyma = 'peli';
 						}}
 						takaisin={() => (nakyma = 'etusivu')}
+						theme={teema}
 					/>
 				</div>
 			{:else}
