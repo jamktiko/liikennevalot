@@ -9,7 +9,7 @@
 
 	let modals = $state<Modal[]>([]);
 	let intervalId: ReturnType<typeof setInterval> | null = null;
-	let speed = $state(550);
+	let speed = $state(700);
 	let nextId = 1;
 
 	function random() {
@@ -40,6 +40,7 @@
 			clearInterval(intervalId);
 			intervalId = null;
 		}
+		modals = [];
 	}
 
 	function closeModal(id: number) {
@@ -60,14 +61,22 @@
 </button>
 
 <label>
-	Speed: {speed}ms
-	<input type="range" min="500" max="1000" step="50" bind:value={speed} />
+	Vaikeus:
+	<input type="range" min="500" max="1000" step="10" bind:value={speed} />
 </label>
+
+{#if modals.length > 0}
+	<div class="overlay">
+		<div class="quitgame">
+			<Button text="LOPETA" onclick={() => miniGameStop()} />
+		</div>
+	</div>
+{/if}
 
 {#each modals as modal (modal.id)}
 	<div
 		class="modal"
-		style="left: {modal.left}%; top: {modal.top}%; position: fixed; transform: translate(-50%, -50%);"
+		style="left: {modal.left}%; top: {modal.top}%; transform: translate(-50%, -50%);"
 	>
 		<h2>HELLO WORLD</h2>
 		<Button text="SULJE" onclick={() => closeModal(modal.id)} />
@@ -75,18 +84,29 @@
 {/each}
 
 <style>
-	/* .overlay {
+	.overlay {
 		position: fixed;
 		inset: 0;
-		background: rgba(0, 0, 0, 0);
-	} */
+		background: rgba(0, 0, 0, 0.2); /* optional tumma tausta */
+		z-index: 999;
+	}
 
 	.modal {
+		position: fixed;
+		z-index: 1000;
+
 		background: white;
 		padding: 2rem;
 		border: solid 4px black;
 		border-radius: 12px;
 		min-width: 300px;
+	}
+	.quitgame {
 		position: absolute;
+		top: -60px;
+		right: -390px;
+		margin: 10px;
+		gap: 10px;
+		display: flex;
 	}
 </style>
