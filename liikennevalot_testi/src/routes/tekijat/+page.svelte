@@ -182,6 +182,7 @@
 		background-position: top center;
 		background-repeat: no-repeat;
 		background-attachment: absolute;
+		text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.2);
 	}
 	.wrapper {
 		width: 100vw;
@@ -201,9 +202,9 @@
 	}
 	h2 {
 		text-transform: uppercase;
-		font-size: 14px;
+		font-size: 16px;
 		letter-spacing: 2px;
-		margin-top: 12px;
+		margin-top: 18px;
 		margin-bottom: 6px;
 		text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.2);
 	}
@@ -219,10 +220,9 @@
 		margin: 0;
 		font-size: 12px;
 		letter-spacing: 1px;
-		background: rgba(255, 255, 255, 0.2);
+
 		padding: 4px 8px;
-		border: 2px solid black;
-		box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.2);
+		text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.2);
 		width: fit-content;
 	}
 </style>
