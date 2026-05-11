@@ -5,42 +5,42 @@
 	import character3 from '$lib/assets/3_paiva.png';
 	import character4 from '$lib/assets/4_paiva.png';
 
-	import paita1 from '$lib/assets/1_paita_paiva.png';
-	import paita2 from '$lib/assets/2_paita_paiva.png';
-	import paita3 from '$lib/assets/3_paita_paiva.png';
-	import paita4 from '$lib/assets/4_paita_paiva.png';
+	import paita1 from '$lib/assets/1_paiva_paita.png';
+	import paita2 from '$lib/assets/2_paiva_paita.png';
+	import paita3 from '$lib/assets/3_paiva_paita.png';
+	import paita4 from '$lib/assets/4_paiva_paita.png';
 
 	// teema 2: yö
-	import character5 from '$lib/assets/1_teurastamo.png';
-	import character6 from '$lib/assets/1_teurastamo.png';
-	import character7 from '$lib/assets/1_teurastamo.png';
-	import character8 from '$lib/assets/1_teurastamo.png';
+	import character5 from '$lib/assets/1_yo.png';
+	import character6 from '$lib/assets/2_yo.png';
+	import character7 from '$lib/assets/3_yo.png';
+	import character8 from '$lib/assets/4_yo.png';
 
-	import paita5 from '$lib/assets/1_paita_teurastamo.png';
-	import paita6 from '$lib/assets/1_paita_teurastamo.png';
-	import paita7 from '$lib/assets/1_paita_teurastamo.png';
-	import paita8 from '$lib/assets/1_paita_teurastamo.png';
+	import paita5 from '$lib/assets/1_yo_paita.png';
+	import paita6 from '$lib/assets/2_yo_paita.png';
+	import paita7 from '$lib/assets/3_yo_paita.png';
+	import paita8 from '$lib/assets/4_yo_paita.png';
 	// teema 3: titanic
-	import character9 from '$lib/assets/1_teurastamo.png';
-	import character10 from '$lib/assets/1_teurastamo.png';
-	import character11 from '$lib/assets/1_teurastamo.png';
-	import character12 from '$lib/assets/1_teurastamo.png';
+	import character9 from '$lib/assets/1_titanic.png';
+	import character10 from '$lib/assets/2_titanic.png';
+	import character11 from '$lib/assets/3_titanic.png';
+	import character12 from '$lib/assets/4_titanic.png';
 
-	import paita9 from '$lib/assets/1_paita_teurastamo.png';
-	import paita10 from '$lib/assets/1_paita_teurastamo.png';
-	import paita11 from '$lib/assets/1_paita_teurastamo.png';
-	import paita12 from '$lib/assets/1_paita_teurastamo.png';
+	import paita9 from '$lib/assets/1_titanic_paita.png';
+	import paita10 from '$lib/assets/2_titanic_paita.png';
+	import paita11 from '$lib/assets/3_titanic_paita.png';
+	import paita12 from '$lib/assets/4_titanic_paita.png';
 
 	// teema 4: teruastamo
 	import character13 from '$lib/assets/1_teurastamo.png';
 	import character14 from '$lib/assets/2_teurastamo.png';
-	import character15 from '$lib/assets/1_teurastamo.png';
-	import character16 from '$lib/assets/1_teurastamo.png';
+	import character15 from '$lib/assets/3_teurastamo.png';
+	import character16 from '$lib/assets/4_teurastamo.png';
 
-	import paita13 from '$lib/assets/1_paita_teurastamo.png';
-	import paita14 from '$lib/assets/2_paita_teurastamo.png';
-	import paita15 from '$lib/assets/1_paita_teurastamo.png';
-	import paita16 from '$lib/assets/1_paita_teurastamo.png';
+	import paita13 from '$lib/assets/1_teurastamo_paita.png';
+	import paita14 from '$lib/assets/2_teurastamo_paita.png';
+	import paita15 from '$lib/assets/3_teurastamo_paita.png';
+	import paita16 from '$lib/assets/4_teurastamo_paita.png';
 
 	interface Props {
 		text?: string;
