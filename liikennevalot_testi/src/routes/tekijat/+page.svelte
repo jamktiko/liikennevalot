@@ -23,7 +23,7 @@
 		<div class="bg-box">
 			<Modal>
 				{#snippet header()}
-					CREDITS
+					TEKIJÄT
 				{/snippet}
 				<h2>Koodaus:</h2>
 				<div class="nimet">
@@ -50,7 +50,7 @@
 		margin: 0;
 		height: 720px;
 		max-width: 100%;
-		background-image: url('$lib/assets/720p/Bg_ai.png');
+		background-image: url('$lib/assets/720p/Bg_ai1.png');
 		background-size: cover;
 		background-position: top center;
 		background-repeat: no-repeat;

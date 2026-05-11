@@ -1,19 +1,28 @@
 <script lang="ts">
-	import Tolppa from '$lib/assets/720p/lamppu.png';
-	// import Valo from '$lib/assets/LIIKENNEVALO_VALO_G.png';
-	import Overlay from '$lib/assets/720p/lampunlamppu.png';
-
 	interface Props {
 		text?: string;
 		valocolor: 'vihrea' | 'punainen' | 'pois';
+		teema: number;
 	}
-	let { valocolor }: Props = $props();
+
+	let { valocolor, teema }: Props = $props();
+
+	const Tolppa = $derived(
+		teema === 1 ? '/src/lib/assets/720p/lamppu.png' : `/src/lib/assets/720p/lamppu${teema}.png`
+	);
+
+	const Overlay = $derived(
+		teema === 1
+			? '/src/lib/assets/720p/lampunlamppu.png'
+			: `/src/lib/assets/720p/lampunlamppu${teema}.png`
+	);
 </script>
 
 <div class="stack">
 	<img src={Tolppa} alt="Tolppa" class="layer" />
 
 	<div class="liikennevalo {valocolor}"></div>
+
 	<img src={Overlay} alt="Overlay" class="layer2" />
 </div>
 
@@ -35,11 +44,11 @@
 	}
 	.vihrea {
 		background-color: #00ff00;
-		box-shadow: 0 0 1000px 50px #00ff00;
+		box-shadow: 0 0 200px 50px #00ff00;
 	}
 	.punainen {
 		background-color: #ff0000;
-		box-shadow: 0 0 1000px 50px #ff0000;
+		box-shadow: 0 0 200px 50px #ff0000;
 	}
 	img {
 		width: 100%;
@@ -47,7 +56,7 @@
 		object-fit: contain; /* or cover depending on your images */
 	}
 	.stack {
-		--size: 220px; /* 👈 change this and everything scales */
+		--size: 150px; /* 👈 change this and everything scales */
 
 		position: relative;
 		width: var(--size);

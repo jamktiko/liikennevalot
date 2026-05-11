@@ -39,6 +39,12 @@
 	let musiikki: boolean = $state(false);
 	let aanet: boolean = $state(true);
 
+	// teeman asetukset
+
+	let teema: number = $state(1);
+	let bgImage = $derived(`/src/lib/assets/720p/Bg_ai${teema}.png`);
+	let gameBgImage = $derived(`/src/lib/assets/720p/Full_area${teema}.png`);
+
 	// Kytketään moottorin voitto-tapahtuma käyttöliittymän modaaliin
 	moottori.onWin = () => {
 		naytaModal = true;
@@ -90,13 +96,44 @@
 			playMusic();
 		}
 	});
+
+	function vaihdaTeema() {
+		teema = teema >= 4 ? 1 : teema + 1;
+	}
+	const valoPosition = $derived.by(() => {
+		switch (teema) {
+			case 2:
+				return {
+					left: '940px',
+					top: '310px'
+				};
+
+			case 3:
+				return {
+					left: '1010px',
+					top: '130px'
+				};
+
+			case 4:
+				return {
+					left: '940px',
+					top: '310px'
+				};
+
+			default:
+				return {
+					left: '940px',
+					top: '310px'
+				};
+		}
+	});
 </script>
 
 <svelte:window onkeydown={moottori.handleKeydown} />
 
 <div class="wrapper">
 	<div class="game" style="transform: translate(-50%, -50%) scale({scale});">
-		<div class="bg-box">
+		<div class="bg-box" style={`background-image: url('${bgImage}')`}>
 			{#if nakyma === 'etusivu'}
 				<div class="ui top-left" transition:fade={{ duration: 300 }}>
 					<Button onclick={() => (naytaAsetukset = true)} text="ASETUKSET" />
@@ -131,12 +168,13 @@
 							nakyma = 'peli';
 						}}
 						takaisin={() => (nakyma = 'etusivu')}
+						theme={teema}
 					/>
 				</div>
 			{:else}
 				<div transition:fade={{ duration: 300 }}>
-					<div class="bg-box">
-						<div class="bg-box-game">
+					<div class="bg-box" style={`background-image: url('${bgImage}')`}>
+						<div class="bg-box-game" style={`background-image: url('${gameBgImage}')`}>
 							{#if !moottori.peliKaynnissa}
 								<div transition:fade={{ duration: 1000 }}>
 									<Nappaimetguide players={moottori.players.slice(0, moottori.pelaajamaara)} />
@@ -154,19 +192,25 @@
 														out:fly={{ x: -150, y: 200, duration: 1000, easing: cubicIn }}
 													>
 														<Character
-															text={player.key.toUpperCase()}
 															color={player.c}
 															character={player.character}
+															theme={teema}
 														/>
 													</div>
 												{/if}
 											{/each}
 										</div>
-										<div class="fixedvalo">
-											<Valotolppa valocolor={moottori.valo} />
-										</div>
 									</div>
 								</div>
+							</div>
+							<div
+								class="fixedvalo"
+								style={`
+		left:${valoPosition.left};
+		top:${valoPosition.top};
+	`}
+							>
+								<Valotolppa valocolor={moottori.valo} {teema} />
 							</div>
 						</div>
 
@@ -203,7 +247,13 @@
 		</div>
 
 		{#if naytaAsetukset}
-			<Asetukset sulje={() => (naytaAsetukset = false)} bind:juomapeli bind:musiikki bind:aanet />
+			<Asetukset
+				sulje={() => (naytaAsetukset = false)}
+				bind:juomapeli
+				bind:musiikki
+				bind:aanet
+				{vaihdaTeema}
+			/>
 		{/if}
 		{#if naytaScoreboard}
 			<Tulostaulukko
@@ -254,7 +304,11 @@
 					class="char-box-shadow flex h-32 w-32 items-center justify-center overflow-hidden border-[4px] border-black bg-[#c0c0c0] md:h-40 md:w-40"
 				>
 					<div style="transform: scale(1.5) translateY(5px);">
-						<Character color={moottori.voittaja.c} character={moottori.voittaja.character} />
+						<Character
+							color={moottori.voittaja.c}
+							character={moottori.voittaja.character}
+							theme={teema}
+						/>
 					</div>
 				</div>
 				{#snippet footer()}
@@ -363,7 +417,7 @@
 		width: 100%;
 		max-width: 100%;
 		height: 100%;
-		background-image: url('$lib/assets/720p/Full_area.png');
+		/* background-image: url('$lib/assets/720p/Full_area.png'); */
 		background-position: center;
 		background-repeat: no-repeat;
 	}
@@ -372,7 +426,7 @@
 		margin: 0;
 		height: 720px;
 		max-width: 100%;
-		background-image: url('$lib/assets/720p/Bg_ai.png');
+		/* background-image: url('$lib/assets/720p/Bg_ai.png'); */
 		background-size: cover;
 		background-position: top center;
 		background-repeat: no-repeat;
