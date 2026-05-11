@@ -80,21 +80,34 @@
 </script>
 
 <div class="stack">
+	<img
+		class:night={theme === 2 || theme === 3}
+		src={currentTheme.characters[character]}
+		alt="Pixel art character"
+	/>
+
 	<div class="layer">
-		<div class="vari" style="filter: sepia(1) saturate(1000%) hue-rotate({color}deg);">
-			<img src={currentTheme.paidat[character]} alt="Pixel art walking character" />
+		<div
+			class="vari"
+			class:shirtNight={theme === 2 || theme === 3}
+			style="filter: sepia(1) saturate(1000%) hue-rotate({color}deg);"
+		>
+			<img src={currentTheme.paidat[character]} alt="Pixel art shirt" />
 		</div>
 	</div>
-
-	<img src={currentTheme.characters[character]} alt="Pixel art walking character" />
-
-	<div class="layer"></div>
 </div>
 
 <style>
 	.vari {
 		filter: sepia(1) saturate(1000%) hue-rotate(0deg);
-		color: rgb(24, 24, 24);
+	}
+
+	.night {
+		filter: contrast(0.85) brightness(0.8) saturate(0.8);
+	}
+
+	.shirtNight {
+		filter: brightness(0.8) contrast(0.9) sepia(1) saturate(1000%) hue-rotate(0deg);
 	}
 	img {
 		height: 80px;
