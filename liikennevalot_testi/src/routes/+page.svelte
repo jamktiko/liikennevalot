@@ -239,7 +239,9 @@
 						/>
 					</div>
 					<div class="ui center"></div>
-					<div class="ui bottom-right">
+					<div
+						class="ui bottom-right font-['Press_Start_2P'] text-xl drop-shadow-[0_0_2px_white] [text-shadow:2px_2px_0px_rgba(255,255,255,0.2)]"
+					>
 						<p>{moottori.viesti}</p>
 					</div>
 				</div>
