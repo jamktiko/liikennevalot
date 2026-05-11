@@ -116,7 +116,7 @@
 
 			case 4:
 				return {
-					left: '940px',
+					left: '1050px',
 					top: '310px'
 				};
 
