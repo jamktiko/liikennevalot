@@ -23,7 +23,7 @@
 		<div class="bg-box">
 			<Modal>
 				{#snippet header()}
-					CREDITS
+					TEKIJÄT
 				{/snippet}
 				<h2>Koodaus:</h2>
 				<div class="nimet">
