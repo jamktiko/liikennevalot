@@ -3,9 +3,10 @@
 	import Button from './Button.svelte';
 	import Character from './Character.svelte';
 
-	let { players, sulje } = $props<{
+	let { players, sulje, theme } = $props<{
 		players: Player[];
 		sulje: () => void;
+		theme?: number;
 	}>();
 
 	// Järjestetään pelaajat niin, että eniten voittoja saanut on ekana
@@ -29,7 +30,7 @@
 				>
 					<div class="flex items-center gap-3">
 						<div style="transform: scale(0.6);">
-							<Character color={p.c} character={p.character} />
+							<Character color={p.c} character={p.character} {theme} />
 						</div>
 						<span class="text-[13px] text-black uppercase">{p.name}</span>
 					</div>
