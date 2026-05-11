@@ -20,7 +20,7 @@
 			<div
 				in:fade
 				out:slide
-				class="mb-4 stroke-3 font-['Press_Start_2P'] text-6xl font-black tracking-tighter uppercase [text-shadow:4px_4px_0px_rgba(0,0,0,0.3)]"
+				class="teksti mb-4 stroke-3 font-['Press_Start_2P'] text-[120px] font-black tracking-tighter text-red-600 uppercase [text-shadow:4px_4px_0px_rgba(0,0,0,0.3)]"
 			>
 				3
 			</div>
@@ -28,7 +28,7 @@
 			<div
 				in:fade
 				out:slide
-				class="mb-4 font-['Press_Start_2P'] text-6xl font-black tracking-tighter uppercase [text-shadow:4px_4px_0px_rgba(0,0,0,0.3)]"
+				class="teksti mb-4 font-['Press_Start_2P'] text-[120px] font-black tracking-tighter text-red-600 uppercase [text-shadow:4px_4px_0px_rgba(0,0,0,0.3)]"
 			>
 				2
 			</div>
@@ -37,7 +37,7 @@
 			<div
 				in:fade
 				out:slide
-				class="mb-4 font-['Press_Start_2P'] text-6xl font-black tracking-tighter uppercase [text-shadow:4px_4px_0px_rgba(0,0,0,0.3)]"
+				class="teksti mb-4 font-['Press_Start_2P'] text-[120px] font-black tracking-tighter text-red-600 uppercase [text-shadow:4px_4px_0px_rgba(0,0,0,0.3)]"
 			>
 				1
 			</div>
@@ -46,7 +46,7 @@
 			<div
 				in:fade
 				out:slide
-				class="teksti mb-4 stroke-3 font-['Press_Start_2P'] text-8xl font-black tracking-tighter text-red-600 uppercase [text-shadow:4px_4px_0px_rgba(0,0,0,0.3)]"
+				class="teksti mb-4 stroke-3 font-['Press_Start_2P'] text-[150px] font-black tracking-tighter text-green-600 uppercase [text-shadow:4px_4px_0px_rgba(0,0,0,0.3)]"
 			>
 				GO!
 			</div>
