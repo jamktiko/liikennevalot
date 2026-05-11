@@ -8,13 +8,11 @@
 	let { valocolor, teema }: Props = $props();
 
 	const Tolppa = $derived(
-		teema === 1 ? '/src/lib/assets/720p/lamppu.png' : `/src/lib/assets/720p/lamppu${teema}.png`
+		teema === 1 ? 'assets/720p/lamppu.png' : `assets/720p/lamppu${teema}.png`
 	);
 
 	const Overlay = $derived(
-		teema === 1
-			? '/src/lib/assets/720p/lampunlamppu.png'
-			: `/src/lib/assets/720p/lampunlamppu${teema}.png`
+		teema === 1 ? 'assets/720p/lampunlamppu.png' : `assets/720p/lampunlamppu${teema}.png`
 	);
 </script>
 
