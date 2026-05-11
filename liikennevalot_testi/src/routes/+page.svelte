@@ -11,7 +11,6 @@
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
-	import puhekuplaImg from '$lib/assets/puhekupla.png';
 
 	// Tuodaan pelimoottori
 	import { moottori } from '$lib/pelimoottori.svelte';
@@ -38,12 +37,13 @@
 	let juomapeli: boolean = $state(false);
 	let musiikki: boolean = $state(false);
 	let aanet: boolean = $state(true);
+	const puhekuplaImg = '/assets/puhekupla.png';
 
 	// teeman asetukset
 
 	let teema: number = $state(1);
-	let bgImage = $derived(`/src/lib/assets/720p/Bg_ai${teema}.png`);
-	let gameBgImage = $derived(`/src/lib/assets/720p/Full_area${teema}.png`);
+	let bgImage = $derived(`assets/720p/Bg_ai${teema}.png`);
+	let gameBgImage = $derived(`assets/720p/Full_area${teema}.png`);
 
 	// Kytketään moottorin voitto-tapahtuma käyttöliittymän modaaliin
 	moottori.onWin = () => {
@@ -239,7 +239,9 @@
 						/>
 					</div>
 					<div class="ui center"></div>
-					<div class="ui bottom-right">
+					<div
+						class="ui bottom-right font-['Press_Start_2P'] text-xl drop-shadow-[0_0_2px_white] [text-shadow:2px_2px_0px_rgba(255,255,255,0.2)]"
+					>
 						<p>{moottori.viesti}</p>
 					</div>
 				</div>
