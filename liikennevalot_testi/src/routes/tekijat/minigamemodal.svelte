@@ -9,7 +9,9 @@
 
 	let modals = $state<Modal[]>([]);
 	let intervalId: ReturnType<typeof setInterval> | null = null;
-	let speed = $state(700);
+	let difficulty = $state(500);
+	let speed = $derived(1500 - difficulty);
+
 	let nextId = 1;
 
 	function random() {
@@ -62,7 +64,7 @@
 
 <label>
 	Vaikeus:
-	<input type="range" min="500" max="1000" step="10" bind:value={speed} />
+	<input type="range" min="500" max="1000" step="10" bind:value={difficulty} />
 </label>
 
 {#if modals.length > 0}
