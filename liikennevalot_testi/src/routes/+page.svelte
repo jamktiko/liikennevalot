@@ -47,7 +47,9 @@
 
 	// Kytketään moottorin voitto-tapahtuma käyttöliittymän modaaliin
 	moottori.onWin = () => {
-		naytaModal = true;
+		setTimeout(() => {
+			naytaModal = true;
+		}, 500);
 	};
 
 	function suljeModal() {
@@ -176,7 +178,7 @@
 					<div class="bg-box" style={`background-image: url('${bgImage}')`}>
 						<div class="bg-box-game" style={`background-image: url('${gameBgImage}')`}>
 							{#if !moottori.peliKaynnissa}
-								<div transition:fade={{ duration: 1000 }}>
+								<div out:fade={{ duration: 1000 }} in:fade={{ duration: 3000 }}>
 									<Nappaimetguide players={moottori.players.slice(0, moottori.pelaajamaara)} />
 								</div>
 							{/if}
