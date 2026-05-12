@@ -58,17 +58,17 @@ Download liikennevalot_testi from GitHub
 
 The game is made for desktop screens, but since it is web browser -based, it can be opened on mobile as well. However, the game cannot be played on mobile, unless you have an attachable keyboard to add to your mobile.
 
-If you run into lag or other problems in the game, try refreshing the page or change your web browser.
+If you run into lag or other problems in the game, try refreshing the page or changing your web browser.
 
 We encourage you not to use Safari to play the game and to use another web browser instead, since some of the Tailwind styles used are not compatible with Safari.
 
-The game is mainly in finnish, except for the joke in the victory screen. If you do not speak finnish, follow the instructions in the beginning of this page. The game is played by pressing the keyboard button (q,p,c,m) given to your character in the character creation.
+The game is mainly in Finnish, except for the joke in the victory screen. If you do not speak Finnish, follow the instructions at the beginning of this page. The game is played by pressing the keyboard button (q,p,c,m) given to your character in the character creation.
 
 ## Authors
 
-Hilla Korkiakoski
-Elias Hakala
-Juho Rajala
+Hilla Korkiakoski,
+Elias Hakala,
+Juho Rajala,
 Oula Hämäläinen
 
 ## Version History
