@@ -6,6 +6,8 @@
 	import Button from '../Button.svelte';
 	import Minigame from './minigamemodal.svelte';
 
+	let showExtras: boolean = $state(false);
+
 	let scale = $state(1);
 	function updateScale() {
 		const baseWidth = 1280;
@@ -18,6 +20,9 @@
 		updateScale();
 		window.addEventListener('resize', updateScale);
 	});
+	function toggleExtras() {
+		showExtras = !showExtras;
+	}
 </script>
 
 <div class="wrapper">
@@ -38,42 +43,54 @@
 					<p>Hilla Korkiakoski</p>
 					<p>Elias Hakala</p>
 				</div>
-				<Minigame />
+				{#if showExtras}
+					<div class="overlay">
+						<div class="extras">
+							<Minigame />
+							<div class="center">
+								<Button
+									text="JARKKOMODE älä paina tätä"
+									onclick={() => {
+										alert('Morjens');
+										alert('Mitä kuuluu?');
+										alert('Vai kuuluuko?');
+										alert('Saako tälläisesta koodista plussaa?');
+										alert('Vai katsotaanko tätä pahalla.');
+										alert('Ei mulla muuta');
+										alert('Kiitos');
+										alert('Hei');
+										alert('10');
+										alert('9');
+										alert('8');
+										alert('7');
+										alert('6');
+										alert('5');
+										alert('4');
+										alert('3');
+										alert('2');
+										alert('1');
+										alert('hähää vielä 5');
+										alert('5');
+										alert('4');
+										alert('3');
+										alert('2');
+										alert('1');
+										alert('NYT');
+										alert('vai?');
+										alert('NYT');
+										alert('OK');
+									}}
+								/>
+							</div>
+							<div class="bottom-right">
+								<Button text="SULJE" onclick={() => (showExtras = false)} />
+							</div>
+						</div>
+					</div>
+				{/if}
+				<Button text="EXTRAS" onclick={toggleExtras} />
 				{#snippet footer()}
 					<Button text="ETUSIVU" onclick={() => goto(resolve('/'))} />
-					<Button
-						text="JARKKOMODE älä paina tätä"
-						onclick={() => {
-							alert('Morjens');
-							alert('Mitä kuuluu?');
-							alert('Vai kuuluuko?');
-							alert('Saako tälläisesta koodista plussaa?');
-							alert('Vai katsotaanko tätä pahalla.');
-							alert('Ei mulla muuta');
-							alert('Kiitos');
-							alert('Hei');
-							alert('10');
-							alert('9');
-							alert('8');
-							alert('7');
-							alert('6');
-							alert('5');
-							alert('4');
-							alert('3');
-							alert('2');
-							alert('1');
-							alert('hähää vielä 5');
-							alert('5');
-							alert('4');
-							alert('3');
-							alert('2');
-							alert('1');
-							alert('NYT');
-							alert('vai?');
-							alert('NYT');
-							alert('OK');
-						}}
-					/>
 				{/snippet}
 			</Modal>
 		</div>
@@ -133,5 +150,34 @@
 		padding: 4px 8px;
 		text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.2);
 		width: fit-content;
+	}
+	.extras {
+		position: fixed;
+		z-index: 1000;
+
+		background: white;
+		padding: 2rem;
+		border: solid 4px black;
+		border-radius: 12px;
+		min-width: 300px;
+		width: 400px;
+		height: 300px;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+	}
+	.overlay {
+		position: fixed;
+		inset: 0;
+		/* background: rgba(0, 0, 0, 0.2); */
+		z-index: 999;
+	}
+	.bottom-right {
+		position: absolute;
+		bottom: 10px;
+		right: 10px;
+	}
+	.center {
+		padding: 5px;
 	}
 </style>

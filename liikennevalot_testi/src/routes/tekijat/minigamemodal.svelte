@@ -14,8 +14,8 @@
 
 	let nextId = 1;
 
-	function random() {
-		return Math.floor(Math.random() * 100);
+	function random(min: number, max: number) {
+		return Math.random() * (max - min) + min;
 	}
 
 	function spawnModal() {
@@ -23,8 +23,8 @@
 			...modals,
 			{
 				id: nextId++,
-				left: random(),
-				top: random()
+				left: random(-50, 150),
+				top: random(-50, 150)
 			}
 		];
 	}
@@ -54,19 +54,18 @@
 	}
 </script>
 
-<button
+<Button
+	text="ALOITA MINIGAME"
 	onclick={() => {
 		miniGameStart();
 	}}
->
-	Start mini game
-</button>
-
-<label>
-	Vaikeus:
-	<input type="range" min="500" max="1000" step="10" bind:value={difficulty} />
-</label>
-
+/>
+<div class="ohjaus">
+	<label>
+		Vaikeus:
+		<input type="range" min="500" max="1000" step="10" bind:value={difficulty} />
+	</label>
+</div>
 {#if modals.length > 0}
 	<div class="overlay">
 		<div class="quitgame">
@@ -105,10 +104,13 @@
 	}
 	.quitgame {
 		position: absolute;
-		top: -60px;
-		right: -390px;
+		top: -210px;
+		right: -440px;
 		margin: 10px;
 		gap: 10px;
 		display: flex;
+	}
+	.ohjaus {
+		padding: 10px;
 	}
 </style>
