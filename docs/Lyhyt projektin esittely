@@ -1,0 +1,3 @@
+Paikallinen moninpeli, jossa kilpailet toisia pelaajia vastaan testaamalla reaktioaikaasi. Peli hakee hauskan lauseen API palvelusta, kun joku voittaa pelin.
+
+Pelin idea: Valo on alussa pois päältä, jonka jälkeen se vaihtuu satunnaisesti vihreän ja punaisen välillä, kolmen ja kuuden sekunnin aikavälillä. Valon vaihtuessa vihreäksi, nopein reaktio liikkuu askeleen eteenpäin. Punaisen palaessa, painalluksesta askel taaksepäin. Liian nopeasta reaktiosta rangaistaan kahdella askeleella taaksepäin.
