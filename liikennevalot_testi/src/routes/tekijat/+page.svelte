@@ -43,6 +43,16 @@
 					<p>Hilla Korkiakoski</p>
 					<p>Elias Hakala</p>
 				</div>
+				<div class="top-right">
+					<Button
+						text="SUPPORT US"
+						onclick={() =>
+							window.open(
+								'https://qr.mobilepay.fi/box/b64335c7-fcbd-4d35-8ced-86a53321f620/pay-in',
+								'_blank'
+							)}
+					/>
+				</div>
 				{#if showExtras}
 					<div class="overlay">
 						<div class="extras">
@@ -82,6 +92,7 @@
 									}}
 								/>
 							</div>
+
 							<div class="bottom-right">
 								<Button text="SULJE" onclick={() => (showExtras = false)} />
 							</div>
@@ -179,5 +190,10 @@
 	}
 	.center {
 		padding: 5px;
+	}
+	.top-right {
+		position: absolute;
+		top: 10px;
+		right: 10px;
 	}
 </style>
