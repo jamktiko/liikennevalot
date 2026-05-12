@@ -178,7 +178,7 @@
 					<div class="bg-box" style={`background-image: url('${bgImage}')`}>
 						<div class="bg-box-game" style={`background-image: url('${gameBgImage}')`}>
 							{#if !moottori.peliKaynnissa}
-								<div out:fade={{ duration: 1000 }} in:fade={{ duration: 3000 }}>
+								<div out:fade={{ duration: 1000 }} in:fade={{ duration: 4000 }}>
 									<Nappaimetguide players={moottori.players.slice(0, moottori.pelaajamaara)} />
 								</div>
 							{/if}
