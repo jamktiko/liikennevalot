@@ -20,6 +20,7 @@
 	onMount(() => {
 		updateScale();
 		window.addEventListener('resize', updateScale);
+		screensaver.startSaver();
 	});
 	function toggleExtras() {
 		showExtras = !showExtras;
@@ -106,7 +107,6 @@
 					</div>
 				{/if}
 				<Button text="EXTRAS" onclick={toggleExtras} />
-				<Button text="SAVER" onclick={() => screensaver.startSaver()} />
 
 				{#snippet footer()}
 					<Button text="ETUSIVU" onclick={() => goto(resolve('/'))} />
