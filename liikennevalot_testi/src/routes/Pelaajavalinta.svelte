@@ -59,7 +59,7 @@
 							<p class="mb-3 text-[8px] leading-none uppercase md:text-[9px]">Paidan väri:</p>
 							<button
 								onclick={() => vaihdaVari(i)}
-								class="btn-shadow border-[3px] border-black bg-[#d1d5db] px-2 py-2 text-[7px] uppercase transition-all active:translate-y-1 active:shadow-none md:text-[8px]"
+								class="btn-shadow cursor-pointer border-[3px] border-black bg-[#d1d5db] px-2 py-2 text-[7px] uppercase transition-all active:translate-y-1 active:shadow-none md:text-[8px]"
 							>
 								Vaihda väriä
 							</button>
@@ -72,7 +72,7 @@
 		<div class="relative flex w-full items-center justify-between">
 			<button
 				onclick={withClickSound(takaisin)}
-				class="-mt-2 flex h-14 w-14 items-center justify-center border-4 border-black bg-[#d1d5db] text-xl shadow-[8px_8px_0px_0px_rgba(0,0,0,0.25),inset_0_-6px_0_rgba(0,0,0,0.5)] transition-all active:translate-y-1 active:shadow-none"
+				class="-mt-2 flex h-14 w-14 cursor-pointer items-center justify-center border-4 border-black bg-[#d1d5db] text-xl shadow-[8px_8px_0px_0px_rgba(0,0,0,0.25),inset_0_-6px_0_rgba(0,0,0,0.5)] transition-all active:translate-y-1 active:shadow-none"
 			>
 				&lt;
 			</button>

@@ -44,7 +44,7 @@
 					<button
 						onclick={withClickSound(poistaPelaaja)}
 						disabled={pelaajamaara <= 2}
-						class="flex h-16 w-16 items-center justify-center border-4 border-black bg-[#eb4c34] text-4xl font-bold text-white shadow-[inset_0px_-6px_0px_rgba(0,0,0,0.4)] active:translate-y-1 disabled:opacity-50 disabled:grayscale disabled:active:translate-y-0"
+						class="flex h-16 w-16 cursor-pointer items-center justify-center border-4 border-black bg-[#eb4c34] text-4xl font-bold text-white shadow-[inset_0px_-6px_0px_rgba(0,0,0,0.4)] active:translate-y-1 disabled:opacity-50 disabled:grayscale disabled:active:translate-y-0"
 					>
 						-
 					</button>
@@ -58,7 +58,7 @@
 					<button
 						onclick={withClickSound(lisaaPelaaja)}
 						disabled={pelaajamaara >= 4}
-						class="flex h-16 w-16 items-center justify-center border-4 border-black bg-[#63a352] text-4xl font-bold text-white shadow-[inset_0px_-6px_0px_rgba(0,0,0,0.4)] active:translate-y-1 disabled:opacity-50 disabled:grayscale disabled:active:translate-y-0"
+						class="flex h-16 w-16 cursor-pointer items-center justify-center border-4 border-black bg-[#63a352] text-4xl font-bold text-white shadow-[inset_0px_-6px_0px_rgba(0,0,0,0.4)] active:translate-y-1 disabled:opacity-50 disabled:grayscale disabled:active:translate-y-0"
 					>
 						+
 					</button>
@@ -67,7 +67,7 @@
 
 			<button
 				onclick={withClickSound(aloita)}
-				class="p-7 text-center font-['Press_Start_2P'] text-3xl leading-none font-black text-black uppercase transition-transform [text-shadow:5px_5px_0px_rgba(0,0,0,0.3)] hover:scale-105"
+				class="cursor-pointer p-7 text-center font-['Press_Start_2P'] text-3xl leading-none font-black text-black uppercase transition-transform [text-shadow:5px_5px_0px_rgba(0,0,0,0.3)] hover:scale-105"
 			>
 				Aloita<br />peli
 			</button>
