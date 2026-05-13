@@ -5,9 +5,10 @@
 	import Modal from '../Modal.svelte';
 	import Button from '../Button.svelte';
 	import Minigame from './minigamemodal.svelte';
+	import Screensaver from './screensaver.svelte';
+	let screensaver: { startSaver: () => void; stopSaver: () => void };
 
-	let showExtras: boolean = $state(false);
-
+	let showExtras = $state(false);
 	let scale = $state(1);
 	function updateScale() {
 		const baseWidth = 1280;
@@ -27,6 +28,10 @@
 
 <div class="wrapper">
 	<div class="game" style="transform: translate(-50%, -50%) scale({scale});">
+		<div class="screensaver-container">
+			<Screensaver bind:this={screensaver} />
+		</div>
+
 		<div class="bg-box">
 			<Modal>
 				{#snippet header()}
@@ -43,6 +48,7 @@
 					<p>Hilla Korkiakoski</p>
 					<p>Elias Hakala</p>
 				</div>
+
 				<div class="top-right">
 					<Button
 						text="SUPPORT US"
@@ -100,6 +106,8 @@
 					</div>
 				{/if}
 				<Button text="EXTRAS" onclick={toggleExtras} />
+				<Button text="SAVER" onclick={() => screensaver.startSaver()} />
+
 				{#snippet footer()}
 					<Button text="ETUSIVU" onclick={() => goto(resolve('/'))} />
 				{/snippet}
@@ -195,5 +203,10 @@
 		position: absolute;
 		top: 10px;
 		right: 10px;
+	}
+	.screensaver-container {
+		position: absolute;
+		inset: 0;
+		z-index: 41; /* behind everything else */
 	}
 </style>
